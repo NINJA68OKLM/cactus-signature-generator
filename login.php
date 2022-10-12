@@ -41,10 +41,10 @@ session_id();
         if (isset($_POST['ok']) && !empty($_POST['identifiant']) && !empty($_POST['mdp']))
         {
             // Connexion à la base de données
-            $requete= "SELECT * FROM entreprise WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
+            // $requete= "SELECT * FROM employes WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
             $servername = "localhost";
             $username = "root";
-            $password = "jijJkikd3";
+            $password = "";
             $dbname = "signature";
             $conn = new mysqli($servername, $username, $password, $dbname);
             // Vérification de la connexion
@@ -52,11 +52,22 @@ session_id();
                 die("Connection failed: " . $conn->connect_error);
             }
             // Vérifie si les identifiants existent dans la base de données
-            $requete= "SELECT * FROM entreprise WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
+            $requete= "SELECT * FROM employes WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
             echo $requete;
             $result = $conn->query($requete);
             if ($result->num_rows >= 1) {
                 // echo "<p class='confirmation' style='margin: 15px;'>Vous allez être redirigé vers votre espace client.</p>";
+                
+                $rechercheinfos = $result -> fetch_array(MYSQLI_ASSOC);
+                // echo $rechercheinfos["fonction"];
+                // Récupération des informations de la personne qui se connecte pour les afficher dans son espace client
+                setcookie("nom", $rechercheinfos["nom"], time()+3600);
+                setcookie("prenom", $rechercheinfos["prenom"], time()+3600);
+                setcookie("fonction", $rechercheinfos["fonction"], time()+3600);
+                setcookie("mail", $rechercheinfos["mail"], time()+3600);
+                setcookie("ld", $rechercheinfos["ld"], time()+3600);
+                setcookie("idd", $rechercheinfos["idd"], time()+3600);
+                setcookie("nb_client", $result->num_rows, time()+3600);
                 header('Location: client.php');
             }
             else

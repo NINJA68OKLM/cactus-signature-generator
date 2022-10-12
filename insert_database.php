@@ -28,24 +28,25 @@ else
 
   while ($ligne = $rresult->fetch_row())
   {
+    
+    // Test
+    echo $i."<br>";
+    echo $_COOKIE['nom_'.$i];
+    // echo "<br>".$ligne[0];
+    // Insertion de l'employé dans la base de données
+    $insert="INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (".$ligne[0].",'".$_COOKIE['nom_'.$i]."', '".$_COOKIE['prenom_'.$i]."', '".$_COOKIE['fonction_'.$i]."', ".$_COOKIE['ld_'.$i].", '".$_COOKIE['mail_'.$i]."', 0, '', '')";
+    echo $insert;
     // Génération des identifiants
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
-    for ($e = 0; $e < 20; $i++) {
+    for ($e = 0; $e < 20; $e++) {
       $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    // Test
-    echo $i."<br>";
-    echo $_COOKIE['nom_'.$i];
     $ide = strtolower($_SESSION['entr']).".signature-cactus.fr";
     // Enregistrement des identifiants dans la base de données
     $update = "UPDATE employes SET ide='".$ide."', mdp='".$randomString."' WHERE id='".$_COOKIE['bddid']."' AND nom='".$_COOKIE['nom_'.$i]."'";
     echo $update;
-    // echo "<br>".$ligne[0];
-    // Insertion de l'employé dans la base de données
-    $insert="INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (".$ligne[0].",'".$_COOKIE['nom_'.$i]."', '".$_COOKIE['prenom_'.$i]."', '".$_COOKIE['fonction_'.$i]."', ".$_COOKIE['ld_'.$i].", '".$_COOKIE['mail_'.$i]."', 0, '".$ide."', '".$randomString."')";
-    echo $insert;
     if ($conn->query($insert) === true)
     {
       echo "True";
@@ -56,11 +57,6 @@ else
     }
     echo "<br>".$_COOKIE['nom_'.$i];
   }
-
-  // if ($rresult->num_rows >= 1)
-  // {
-    
-  // }
 }
 $conn->close();
 ?>

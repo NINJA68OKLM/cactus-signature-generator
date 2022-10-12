@@ -1,0 +1,19 @@
+"<fieldset>
+                <div class='gauche'>
+                    <img src='img/logo.png' alt='' style='width: 100%;'>
+                    <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
+                </div>
+                <div class='droite'>
+                    <h1>Vos informations personnelles</h1>
+                    <form action='".$_SERVER['PHP_SELF']."' method='post'>
+                            <div class='ekkkiiiiz'>
+                                <div class='form' id='0'>
+                                    <div class='col5 client'>
+                                        <p>Nom :</p> <br>
+                                        <p>Prénom :</p> <br>
+                                        <p>Fonction :</p> <br>
+                                        <p>Ligne directe :</p> <br>
+                                        <p>Mail :</p> <br>
+                                    </div>
+                                    <div class='col6'>
+                                        <input type='text' name='nom' id='' value='";

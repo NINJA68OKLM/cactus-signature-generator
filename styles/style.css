@@ -34,7 +34,7 @@ body
     {
         margin-top: 59px;
     }
-    p:not(.col1>p, .col3>p, p.ele, p.pp, p.message, p.filename, p.trait, .formprinc>p), .emplo>hr
+    p:not(.col1>p, .col3>p, p.ele, p.pp, p.message, p.filename, p.trait, .formprinc>p, .client>p), .emplo>hr
     {
         color: white;
     }

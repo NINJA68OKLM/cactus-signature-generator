@@ -453,4 +453,13 @@ jQuery(function ($) {
 
     // Zone d'aperçu
     $(".apercu").html("<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;'><strong>APERCU</strong></div>")
+
+    // client.php
+    $(".telecharger")
+    $("[name='telecharger_"+formId+"']").on("click", function () {
+        $.get("download.php", function(data){
+            console.log(data)
+        })
+        
+    })
 })
