@@ -130,7 +130,7 @@ session_id();
             $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
             $servername = "localhost";
             $username = "root";
-            $password = "jijJkikd3";
+            $password = "";
             $dbname = "signature";
             $conn = new mysqli($servername, $username, $password, $dbname);
             // Vérification de la connexion
@@ -140,12 +140,13 @@ session_id();
             // Vérifie si l'entreprise existe déjà exite dans la base de données
             $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
             $result = $conn->query($requete);
-            if ($result->num_rows >= 1) {
+            if ($result->num_rows > 0) {
                 echo "<p class='confirmation' style='margin: 15px;'>Cette entreprise existe déjà dans notre base de données !</p>";
             }
             else {
-                $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs) VALUES('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', '".$_SESSION['empl']."', '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '')";
+                $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs, ide, mdp) VALUES ('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', ".$_SESSION['empl'].", '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '', '', '')";
                 // echo $sql."<br>"; 
+                $conn->query($sql);
                 if ($conn->query($sql) === TRUE) {
                     // Message pour déclarer les employés
                     echo "<p class='confirmation' style='margin: 15px;'>Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.</p><br>";

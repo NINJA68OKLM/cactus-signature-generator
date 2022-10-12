@@ -5,7 +5,7 @@ $i = $_COOKIE['id'];
 // Connexion à la base de données
 $servername = "localhost";
 $username = "root";
-$password = "jijJkikd3";
+$password = "";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Vérification de la connexion
