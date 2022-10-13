@@ -7,7 +7,7 @@ $id=$_COOKIE['id'];
       <!-- Identité -->
       <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
         <span>
-          <img src="img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="img/uploads/<?= $_SESSION['logonom'] || $_SESSION['logo'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
         <br>
         <span id="nom" style="font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif;"><?= $_COOKIE['prenom_'.$id]." ".strtoupper($_COOKIE['nom_'.$id]) ?></span>
@@ -36,7 +36,7 @@ $id=$_COOKIE['id'];
         <span style="display: flex;" class='cacher'>
         <!-- Site web -->
         <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
-          <a style="color: #156cad; text-decoration: none;" href="<?= $_SESSION['site']?>"><?= $_SESSION['site']?></a>
+          <a style="color: #156cad; text-decoration: none;" href="<?= $_SESSION['site'] |$_SESSION['site'] ?>"><?= $_SESSION['site']?></a>
         </span>
         <span class="signRS" style='display: flex; margin-left: 5px;'>
         <?php

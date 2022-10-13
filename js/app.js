@@ -8,19 +8,21 @@ jQuery(function ($) {
     // creation_entre.php
     
     // Affichage du bouton pour la redirection vers la déclaration d'employés ou la connexion
-    if ($("[name='tel']").val()!== "" && $("[name='site']").val()!== "" && $("[name='empl']").val()!== "" && $("[name='sign']").val()!=="" && $("[name='entr']").val()!== "" && $("[name='adre']").val()!== "" && $("[name='vill']").val()!== "" && $("[name='site']").val().match(sw) && $("[name='vill']").val().match(maj) && $("[name='cp']").val()!== "" && $(".filename").html() !== " Aucun fichier selectionné...") {
-        if ($(".confirmation").html() !== "Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.")
-        {
-            $(".entre_connex").css("display", "initial")
-            $(".entre_confirm").css("display", "none")
+    if (window.location.href.indexOf("/creation_entre_test.php")!=-1) {
+        if ($("[name='tel']").val()!== "" && $("[name='site']").val()!== "" && $("[name='empl']").val()!== "" && $("[name='sign']").val()!=="" && $("[name='entr']").val()!== "" && $("[name='adre']").val()!== "" && $("[name='vill']").val()!== "" && $("[name='site']").val().match(sw) && $("[name='vill']").val().match(maj) && $("[name='cp']").val()!== "" && $(".filename").html() !== " Aucun fichier selectionné...") {
+            if ($(".confirmation").html() !== "Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.")
+            {
+                $(".entre_connex").css("display", "initial")
+                $(".entre_confirm").css("display", "none")
+            }
+            else
+            {
+                $(".entre_connex").css("display", "none")
+                $(".entre_confirm").css("display", "initial")
+            }
+            $(".entre_decla, [name='logo'], .br").css("display", "none")
+            $("#label_file").css("display", "flex")
         }
-        else
-        {
-            $(".entre_connex").css("display", "none")
-            $(".entre_confirm").css("display", "initial")
-        }
-        $(".entre_decla, [name='logo'], .br").css("display", "none")
-        $("#label_file").css("display", "flex")
     }
 
     // Remplissage du formulaire
@@ -99,8 +101,8 @@ jQuery(function ($) {
             $(".trait.ele").css("display", "initial")
             $(".champsrs").css("display", "initial")
             $(".formRS").css("display", "flex")
-            // Création des boutons d'aperçu et de téléchargement
-            $(zone).html("<p style='margin-left: 15px; font-weight: bold;'>La signature de cette personne a bien été créé !</p> <br> <div style='display: flex; justify-content: left;'><input type='submit' name='apercu_" + formId + "' value='Aperçu' class='button apercu_submit' id='apercu_" + formId + "' style='margin-left: 15px;' data-form-id='" + formId + "'> <a href='signatures/Signature_"+$("[name='nom_"+formId+"']").val()+"_"+$("[name='prenom_"+formId+"']").val()+".html' download class='button telecharger' style='border-top: 1px solid #FFF; margin-left: 15px;' data-form-id='"+ formId +"' name='telecharger_" + formId + "'> Télécharger </a> </div>");
+            // Création des boutons d'aperçu, de téléchargement et de connexion
+            $(zone).html("<p style='margin-left: 15px; font-weight: bold;'>La signature de cette personne a bien été créé !</p> <br> <div style='display: flex; justify-content: left;'><input type='submit' name='apercu_" + formId + "' value='Aperçu' class='button apercu_submit' id='apercu_" + formId + "' style='margin-left: 15px;' data-form-id='" + formId + "'> <a href='signatures/Signature_"+$("[name='nom_"+formId+"']").val()+"_"+$("[name='prenom_"+formId+"']").val()+".html' download class='button telecharger' style='border-top: 1px solid #FFF; margin-left: 15px;' data-form-id='"+ formId +"' name='telecharger_" + formId + "'> Télécharger </a> <a class='button connexion' style='border-top: 1px solid #FFF; margin-left: 15px;' href='/login.php'>Connexion</a> </div>");
             // Signatures
             var signaturehaut = `<table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; " cellpadding="0" cellspacing="0" id="table">
                     <tbody>
@@ -455,11 +457,76 @@ jQuery(function ($) {
     $(".apercu").html("<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;'><strong>APERCU</strong></div>")
 
     // client.php
-    $(".telecharger")
-    $("[name='telecharger_"+formId+"']").on("click", function () {
-        $.get("download.php", function(data){
-            console.log(data)
+
+    // Redirection au cas où on tenterait d'accéder à l'epsace client sans s'être authentifié
+    // if (window.location.href.indexOf("client.php")!=-1)
+    // {
+    //     if (typeof $.cookie('nom_0') === 'undefined' && typeof $.cookie('prenom_0') === 'undefined' && typeof $.cookie('fonction_0') === 'undefined' &&typeof $.cookie('mail_0') === 'undefined' && typeof $.cookie('admin_0') === 'undefined' && typeof $.cookie('ld_0') === 'undefined' && typeof $.cookie('nb_client') === 'undefined' && typeof $.cookie('idd_0') === 'undefined')
+    //     {
+    //         window.location.replace("/login.php")
+    //     }
+    // }
+    
+    
+    if (window.location.href.indexOf("client.php")!=-1)
+    {
+        var tab = $(".col6.client>input").attr("name")
+        var tabb = tab.split('_')
+        // console.log(tabb)
+        formId = tabb[1]
+        $.cookie("id", tabb[1])
+        // Fonction de téléchargement
+        $("[name='telecharger_"+formId+"']").on("click", function (b) {
+            b.preventDefault()
+            // console.log(this)
+            // formId = 
+            $.get("download.php", function(data){
+                // console.log(data)
+            })
         })
-        
-    })
+        // Fonction de déconnexion
+        // Affichage de l'aperçu espace client
+        $(".apercu_submit").on("click", function (e) {
+            e.preventDefault()
+            // Changement d'aperçu en fonction du choix de signature
+            // var signature = "signature"+$.cookie("signature")
+            // $.get("objects/signature"+$.cookie("signature")+".php", function(data) {
+            //     $(".apercu").html(data)
+            // })
+            // $(".apercu").html("<script>jQuery(function ($) {"+$.get("objects/signature"+$.cookie("signature")+".js", function(data) {
+            //     data
+            //     console.log(data)
+            // }, "text")+"})</script>")
+            $.get("objects/signature"+$.cookie("signature")+".php", function(data) {
+                $(".apercu").html(data)
+            }, "text")
+            // Intégration des RS  
+            // if ($(".RS").length > 0) {
+            //     var RS = []
+            //     var icones = $(".signRS").html()
+            //     $.each($(".RS"), function (l, k) {
+            //         var valeur = $(".RS:eq(" + l + ")").data("id")
+            //         var href = $(".URL:eq(" + l + ")").val()
+            //         RS.push(valeur)
+            //         icones = $(".signRS").html()
+            //         $(".signRS").append(`<span style="margin-left: 5px; margin-top: 3px;">
+            //                                     <a style="text-decoration: none;" href="${href}" target="_blank" rel="noopener noreferrer" style="" >
+            //                                         <div style="display: flex; width: 15px; justify-content: space-between;" class="icon ${valeur}"></div>
+            //                                     </a>
+            //                                 </span>`)
+            //         $.cookie("rs_href_"+l, href)
+            //         readFiles()
+            //         function readFiles() {
+            //             $.get('img/Logos/' + $("[name='style']").val() + '/' + valeur + '.svg', function (data) {
+            //                 $(".icon." + valeur).append(data)
+            //                 console.log(data)
+            //                 $.cookie("rs_icon_"+l, data)
+            //                 return data
+            //             }, "html");
+            //         }
+            //     })
+            // }
+        })
+    }
+    
 })

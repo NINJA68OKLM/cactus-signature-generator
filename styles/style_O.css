@@ -103,3 +103,16 @@ p.trait
     font-size: 35px;
     text-align: left;
 }
+/*  */
+.droitedeux
+{
+    width: 75%;
+}
+.field_client .droite
+{
+    width: 40%;
+}
+.droitedeux>.coldeux>.apercu
+{
+    margin-top: 86px;
+}

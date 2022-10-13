@@ -57,17 +57,40 @@ session_id();
             $result = $conn->query($requete);
             if ($result->num_rows >= 1) {
                 // echo "<p class='confirmation' style='margin: 15px;'>Vous allez être redirigé vers votre espace client.</p>";
-                
+                // Récupération des informations de la personne et déclaration en tant que cookie qui se connecte pour les afficher dans son espace client
                 $rechercheinfos = $result -> fetch_array(MYSQLI_ASSOC);
-                // echo $rechercheinfos["fonction"];
-                // Récupération des informations de la personne qui se connecte pour les afficher dans son espace client
-                setcookie("nom", $rechercheinfos["nom"], time()+3600);
-                setcookie("prenom", $rechercheinfos["prenom"], time()+3600);
-                setcookie("fonction", $rechercheinfos["fonction"], time()+3600);
-                setcookie("mail", $rechercheinfos["mail"], time()+3600);
-                setcookie("ld", $rechercheinfos["ld"], time()+3600);
-                setcookie("idd", $rechercheinfos["idd"], time()+3600);
-                setcookie("nb_client", $result->num_rows, time()+3600);
+                // Si la personne authentifié n'est pas administrateur un seul utilisateur lui est affilié dans l'espace client
+                setcookie("idd", $rechercheinfos["id"], time()+3600);
+                if ($rechercheinfos["admin"] == 0)
+                {
+                    setcookie("nom_0", $rechercheinfos["nom"], time()+3600);
+                    setcookie("prenom_0", $rechercheinfos["prenom"], time()+3600);
+                    setcookie("fonction_0", $rechercheinfos["fonction"], time()+3600);
+                    setcookie("mail_0", $rechercheinfos["mail"], time()+3600);
+                    setcookie("ld_0", $rechercheinfos["ld"], time()+3600);
+                    setcookie("admin_0", $rechercheinfos["admin"], time()+3600);
+                    setcookie("nb_client", $result->num_rows, time()+3600);
+                }
+                // Sinon tous les employés de l'entreprise le sont
+                else
+                {
+                    $drequete = "SELECT * FROM employes WHERE id='".$rechercheinfos["id"]."'";
+                    echo $drequete;
+                    $dresult = $conn->query($drequete);
+                    $nb_client = $dresult->fetch_assoc();
+                    var_dump($dresult->num_rows);
+                    $l = 0;
+                    setcookie("nb_client", $dresult->num_rows, time()+3600);
+                    foreach ($dresult as $cle => $val) {
+                        setcookie("nom_".$l, $val["nom"], time()+3600);
+                        setcookie("prenom_".$l, $val["prenom"], time()+3600);
+                        setcookie("fonction_".$l, $val["fonction"], time()+3600);
+                        setcookie("mail_".$l, $val["mail"], time()+3600);
+                        setcookie("ld_".$l, $val["ld"], time()+3600);
+                        setcookie("admin_".$l, $val["admin"], time()+3600);
+                        $l++;
+                    }
+                }
                 header('Location: client.php');
             }
             else
