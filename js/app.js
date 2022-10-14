@@ -468,7 +468,7 @@ jQuery(function ($) {
     // }
     
     
-    if (window.location.href.indexOf("client.php")!=-1)
+    if (window.location.href.indexOf("client_test.php")!=-1)
     {
         var tab = $(".col6.client>input").attr("name")
         var tabb = tab.split('_')
@@ -486,8 +486,10 @@ jQuery(function ($) {
         })
         // Fonction de déconnexion
         // Affichage de l'aperçu espace client
-        $(".apercu_submit").on("click", function (e) {
-            e.preventDefault()
+        console.log("formclient_"+formId)
+        $(".apercu_"+formId+".apercu_submit").on("click", function (w) {
+            w.preventDefault()
+            console.log("KIKIKIKI")
             // Changement d'aperçu en fonction du choix de signature
             // var signature = "signature"+$.cookie("signature")
             // $.get("objects/signature"+$.cookie("signature")+".php", function(data) {

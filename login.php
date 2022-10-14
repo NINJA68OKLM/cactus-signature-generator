@@ -59,8 +59,9 @@ session_id();
                 // echo "<p class='confirmation' style='margin: 15px;'>Vous allez être redirigé vers votre espace client.</p>";
                 // Récupération des informations de la personne et déclaration en tant que cookie qui se connecte pour les afficher dans son espace client
                 $rechercheinfos = $result -> fetch_array(MYSQLI_ASSOC);
-                // Si la personne authentifié n'est pas administrateur un seul utilisateur lui est affilié dans l'espace client
                 setcookie("idd", $rechercheinfos["id"], time()+3600);
+                // echo "<br>Admin : ".$rechercheinfos["admin"]."<br>";
+                // Si la personne authentifié n'est pas administrateur un seul utilisateur lui est affilié dans l'espace client
                 if ($rechercheinfos["admin"] == 0)
                 {
                     setcookie("nom_0", $rechercheinfos["nom"], time()+3600);
@@ -75,7 +76,7 @@ session_id();
                 else
                 {
                     $drequete = "SELECT * FROM employes WHERE id='".$rechercheinfos["id"]."'";
-                    echo $drequete;
+                    // echo $drequete;
                     $dresult = $conn->query($drequete);
                     $nb_client = $dresult->fetch_assoc();
                     var_dump($dresult->num_rows);

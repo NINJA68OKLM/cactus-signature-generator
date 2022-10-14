@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_id();
+$_SESSION['hery'];
+$_SESSION['hery']= "drdr";
+echo $de;
 // Connexion à la base de données
 $servername = "localhost";
 $username = "root";
@@ -26,9 +29,10 @@ if ($result->num_rows > 0) {
     $adre = setcookie("logo", $ligne["logo"], time()+3600);
     $adre = setcookie("signature", $ligne["signature"], time()+3600);
     $adre = setcookie("rs", "", time()+3600);
+    $_SESSION['logonnom'] = $_COOKIE['logo'];
 }
-else
-{}
+// else
+// {}
 ?>
 <!DOCTYPE html>
 <html lang="en">
