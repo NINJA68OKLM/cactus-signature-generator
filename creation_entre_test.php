@@ -127,7 +127,6 @@ session_id();
             $_SESSION['sign']=$_POST['sign'];
             // Enregistrement de l'entreprise dans la base de données
             // Connexion à la base de données
-            $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
             $servername = "localhost";
             $username = "root";
             $password = "";
@@ -144,7 +143,7 @@ session_id();
                 echo "<p class='confirmation' style='margin: 15px;'>Cette entreprise existe déjà dans notre base de données !</p>";
             }
             else {
-                $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs, ide, mdp) VALUES ('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', ".$_SESSION['empl'].", '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '', '', '')";
+                $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs, ide, mdp, facebook, twitter, instagram, linkedin, youtube, rs_style) VALUES ('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', ".$_SESSION['empl'].", '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '', '', '', '', '', '', '', '', '')";
                 // echo $sql."<br>"; 
                 $conn->query($sql);
                 if ($conn->query($sql) === TRUE) {

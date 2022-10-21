@@ -59,7 +59,7 @@ jQuery(function ($) {
     }
 
     // Employés à déclarer
-    $(document).on("click", ".enregistrer", function (e) {
+    $(document).on("click", ".enregistrer.ji", function (e) {
         e.preventDefault()
         let emptyfield = false
         var fild = []
@@ -426,9 +426,13 @@ jQuery(function ($) {
                 
             // Récupération des styles de RS
             if ($(".rs").val() == "Enregistrer les liens") {
+                $.cookie("rs_style", $("[name='style']:checked").val())
+                // console.log("Cookie :"+$("[name='style']").is(":checked"))
                 $("body").append(`<div class="values"></div>`)
+                $.get("add_social_media.php", function(data){ console.log(data)})
                 $(".rs").on("click", function () {
-                    $(".values").html("")
+                    $(".values").html(" ")
+                    
                     // Stockage des RS
                     $.each(check, function (q, a) {
                         if ($("[name='" + check[q] + "']").val() !== "") {
@@ -439,8 +443,11 @@ jQuery(function ($) {
                             var rsnbr = check.length
                             $.cookie("rsnbr", rsnbr)
                             $.cookie("rs_"+q, a)
+                            // Enregistrement des informarions propres aux réseuax sociaux dans la base de données
+                            
                         }
                     })
+                    
                 })
             }
             if ($(".RSvalue").length > 0)
@@ -470,64 +477,66 @@ jQuery(function ($) {
     
     if (window.location.href.indexOf("client_test.php")!=-1)
     {
-        var tab = $(".col6.client>input").attr("name")
-        var tabb = tab.split('_')
-        // console.log(tabb)
-        formId = tabb[1]
-        $.cookie("id", tabb[1])
-        // Fonction de téléchargement
-        $("[name='telecharger_"+formId+"']").on("click", function (b) {
-            b.preventDefault()
-            // console.log(this)
-            // formId = 
-            $.get("download.php", function(data){
-                // console.log(data)
-            })
-        })
-        // Fonction de déconnexion
         // Affichage de l'aperçu espace client
-        console.log("formclient_"+formId)
-        $(".apercu_"+formId+".apercu_submit").on("click", function (w) {
+        $(".apercu_submit").on("click", function (w) {
+            var tab = $(this).attr("name")
+            var tabb = tab.split('_')
+            // console.log(tabb)
+            formId = tabb[1]
+            // Création du cookie Id pour l'apercu et le téléchargement
+            $.cookie("id", tabb[1])
             w.preventDefault()
             console.log("KIKIKIKI")
             // Changement d'aperçu en fonction du choix de signature
-            // var signature = "signature"+$.cookie("signature")
-            // $.get("objects/signature"+$.cookie("signature")+".php", function(data) {
-            //     $(".apercu").html(data)
-            // })
-            // $(".apercu").html("<script>jQuery(function ($) {"+$.get("objects/signature"+$.cookie("signature")+".js", function(data) {
-            //     data
-            //     console.log(data)
-            // }, "text")+"})</script>")
-            $.get("objects/signature"+$.cookie("signature")+".php", function(data) {
+            $.get("objects/signature"+$.cookie("signature")+"c.php", function(data) {
                 $(".apercu").html(data)
             }, "text")
-            // Intégration des RS  
-            // if ($(".RS").length > 0) {
-            //     var RS = []
-            //     var icones = $(".signRS").html()
-            //     $.each($(".RS"), function (l, k) {
-            //         var valeur = $(".RS:eq(" + l + ")").data("id")
-            //         var href = $(".URL:eq(" + l + ")").val()
-            //         RS.push(valeur)
-            //         icones = $(".signRS").html()
-            //         $(".signRS").append(`<span style="margin-left: 5px; margin-top: 3px;">
-            //                                     <a style="text-decoration: none;" href="${href}" target="_blank" rel="noopener noreferrer" style="" >
-            //                                         <div style="display: flex; width: 15px; justify-content: space-between;" class="icon ${valeur}"></div>
-            //                                     </a>
-            //                                 </span>`)
-            //         $.cookie("rs_href_"+l, href)
-            //         readFiles()
-            //         function readFiles() {
-            //             $.get('img/Logos/' + $("[name='style']").val() + '/' + valeur + '.svg', function (data) {
-            //                 $(".icon." + valeur).append(data)
-            //                 console.log(data)
-            //                 $.cookie("rs_icon_"+l, data)
-            //                 return data
-            //             }, "html");
-            //         }
-            //     })
-            // }
+        })
+        
+        // Fonction de téléchargement
+        $(".button.telech").on("click", function (b) {
+        // $("[name='telecharger_"+tabb[1]+"']").on("click", function (b) {
+            b.preventDefault()
+            var tab = $(this).attr("name")
+            console.log(tab)
+            var tabb = tab.split('_')
+            formId = tabb[1]
+            // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
+            $.get("download_client.php", function(data){
+                console.log(data)
+            })
+        })
+
+        for (let bn = 0; bn < $.cookie("nb_client"); bn++) {
+            $.cookie("nom_pre_"+bn, $("[name='nom_"+bn+"']").val())
+            $.cookie("prenom_pre_"+bn, $("[name='prenom_"+bn+"']").val())
+        }
+        
+
+        // Fonction d'enregistrement dans la base de données
+        $(".enregistrer").on("click", function (f) {
+            f.preventDefault()
+            var tab = $(this).attr("name")
+            console.log(tab)
+            var tabb = tab.split('_')
+            formId = tabb[1]
+            $.cookie("id", formId)
+            // $.cookie("nom_pre_"+formId, $("[name='nom_"+formId+"']").val())
+            // $.cookie("prenom_pre_"+formId, $("[name='prenom_"+formId+"']").val())
+            // Testhfirjfrfjr
+            if ($("[name='nom_"+formId+"']").val()!=="" && $("[name='prenom_"+formId+"']").val()!=="" && $("[name='mail_"+formId+"']").val()!=="" && $("[name='ld_"+formId+"']").val()!=="" && $("[name='fonction_"+formId+"']").val()!=="")
+            {
+                $.cookie("nom_"+formId, $("[name='nom_"+formId+"']").val())
+                $.cookie("prenom_"+formId, $("[name='prenom_"+formId+"']").val())
+                $.cookie("mail_"+formId, $("[name='mail_"+formId+"']").val())
+                $.cookie("ld_"+formId, $("[name='ld_"+formId+"']").val())
+                $.cookie("fonction_"+formId, $("[name='fonction_"+formId+"']").val())
+                // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
+                $.get("client_save.php", function(data){
+                    // console.log(data)
+                })
+                $(".reponse_client").text("Vos modifications ont bien étés enregistrés !")
+            }
         })
     }
     

@@ -1,23 +1,36 @@
 <?php
 session_start();
 session_id();
-$_SESSION['logonom'] = "jjjjjjjjjjjjjj";
-$_SESSION['hery'];
 // Connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
+// Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
+if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
+{
+    // // Stockage des informations de l'entreprise en tant que cookies
+    // $rech= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+    // $resu = $conn->query($requete);
+    // // Déclaration des cookies d'entreprise
+    // if ($result->num_rows > 0) {
+    // echo "ta grand mère la pute je vais te soulever";
+    $_COOKIE['logo'] = "jjjjjjjjjjjjjj";
+}
+else
+{
+    header("Location: login.php");
+}
 // Vérification de la connexion
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-// Recherche du nom de l'entreprise de l'employé
-$requete= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
-$result = $conn->query($requete);
-// Déclaration des cookies d'entreprise
-if ($result->num_rows > 0) {
+    // Recherche du nom de l'entreprise de l'employé
+    $requete= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+    $result = $conn->query($requete);
+    // Déclaration des cookies d'entreprise
+    if ($result->num_rows > 0) {
     $ligne = $result->fetch_array(MYSQLI_ASSOC);
     $entr = $ligne["nom"];
     $adre = setcookie("adre", $ligne["adresse"], time()+3600);
@@ -140,9 +153,9 @@ else
                                   </div>
                               </div>
                           </div>
-                          <input type='submit' name='confirm_0' value='Enregistrer' class='button'>
+                          <input type='submit' name='confirm_0' value='Enregistrer' class='button enregsitre_0 enregistrer'>
                           <input type='submit' name='apercu_0' value='Aperçu' class='button apercu_0 apercu_submit' style='margin-left: 95px;'>
-                          <input type='submit' value='Télécharger' class='button' name='telecharger_0'>
+                          <a href='signatures/Signature_".$_COOKIE['nom_0']."_".$_COOKIE['prenom_0'].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_0' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
                       </form>
               </div>";
                 }
@@ -221,13 +234,18 @@ else
                                         </div>
                                     </div>
                                 </div>
-                                <input type='submit' name='confirm_".$z."' value='Enregistrer' class='button enregistrer_".$z."'>
+                                <input type='submit' name='confirm_".$z."' value='Enregistrer' class='button enregistrer_".$z." enregistrer'>
                                 <input type='submit' name='apercu_".$z."' value='Aperçu' class='button apercu_".$z." apercu_submit' style='margin-left: 95px;'>
-                                <input type='submit' value='Télécharger' class='button' name='telecharger_0'>
+                                <a href='signatures/Signature_".$_COOKIE['nom_'.$z]."_".$_COOKIE['prenom_'.$z].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_".$z."' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
                                 <!-- <hr class='hrclient' style='background: black; width: 350px; margin-left: 0px;'> -->
-                            </form>";
+                            </form>
+                        <div class='reponse_client'></div>";
                     }
                 echo "</div>";
+                }
+                if ($_COOKIE['nb_client'])
+                {
+                    echo "<p>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo_test.php' class='button'>Déclarer les employés</a>"
                 }
                 echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
@@ -279,6 +297,18 @@ else
     {
         session_destroy();
         header("Location: login.php");
+    }
+    $i = $_COOKIE['id'];
+    if ($_POST['confirm_'.$i]) 
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "signature";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        $requete= "UPDATE employes SET nom='".$_POST['nom_'.$i]."', prenom='".$_POST['prenom_'.$i]."', mail='".$_POST['mail_'.$i]."', ld='".$_POST['ld_'.$i]."', fonction='".$_POST['fonction_'.$i]."' WHERE id='".$_COOKIE['bddid']."' AND nom='".$_COOKIE['nom_'.$$i]."', prenom='".$_COOKIE['prenom_'.$i]."', mail='".$_COOKIE['mail_'.$i]."', ld='".$_COOKIE['ld_'.$i]."', fonction='".$_COOKIE['fonction_'.$i]."'";
+        $result = $conn->query($requete);
+        echo $requete;
     }
     ?>
 </body>

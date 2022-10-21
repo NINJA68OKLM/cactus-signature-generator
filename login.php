@@ -92,7 +92,7 @@ session_id();
                         $l++;
                     }
                 }
-                header('Location: client.php');
+                header('Location: client_test.php');
             }
             else
             {

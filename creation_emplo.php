@@ -130,7 +130,7 @@ if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) &
                                             echo $_POST['mail_'.$i];
                                         }
                                         echo "\">
-                                        <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer' data-form-id='$i' >
+                                        <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer ji' data-form-id='$i' >
                                     </div>
                                 </div>
                             </div>
