@@ -1,4 +1,14 @@
 jQuery(function ($) {
+    // Acceptation des cookies
+    if (typeof $.cookie("accept_cookie") === "undefined")
+    {
+        console.log("Cookie non existant")
+        $("body").append("<div class='bloqueur'></div>")
+    }
+    else
+    {
+        console.log("Cookie crée")
+    }
     // Expressions régulières
     var maj = /^[A-Z][a-z]{1,}$/
     var ld = /^[0][0-9]{9}$/
@@ -506,14 +516,15 @@ jQuery(function ($) {
                 console.log(data)
             })
         })
-
+        // On enregistre dans des cookies la valeur des champs avant modification de l'internaute
         for (let bn = 0; bn < $.cookie("nb_client"); bn++) {
             $.cookie("nom_pre_"+bn, $("[name='nom_"+bn+"']").val())
             $.cookie("prenom_pre_"+bn, $("[name='prenom_"+bn+"']").val())
+            $.cookie("fonction_pre_"+bn, $("[name='fonction_"+bn+"']").val())
         }
         
 
-        // Fonction d'enregistrement dans la base de données
+        // Fonction d'enregistrement/modification dans la base de données
         $(".enregistrer").on("click", function (f) {
             f.preventDefault()
             var tab = $(this).attr("name")
@@ -521,9 +532,7 @@ jQuery(function ($) {
             var tabb = tab.split('_')
             formId = tabb[1]
             $.cookie("id", formId)
-            // $.cookie("nom_pre_"+formId, $("[name='nom_"+formId+"']").val())
-            // $.cookie("prenom_pre_"+formId, $("[name='prenom_"+formId+"']").val())
-            // Testhfirjfrfjr
+            // Vérifie qu'on a pas modifié les données pas des valeurs vides
             if ($("[name='nom_"+formId+"']").val()!=="" && $("[name='prenom_"+formId+"']").val()!=="" && $("[name='mail_"+formId+"']").val()!=="" && $("[name='ld_"+formId+"']").val()!=="" && $("[name='fonction_"+formId+"']").val()!=="")
             {
                 $.cookie("nom_"+formId, $("[name='nom_"+formId+"']").val())
@@ -535,8 +544,71 @@ jQuery(function ($) {
                 $.get("client_save.php", function(data){
                     // console.log(data)
                 })
-                $(".reponse_client").text("Vos modifications ont bien étés enregistrés !")
+                $(".reponse_client"+formId).text("Vos modifications ont bien étés enregistrés !")
             }
+        })
+        // Suppression d'un utilisateur
+        $(".croix>img").on("click", function (g) {
+            g.preventDefault()
+            console.log('image détecté')
+            var tab = $(this).attr("name")
+            
+            formId = $(this).data("formId")
+            console.log(formId)
+            $.cookie("id", formId)
+            // Suppression du formulaire correspondant à l'employé
+            $("#"+formId).parent().parent().remove()
+            // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
+            // $.get("client_delete.php", function(data){
+            //     console.log(data)
+            // })
+            // Suppression des cookies liés au formulaire supprimé
+            $.removeCookie("nom_"+formId)
+            $.removeCookie("prenom_"+formId)
+            $.removeCookie("mail_"+formId)
+            $.removeCookie("ld_"+formId)
+            $.removeCookie("fonction_"+formId)
+            $.removeCookie("admin_"+formId)
+            // Actualisation du nombre d'employés après la suppression du formulaire
+            $.cookie("nb_client", $(".formclientt").length)
+            // Nouvelle déclaration des cookies
+            for (let j = formId; j < $.cookie("nb_client"); j++) {
+                // $("#"+formId).parent().parent().remove()
+                // Alternance des valeurs
+                $.cookie("nom_"+j, $("[name='nom_"+(j+1)+"']").val())
+                $.cookie("prenom_"+j, $("[name='prenom_"+(j+1)+"']").val())
+                $.cookie("mail_"+j, $("[name='mail_"+(j+1)+"']").val())
+                $.cookie("ld_"+j, $("[name='ld_"+(j+1)+"']").val())
+                $.cookie("fonction_"+j, $("[name='fonction_"+(j+1)+"']").val())
+                $.cookie("admin_"+j, $("[name='admin_"+(j+1)+"']").val())
+                // Renommage des id
+                $(".form_"+(j+1)).attr("id", j)
+                // Renommage des champs
+                $("[name='nom_"+(j+1)+"']").attr("name", "nom_"+j)
+                $("[name='prenom_"+(j+1)+"']").attr("name", "prenom_"+j)
+                $("[name='mail_"+(j+1)+"']").attr("name", "mail_"+j)
+                $("[name='ld_"+(j+1)+"']").attr("name", "ld_"+j)
+                $("[name='fonction_"+(j+1)+"']").attr("name", "fonction_"+j)
+                $("[name='confirm_"+(j+1)+"']").attr("name", "confirm_"+j)
+                $("[name='apercu_"+(j+1)+"']").attr("name", "apercu_"+j)
+                $("[name='telecharger_"+(j+1)+"']").attr("name", "telecharger_"+j)
+                // Renommage des classes
+                $("[name='telecharger_"+(j+1)+"']").attr("class", "button enregistrer_"+j+" enregistrer")
+                $("[name='apercu_"+(j+1)+"']").attr("class", "button apercu_"+j+" apercu_submit")
+                $("img[data-form-id='"+(j+1)+"']").attr("data-form-id", j)
+                // Changement du numéro des employé dans les titres H2
+                $(".formclient_"+(j+1)+">div>h2").html("Employé n° "+j)
+            }
+
+
+
+            console.log("Test : "+$.cookie("id"))
+
+
+            // Actualisation des numéros des employés
+            console.log($(".formclientt").length)
+            
+            $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
         })
     }
     

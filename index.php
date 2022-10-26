@@ -12,6 +12,12 @@ session_id();
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
     <link rel="stylesheet" href="styles/background_1.css">
     <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+    <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
+    <script src="js/app.js"></script>
     <title>Signature Generator</title>
 </head>
 <body>

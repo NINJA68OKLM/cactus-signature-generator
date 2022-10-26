@@ -84,9 +84,9 @@ else
                 {
                   echo "<div class='droite'>
                   <h1>Vos informations personnelles</h1>
-                  <form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_0'>
+                  <form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_0 formclient'>
                           <div class='".$_COOKIE['nom_0']." formclientt'>
-                              <div class='form' id='0'>
+                              <div class='form form_0' id='0'>
                                   <div class='col5 client'>
                                       <p>Nom :</p> <br>
                                       <p>Prénom :</p> <br>
@@ -151,12 +151,16 @@ else
                                       }
                                       echo "'> <br>
                                   </div>
+                                  <div class='croix ".$_COOKIE['nom_0']."'>
+                                    <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='0'>
+                                </div>
                               </div>
                           </div>
                           <input type='submit' name='confirm_0' value='Enregistrer' class='button enregsitre_0 enregistrer'>
                           <input type='submit' name='apercu_0' value='Aperçu' class='button apercu_0 apercu_submit' style='margin-left: 95px;'>
                           <a href='signatures/Signature_".$_COOKIE['nom_0']."_".$_COOKIE['prenom_0'].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_0' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
                       </form>
+                <div class='reponse_client reponse_client_0'></div>
               </div>";
                 }
                 else
@@ -164,10 +168,10 @@ else
                   echo "<div class='droite'>
                     <h1>Les employés de votre entreprise</h1>";
                     for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
-                        echo "<form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_".$z."'>
+                        echo "<form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_".$z." formclient'>
                                 <div class='".$_COOKIE['nom_'.$z]." formclientt'>
                                 <h2 style='margin-top: 25px; margin-bottom: 25px; padding-left: 15px;'>Employé n° ".($z+1)."</h2>
-                                    <div class='form' id='0'>
+                                    <div class='form form_".$z."' id='".$z."'>
                                         <div class='col5 client'>
                                             <p>Nom :</p> <br>
                                             <p>Prénom :</p> <br>
@@ -232,6 +236,9 @@ else
                                             }
                                             echo "'> <br>
                                         </div>
+                                        <div class='croix ".$_COOKIE['nom_'.$z]."'>
+                                            <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='".$z."'>
+                                        </div>
                                     </div>
                                 </div>
                                 <input type='submit' name='confirm_".$z."' value='Enregistrer' class='button enregistrer_".$z." enregistrer'>
@@ -239,13 +246,18 @@ else
                                 <a href='signatures/Signature_".$_COOKIE['nom_'.$z]."_".$_COOKIE['prenom_'.$z].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_".$z."' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
                                 <!-- <hr class='hrclient' style='background: black; width: 350px; margin-left: 0px;'> -->
                             </form>
-                        <div class='reponse_client'></div>";
+                        <div class='reponse_client reponse_client_".$z."'></div>";
                     }
                 echo "</div>";
                 }
-                if ($_COOKIE['nb_client'])
+                // Si la personne a déclaré son entreprise mais pas ses employés, on fait une redirection
+                if ($_COOKIE['nb_client'] == 0)
                 {
-                    echo "<p>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo_test.php' class='button'>Déclarer les employés</a>"
+                    echo "<p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo_test.php' class='button' style='color: #000000;'>Déclarer les employés</a>";
+                }
+                else
+                {
+                    echo "<p style='color: #000000;'>Michou</p>";
                 }
                 echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
@@ -289,27 +301,25 @@ else
                     <input type="submit" value="Télécharger" class="button" name="telecharger_0">
                 </form>
         </div>
-        <?php
-        ?>
     </fieldset> -->
-    <?php
-    if (isset($_POST['deconnexion']))
-    {
-        session_destroy();
-        header("Location: login.php");
-    }
-    $i = $_COOKIE['id'];
-    if ($_POST['confirm_'.$i]) 
-    {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "signature";
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $requete= "UPDATE employes SET nom='".$_POST['nom_'.$i]."', prenom='".$_POST['prenom_'.$i]."', mail='".$_POST['mail_'.$i]."', ld='".$_POST['ld_'.$i]."', fonction='".$_POST['fonction_'.$i]."' WHERE id='".$_COOKIE['bddid']."' AND nom='".$_COOKIE['nom_'.$$i]."', prenom='".$_COOKIE['prenom_'.$i]."', mail='".$_COOKIE['mail_'.$i]."', ld='".$_COOKIE['ld_'.$i]."', fonction='".$_COOKIE['fonction_'.$i]."'";
-        $result = $conn->query($requete);
-        echo $requete;
-    }
-    ?>
+    <!-- <?php
+    // if (isset($_POST['deconnexion']))
+    // {
+    //     session_destroy();
+    //     header("Location: login.php");
+    // }
+    // $i = $_COOKIE['id'];
+    // if ($_POST['confirm_'.$i]) 
+    // {
+    //     $servername = "localhost";
+    //     $username = "root";
+    //     $password = "";
+    //     $dbname = "signature";
+    //     $conn = new mysqli($servername, $username, $password, $dbname);
+    //     $requete= "UPDATE employes SET nom='".$_POST['nom_'.$i]."', prenom='".$_POST['prenom_'.$i]."', mail='".$_POST['mail_'.$i]."', ld='".$_POST['ld_'.$i]."', fonction='".$_POST['fonction_'.$i]."' WHERE id='".$_COOKIE['bddid']."' AND nom='".$_COOKIE['nom_'.$$i]."', prenom='".$_COOKIE['prenom_'.$i]."', mail='".$_COOKIE['mail_'.$i]."', ld='".$_COOKIE['ld_'.$i]."', fonction='".$_COOKIE['fonction_'.$i]."'";
+    //     $result = $conn->query($requete);
+    //     echo $requete;
+    // }
+    ?> -->
 </body>
 </html>

@@ -115,4 +115,23 @@ body
     font-size: 25px;
     text-align: center;
 }
-    
+.croix
+{
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+}
+.croix>img
+{
+    width: 25px;
+}
+/* Cookies */
+.bloqueur
+{
+    background: gray;
+    opacity: 0.7;
+    position: fixed;
+    width: 100%;
+    height: 99vh;
+    top: 0px;
+}
