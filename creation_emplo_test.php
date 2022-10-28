@@ -194,5 +194,6 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
     <div class="logonom" data-nom-id="<?php echo $_SESSION['logonom']; ?>"></div>
     <div id="infoRS"></div>
     <div class="employes"></div>
+    <div class="values"></div>
 </body>
 </html>

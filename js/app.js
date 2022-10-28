@@ -1,14 +1,30 @@
 jQuery(function ($) {
+
     // Acceptation des cookies
+    // On vérifie si le premier cookie du site "accept_cookie" existe, si non, on bloque la page
     if (typeof $.cookie("accept_cookie") === "undefined")
     {
         console.log("Cookie non existant")
-        $("body").append("<div class='bloqueur'></div>")
+        setTimeout(() => {
+            $("body").append("<div class='bloqueur'></div>")
+            $(".bloqueur").append("<div class='zonecookie'></div>")
+            $(".zonecookie").append("<p style='color: #FFFFFF;'>Pour pouvoir utiliser notre site vous devez accepter les cookies</p><a name='acceptbouton' href='#' class='acceptcookie' style='text-decoration: none; color: #FFFFFF; border: 1px solid green;'>Accepter les cookies</a>")
+        }, 1200);
+        
     }
+    // Test pour vérifier que le cookie existe
     else
     {
         console.log("Cookie crée")
     }
+    // Si l'internaute a bien cliqué sur le bouton on crée le cookie et on retire le bloqueur
+    $(document).on("click", ".acceptcookie", function (event) {
+        event.preventDefault()
+            console.log("ffff")
+            $.cookie("accept_cookie", "true")
+            $(".bloqueur").remove()
+        })
+    
     // Expressions régulières
     var maj = /^[A-Z][a-z]{1,}$/
     var ld = /^[0][0-9]{9}$/
@@ -54,6 +70,7 @@ jQuery(function ($) {
     })
 
     // creation_emplo.php
+
     if ($(".logoimg").attr("src") ==  "img/uploads/")
     {
         console.log("erreur rt")
@@ -69,7 +86,7 @@ jQuery(function ($) {
     }
 
     // Employés à déclarer
-    $(document).on("click", ".enregistrer.ji", function (e) {
+    $(document).on("click", ".enregistrer", function (e) {
         e.preventDefault()
         let emptyfield = false
         var fild = []
@@ -432,17 +449,18 @@ jQuery(function ($) {
             for (let r = 0; r < check.length; r++) {
                 $(".champsrs").append(`<input type="text" name="${check[r]}" id="" placeholder="URL ${check[r]}" class="URL" value=""><br>`)
             }
+            console.log("check :"+check)
             $(".champsrs > :first-child").css("margin-top", "15px")
                 
             // Récupération des styles de RS
             if ($(".rs").val() == "Enregistrer les liens") {
                 $.cookie("rs_style", $("[name='style']:checked").val())
                 // console.log("Cookie :"+$("[name='style']").is(":checked"))
-                $("body").append(`<div class="values"></div>`)
+                // $("body").append(`<div class="values"></div>`)
                 $.get("add_social_media.php", function(data){ console.log(data)})
                 $(".rs").on("click", function () {
                     $(".values").html(" ")
-                    
+                    $("#infoRS").html(" ")
                     // Stockage des RS
                     $.each(check, function (q, a) {
                         if ($("[name='" + check[q] + "']").val() !== "") {
@@ -453,7 +471,7 @@ jQuery(function ($) {
                             var rsnbr = check.length
                             $.cookie("rsnbr", rsnbr)
                             $.cookie("rs_"+q, a)
-                            // Enregistrement des informarions propres aux réseuax sociaux dans la base de données
+                            // Enregistrement des informations propres aux réseaux sociaux dans la base de données
                             
                         }
                     })
