@@ -1,29 +1,4 @@
 jQuery(function ($) {
-
-    // Acceptation des cookies
-    // On vérifie si le premier cookie du site "accept_cookie" existe, si non, on bloque la page
-    if (typeof $.cookie("accept_cookie") === "undefined")
-    {
-        console.log("Cookie non existant")
-        setTimeout(() => {
-            $("body").append("<div class='bloqueur'></div>")
-            $(".bloqueur").append("<div class='zonecookie'></div>")
-            $(".zonecookie").append("<p style='color: #FFFFFF;'>Pour pouvoir utiliser notre site vous devez accepter les cookies</p><a name='acceptbouton' href='#' class='acceptcookie' style='text-decoration: none; color: #FFFFFF; border: 1px solid green;'>Accepter les cookies</a>")
-        }, 1200);
-        
-    }
-    // Test pour vérifier que le cookie existe
-    else
-    {
-        console.log("Cookie crée")
-    }
-    // Si l'internaute a bien cliqué sur le bouton on crée le cookie et on retire le bloqueur
-    $(document).on("click", ".acceptcookie", function (event) {
-        event.preventDefault()
-            console.log("ffff")
-            $.cookie("accept_cookie", "true")
-            $(".bloqueur").remove()
-        })
     
     // Expressions régulières
     var maj = /^[A-Z][a-z]{1,}$/
@@ -121,7 +96,7 @@ jQuery(function ($) {
         // Enregistrement d'un employé
         if (emptyfield==false && $.isNumeric($("[name='ld_" + formId + "']").val()) && $("[name='ld_" + formId + "']").val().length >= 10 && $("[name='nom_" + formId + "']").val().match(maj) && $("[name='prenom_" + formId + "']").val().match(maj) && $("[name='fonction_" + formId + "']").val().match(maj) && $("[name='ld_" + formId + "']").val().match(ld) && $("[name='mail_" + formId + "']").val().match(mail)) {
             // Appel du fichier "insert_database.php" pour enregistrer les employés
-            $.get("insert_database.php", function(data){
+            $.get("functions/insert_database.php", function(data){
                 console.log(data)
             })
             // Aperçu des RS
@@ -418,7 +393,7 @@ jQuery(function ($) {
            $.cookie("id", formId,  {expires: 7})
         // Téléchargement
         $("[name='telecharger_"+formId+"']").on("click", function () {
-            $.get("download.php", function(data){
+            $.get("functions/download.php", function(data){
                 console.log(data)
             })
             
@@ -457,7 +432,7 @@ jQuery(function ($) {
                 $.cookie("rs_style", $("[name='style']:checked").val())
                 // console.log("Cookie :"+$("[name='style']").is(":checked"))
                 // $("body").append(`<div class="values"></div>`)
-                $.get("add_social_media.php", function(data){ console.log(data)})
+                $.get("functions/add_social_media.php", function(data){ console.log(data)})
                 $(".rs").on("click", function () {
                     $(".values").html(" ")
                     $("#infoRS").html(" ")
@@ -530,7 +505,7 @@ jQuery(function ($) {
             var tabb = tab.split('_')
             formId = tabb[1]
             // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
-            $.get("download_client.php", function(data){
+            $.get("functions/download_client.php", function(data){
                 console.log(data)
             })
         })
@@ -559,7 +534,7 @@ jQuery(function ($) {
                 $.cookie("ld_"+formId, $("[name='ld_"+formId+"']").val())
                 $.cookie("fonction_"+formId, $("[name='fonction_"+formId+"']").val())
                 // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
-                $.get("client_save.php", function(data){
+                $.get("functions/client_save.php", function(data){
                     // console.log(data)
                 })
                 $(".reponse_client"+formId).text("Vos modifications ont bien étés enregistrés !")
@@ -577,7 +552,7 @@ jQuery(function ($) {
             // Suppression du formulaire correspondant à l'employé
             $("#"+formId).parent().parent().remove()
             // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
-            // $.get("client_delete.php", function(data){
+            // $.get("functions/client_delete.php", function(data){
             //     console.log(data)
             // })
             // Suppression des cookies liés au formulaire supprimé
@@ -618,14 +593,10 @@ jQuery(function ($) {
                 $(".formclient_"+(j+1)+">div>h2").html("Employé n° "+j)
             }
 
-
-
             console.log("Test : "+$.cookie("id"))
-
 
             // Actualisation des numéros des employés
             console.log($(".formclientt").length)
-            
             $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
         })
     }

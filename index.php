@@ -18,6 +18,7 @@ session_id();
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
+    <script src="js/accept-cookie.js"></script>
     <title>Signature Generator</title>
 </head>
 <body>

@@ -50,6 +50,7 @@ if ($result->num_rows > 0) {
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
+    <script src="js/accept-cookie.js"></script>
 </head>
 <body>
     <?php

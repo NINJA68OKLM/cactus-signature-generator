@@ -19,25 +19,13 @@ session_id();
     <link rel="stylesheet" href="styles/background_1.css">
     <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
     <title>Signature Generator</title>
-    <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-    <script type="text/javascript">
-        function initialize() {
-                var options = {
-                types: ['(cities)'],
-            };
-            var input = document.getElementById('ville');
-            var autocomplete = new google.maps.places.Autocomplete(input, options);
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script> -->
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
+    <script src="js/accept-cookie.js"></script>
 </head>
 <body>
     <fieldset>
