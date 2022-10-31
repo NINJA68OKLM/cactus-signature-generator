@@ -96,11 +96,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                         </div>
                         <div class="col6">
                             <div class="ele">
-                                <input type="checkbox" name="rs[]" id="" value="Facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
-                                <input type="checkbox" name="rs[]" id="" value="Twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
-                                <input type="checkbox" name="rs[]" id="" value="Instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
-                                <input type="checkbox" name="rs[]" id="rs" value="LinkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
-                                <input type="checkbox" name="rs[]" id="rs" value="Youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
+                                <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
+                                <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
+                                <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
+                                <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
+                                <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
                                 <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
                                 <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
                                 <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>

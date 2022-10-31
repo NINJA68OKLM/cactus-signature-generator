@@ -1,5 +1,46 @@
 <?php
 $id=$_COOKIE['id'];
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "signature";
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Sélection de tous les champs de réseuax sociaux
+$requete= "SELECT facebook, twitter, instagram, youtube, linkedin FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+$result = $conn->query($requete);
+// Sélection du nombre de réseuax sociaux
+$rrequete= "SELECT rs FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+$rresult = $conn->query($rrequete);
+// Sélection du style
+$srequete= "SELECT rs_style FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+$sresult = $conn->query($srequete);
+// Déclaration des cookies
+$tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
+// Récupération du nombre de réseaux sociaux
+foreach ($rresult as $cle => $val) {
+  setcookie("rsnbr", $val["rs"], time()+3600);
+}
+// Récupération du style
+foreach ($sresult as $cle => $val) {
+  setcookie("style", $val["rs_style"], time()+3600);
+}
+// Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
+foreach ($result as $cle => $val) {
+  $ch=0;
+  for ($r=0; $r < 5; $r++) {
+    // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
+    if ($val[$tab[$r]] !== "")
+    {
+      // En-dessous -> exemples pour voir les résultats pris en compte
+      // echo $r." : ".$val[$tab[$r]]."<br>";
+      setcookie("rs_".$ch, $tab[$r]);
+      setcookie("rs_href_".$ch, $val[$tab[$r]]);
+      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
+      // echo $_COOKIE['rs_icon_0'];
+      $ch++;
+    }
+  }
+}
 ?>
 <div style="font-family: Arial, Helvetica, sans-serif !important; min-height: 250px; min-width: 320px; max-width: 650px; min-height: 250px; display: flex; align-items: center">
     <table style="padding: 2px; border-style: none; border-color: black; border-style: none; border-collapse: inherit; direction: ltr; width: 100%" cellpadding="0" cellspacing="0">

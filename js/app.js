@@ -629,5 +629,17 @@ jQuery(function ($) {
             $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
         })
     }
+
+    // Fonction de déconnexion
+    $("[name='deconnexion']").on("click", function(x){
+        x.preventDefault()
+        // Suppression de tous les cookies
+        var cookies = $.cookie();
+        for(var cookie in cookies) {
+            $.removeCookie(cookie);
+        }
+        // Redirection vers l'authentification
+        window.location.href= "/login.php";
+    })
     
 })

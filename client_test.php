@@ -10,12 +10,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
 if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
 {
-    // // Stockage des informations de l'entreprise en tant que cookies
-    // $rech= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
-    // $resu = $conn->query($requete);
-    // // Déclaration des cookies d'entreprise
-    // if ($result->num_rows > 0) {
-    // echo "ta grand mère la pute je vais te soulever";
     $_COOKIE['logo'] = "jjjjjjjjjjjjjj";
 }
 else
@@ -72,9 +66,6 @@ else
 </head>
 <body>
     <?php
-    // echo $_COOKIE['nb_client'];
-     
-     
         echo "<fieldset class='field_client'>
                 <div class='gauche'>
                     <img src='img/logo.png' alt='' style='width: 100%;'>
@@ -307,18 +298,6 @@ else
     // {
     //     session_destroy();
     //     header("Location: login.php");
-    // }
-    // $i = $_COOKIE['id'];
-    // if ($_POST['confirm_'.$i]) 
-    // {
-    //     $servername = "localhost";
-    //     $username = "root";
-    //     $password = "";
-    //     $dbname = "signature";
-    //     $conn = new mysqli($servername, $username, $password, $dbname);
-    //     $requete= "UPDATE employes SET nom='".$_POST['nom_'.$i]."', prenom='".$_POST['prenom_'.$i]."', mail='".$_POST['mail_'.$i]."', ld='".$_POST['ld_'.$i]."', fonction='".$_POST['fonction_'.$i]."' WHERE id='".$_COOKIE['bddid']."' AND nom='".$_COOKIE['nom_'.$$i]."', prenom='".$_COOKIE['prenom_'.$i]."', mail='".$_COOKIE['mail_'.$i]."', ld='".$_COOKIE['ld_'.$i]."', fonction='".$_COOKIE['fonction_'.$i]."'";
-    //     $result = $conn->query($requete);
-    //     echo $requete;
     // }
     ?> -->
 </body>

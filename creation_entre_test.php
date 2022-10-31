@@ -137,7 +137,7 @@ session_id();
                 die("Connection failed: " . $conn->connect_error);
             }
             // Vérifie si l'entreprise existe déjà exite dans la base de données
-            $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
+            $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."' AND adresse='".$_SESSION['adre']."' AND cp='".$_SESSION['cp']."' AND ville='".$_SESSION['vill']."'";
             $result = $conn->query($requete);
             if ($result->num_rows > 0) {
                 echo "<p class='confirmation' style='margin: 15px;'>Cette entreprise existe déjà dans notre base de données !</p>";
@@ -175,60 +175,60 @@ session_id();
     </script>
     <?php
                     // Envoi du mail
-                    $to      = ''.$_POST['adrmail'].'';
-                    $subject = 'Identifiants entreprise Signature Generator';
-                    $message = 'Voici vos identifiants pour l\'accès à votre espace client dans Signature Generator : <br> Identifiant : '.$ide.'<br> Mot de passe : '.$randomString.'.<br> Ne répondez pas, ceci est un message automatique.';
-                    $headers = 'From: support@signature-generator.com' . "\r\n" .
-                               'Reply-To: support@signature-generator.com' . "\r\n" .
-                               'X-Mailer: PHP/' . phpversion();
+                    // $to      = ''.$_POST['adrmail'].'';
+                    // $subject = 'Identifiants entreprise Signature Generator';
+                    // $message = 'Voici vos identifiants pour l\'accès à votre espace client dans Signature Generator : <br> Identifiant : '.$ide.'<br> Mot de passe : '.$randomString.'.<br> Ne répondez pas, ceci est un message automatique.';
+                    // $headers = 'From: support@signature-generator.com' . "\r\n" .
+                    //            'Reply-To: support@signature-generator.com' . "\r\n" .
+                    //            'X-Mailer: PHP/' . phpversion();
 
-                    // mail($to, $subject, $message, $headers);
+                    // // mail($to, $subject, $message, $headers);
 
-                    $destinataire = ''.$_POST['adrmail'].'';
-                    $expediteur   = 'support.signature-generator@gmail.com';
-                    $reponse      = $expediteur;
-                    echo "Ce script envoie un mail à $destinataire ".
-                        "en précisant que l'expediteur est $expediteur ".
-                        "et que la réponse doit être envoyée à $reponse";
-                    mail($destinataire,
-                        $subject,
-                        $message,
-                        "From: $expediteur\r\nReply-To: $reponse");
+                    // $destinataire = ''.$_POST['adrmail'].'';
+                    // $expediteur   = 'support.signature-generator@gmail.com';
+                    // $reponse      = $expediteur;
+                    // echo "Ce script envoie un mail à $destinataire ".
+                    //     "en précisant que l'expediteur est $expediteur ".
+                    //     "et que la réponse doit être envoyée à $reponse";
+                    // mail($destinataire,
+                    //     $subject,
+                    //     $message,
+                    //     "From: $expediteur\r\nReply-To: $reponse");
 
 
-                    // Nouvel essai
+                    // // Nouvel essai
 
-                    $mail = new PHPMailer();
-                    $mail->IsSMTP();
-                    $mail->Host = '127.0.0.1';               //Adresse IP ou DNS du serveur SMTP
-                    // $mail->Port = 465;                          //Port TCP du serveur SMTP
-                    $mail->Port = 3306;
-                    $mail->SMTPAuth = 1;                        //Utiliser l'identification
+                    // $mail = new PHPMailer();
+                    // $mail->IsSMTP();
+                    // $mail->Host = '127.0.0.1';               //Adresse IP ou DNS du serveur SMTP
+                    // // $mail->Port = 465;                          //Port TCP du serveur SMTP
+                    // $mail->Port = 3306;
+                    // $mail->SMTPAuth = 1;                        //Utiliser l'identification
 
-                    if($mail->SMTPAuth){
-                        $mail->SMTPSecure = 'ssl';               //Protocole de sécurisation des échanges avec le SMTP
-                        $mail->Username   =  'support@gmail.com';   //Adresse email à utiliser
-                        $mail->Password   =  'password';         //Mot de passe de l'adresse email à utiliser    
-                    }
-                    // Format de l'email
-                    $mail->CharSet = 'UTF-8'; //Format d'encodage à utiliser pour les caractères
-                    $mail->smtpConnect();
-                    $mail->From       =  'support@signature-generator@ovh.com';                //L'email à afficher pour l'envoi
-                    $mail->FromName   = 'Contact de ovh.net';             //L'alias à afficher pour l'envoi
-                    $mail->Subject    =  $subject;                      //Le sujet du mail
-                    $mail->WordWrap   = 50; 			                   //Nombre de caracteres pour le retour a la ligne automatique
-                    $mail->AltBody = $message; 	       //Texte brut
-                    $mail->IsHTML(false);                                  //Préciser qu'il faut utiliser le texte brut
-
-                    // if($Use_HTML == true){
-                    // $mail->MsgHTML('<div>Mon message en <code>HTML</code></div>'); 		                //Le contenu au format HTML
-                    // $mail->IsHTML(true);
+                    // if($mail->SMTPAuth){
+                    //     $mail->SMTPSecure = 'ssl';               //Protocole de sécurisation des échanges avec le SMTP
+                    //     $mail->Username   =  'support@gmail.com';   //Adresse email à utiliser
+                    //     $mail->Password   =  'password';         //Mot de passe de l'adresse email à utiliser    
                     // }
-                    if (!$mail->send()) {
-                        echo $mail->ErrorInfo;
-                    } else{
-                        echo 'Message bien envoyé';
-                    }
+                    // // Format de l'email
+                    // $mail->CharSet = 'UTF-8'; //Format d'encodage à utiliser pour les caractères
+                    // $mail->smtpConnect();
+                    // $mail->From       =  'support@signature-generator@ovh.com';                //L'email à afficher pour l'envoi
+                    // $mail->FromName   = 'Contact de ovh.net';             //L'alias à afficher pour l'envoi
+                    // $mail->Subject    =  $subject;                      //Le sujet du mail
+                    // $mail->WordWrap   = 50; 			                   //Nombre de caracteres pour le retour a la ligne automatique
+                    // $mail->AltBody = $message; 	       //Texte brut
+                    // $mail->IsHTML(false);                                  //Préciser qu'il faut utiliser le texte brut
+
+                    // // if($Use_HTML == true){
+                    // // $mail->MsgHTML('<div>Mon message en <code>HTML</code></div>'); 		                //Le contenu au format HTML
+                    // // $mail->IsHTML(true);
+                    // // }
+                    // if (!$mail->send()) {
+                    //     echo $mail->ErrorInfo;
+                    // } else{
+                    //     echo 'Message bien envoyé';
+                    // }
                 } else {
                     echo "<p class='confirmation' style='margin: 15px;'>Un problème a été détecté, veuillez réessayer plus tard</p>";
                 }
