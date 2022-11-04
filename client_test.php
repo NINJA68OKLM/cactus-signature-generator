@@ -10,7 +10,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
 if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
 {
-    $_COOKIE['logo'] = "jjjjjjjjjjjjjj";
+    // $_COOKIE['logo'];
+    $cookie="dd";
 }
 else
 {
@@ -36,7 +37,6 @@ if ($conn->connect_error) {
     $logo = setcookie("logo", $ligne["logo"], time()+3600);
     $signature = setcookie("signature", $ligne["signature"], time()+3600);
     $rs = setcookie("rs", "", time()+3600);
-    echo $_COOKIE['logo'];
     $_SESSION["logonom"] = $_COOKIE['logo'];
     for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
       $_SESSION['nom_'.$z]=$_COOKIE['nom_'.$z];
@@ -66,6 +66,43 @@ else
 </head>
 <body>
     <?php
+    // Si la personne authentifié est administrateur on va afficher les informations de l'entreprise qui peuvent êtres modifiables
+    if ($_COOKIE['nb_client'] > 1) 
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "signature";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Vérification de la connexion
+        if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+        }
+        // Récupération de l'id de l'entreprise en cookie "bddid"
+        $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['bddid']."'";
+        $result = $conn->query($requete);
+        $result =$result -> fetch_array(MYSQLI_ASSOC);
+        // var_dump($result);
+        // Cookies entreprise
+        setcookie("entr", $result["nom"], time()+3600);
+        setcookie("adre", $result["adresse"], time()+3600);
+        setcookie("vill", $result["ville"], time()+3600);
+        setcookie("cp", $result["cp"], time()+3600);
+        setcookie("tel", $result["tel"], time()+3600);
+        setcookie("site", $result["site"], time()+3600);
+        setcookie("empl", $result["employe"], time()+3600);
+        setcookie("sign", $result["signature"], time()+3600);
+        setcookie("logo", $result["logo"], time()+3600);
+        setcookie("rsnbr", $result["rs"], time()+3600);
+        setcookie("rs_style", $result["rs_style"], time()+3600);
+        setcookie("facebook", $result["facebook"], time()+3600);
+        setcookie("instagram", $result["instagram"], time()+3600);
+        setcookie("twitter", $result["twitter"], time()+3600);
+        setcookie("linkedin", $result["linkedin"], time()+3600);
+        setcookie("youtube", $result["youtube"], time()+3600);
+        // Récupération du formulaire :
+        include("functions/formulaire.php");
+    }
         echo "<fieldset class='field_client'>
                 <div class='gauche'>
                     <img src='img/logo.png' alt='' style='width: 100%;'>

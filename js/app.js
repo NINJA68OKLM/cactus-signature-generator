@@ -2,15 +2,15 @@ jQuery(function ($) {
     
     // Expressions régulières
     var maj = /^[A-Z][a-z]{1,}$/
-    var ld = /^[0][0-9]{9}$/
+    // var ld = /^[0][0-9]{9}$/
     var mail = /^[a-zA-Z]{4,}.[a-z]{1,}@[a-z]{1,}[-.][a-z]{2,3}$/
-    var sw = /^w{3}.[a-z]{3,}.[a-z]{2,3}$/
+    // var sw = /^w{3}.[a-z]{3,}.[a-z]{2,3}$/
 
     // creation_entre.php
     
     // Affichage du bouton pour la redirection vers la déclaration d'employés ou la connexion
     if (window.location.href.indexOf("/creation_entre_test.php")!=-1) {
-        if ($("[name='tel']").val()!== "" && $("[name='site']").val()!== "" && $("[name='empl']").val()!== "" && $("[name='sign']").val()!=="" && $("[name='entr']").val()!== "" && $("[name='adre']").val()!== "" && $("[name='vill']").val()!== "" && $("[name='site']").val().match(sw) && $("[name='vill']").val().match(maj) && $("[name='cp']").val()!== "" && $(".filename").html() !== " Aucun fichier selectionné...") {
+        if ($("[name='tel']").val()!== "" && $("[name='site']").val()!== "" && $("[name='empl']").val()!== "" && $("[name='sign']").val()!=="" && $("[name='entr']").val()!== "" && $("[name='adre']").val()!== "" && $("[name='vill']").val()!== "" && $("[name='vill']").val().match(maj) && $("[name='cp']").val()!== "" && $(".filename").html() !== " Aucun fichier selectionné...") {
             if ($(".confirmation").html() !== "Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.")
             {
                 $(".entre_connex").css("display", "initial")
@@ -94,10 +94,11 @@ jQuery(function ($) {
         }
 
         // Enregistrement d'un employé
-        if (emptyfield==false && $.isNumeric($("[name='ld_" + formId + "']").val()) && $("[name='ld_" + formId + "']").val().length >= 10 && $("[name='nom_" + formId + "']").val().match(maj) && $("[name='prenom_" + formId + "']").val().match(maj) && $("[name='fonction_" + formId + "']").val().match(maj) && $("[name='ld_" + formId + "']").val().match(ld) && $("[name='mail_" + formId + "']").val().match(mail)) {
+        if (emptyfield==false && $.isNumeric($("[name='ld_" + formId + "']").val()) && $("[name='ld_" + formId + "']").val().length >= 10 && $("[name='nom_" + formId + "']").val().match(maj) && $("[name='prenom_" + formId + "']").val().match(maj) && $("[name='fonction_" + formId + "']").val().match(maj) && $("[name='mail_" + formId + "']").val().match(mail)) {
             // Appel du fichier "insert_database.php" pour enregistrer les employés
             $.get("functions/insert_database.php", function(data){
                 console.log(data)
+                $("#zone_"+formId+">p").html(data)
             })
             // Aperçu des RS
             $(".trait.ele").css("display", "initial")
@@ -368,7 +369,7 @@ jQuery(function ($) {
                         readFiles()
                         function readFiles() {
                             $.get('img/Logos/' + $("[name='style']").val() + '/' + valeur + '.svg', function (data) {
-                                $(".icon." + valeur).append(data)
+                                $(".icon." + valeur).html(data)
                                 console.log(data)
                                 $.cookie("rs_icon_"+l, data)
                                 return data
@@ -380,23 +381,23 @@ jQuery(function ($) {
             $(".erreur_" + formId).text("")
         }
         // Création des cookies pour le téléchargement
-            var nomm= $("[name='nom_"+formId+"']").val()
-            var prenomm= $("[name='prenom_"+formId+"']").val()
-            var fonctionm= $("[name='fonction_"+formId+"']").val()
-            var ldm= $("[name='ld_"+formId+"']").val()
-            var mailm= $("[name='mail_"+formId+"']").val()
-            $.cookie("nom_"+formId, nomm, {expires: 7})
-            $.cookie("prenom_"+formId, prenomm, {expires: 7})
-            $.cookie("fonction_"+formId, fonctionm, {expires: 7})
-            $.cookie("ld_"+formId, ldm, {expires: 7})
-            $.cookie("mail_"+formId, mailm, {expires: 7})
-           $.cookie("id", formId,  {expires: 7})
+        var nomm= $("[name='nom_"+formId+"']").val()
+        var prenomm= $("[name='prenom_"+formId+"']").val()
+        var fonctionm= $("[name='fonction_"+formId+"']").val()
+        var ldm= $("[name='ld_"+formId+"']").val()
+        var mailm= $("[name='mail_"+formId+"']").val()
+        $.cookie("nom_"+formId, nomm, {expires: 7})
+        $.cookie("prenom_"+formId, prenomm, {expires: 7})
+        $.cookie("fonction_"+formId, fonctionm, {expires: 7})
+        $.cookie("ld_"+formId, ldm, {expires: 7})
+        $.cookie("mail_"+formId, mailm, {expires: 7})
+        $.cookie("id", formId,  {expires: 7})
         // Téléchargement
         $("[name='telecharger_"+formId+"']").on("click", function () {
             $.get("functions/download.php", function(data){
                 console.log(data)
-            })
-            
+                $("[id='zone_"+formId+"']").append("<b>"+data+"</b>")
+            })    
         })
     })
     
@@ -422,7 +423,7 @@ jQuery(function ($) {
             // Génération des champs pour les liens des RS
             $(".champsrs").html("")
             for (let r = 0; r < check.length; r++) {
-                $(".champsrs").append(`<input type="text" name="${check[r]}" id="" placeholder="URL ${check[r]}" class="URL" value=""><br>`)
+                $(".champsrs").append(`<input type="url" name="${check[r]}" id="" placeholder="URL ${check[r]}" class="URL" value=""><br>`)
             }
             console.log("check :"+check)
             $(".champsrs > :first-child").css("margin-top", "15px")
@@ -507,6 +508,9 @@ jQuery(function ($) {
             // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
             $.get("functions/download_client.php", function(data){
                 console.log(data)
+                $.cookie("id", formId)
+                var structure = $(".formclient_"+formId).html()
+                $(".formclient_"+formId).html(structure+"<br>"+data)
             })
         })
         // On enregistre dans des cookies la valeur des champs avant modification de l'internaute

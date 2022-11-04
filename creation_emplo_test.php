@@ -22,6 +22,10 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
     $_SESSION['site']=$site=$_POST['site'];
     $_SESSION['sign']=$sign=$_POST['sign'];
 }
+// Appelle à la fonction select-id() pour pouvoir obtenir l'id de l'entreprise
+$iddd = file_get_contents("functions/select_id.php");
+include("functions/select_id.php");
+// echo "<?php".$iddd."?>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,8 +80,8 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                             <p class="plogo">*Logo :</p> <br>
                         </div>
                         <div class="col4">
-                            <input type="text" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
-                            <input type="text" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
+                            <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
+                            <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
                             <input type="text" name="empl" id="" value="<?php echo $empl;?>" class="employ"><br>
                             <input type="radio" name="sign" value="haut" id="haut" <?php if ($sign=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
                             <input type="radio" name="sign" value="bas" id="bas" <?php if ($sign=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
@@ -113,7 +117,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                 </div>
                 <p>Tous les champs précédés d'un "<b> * </b>" sont obligatoires !</p> <br>
                 <input type="submit" name="ok" id="okk" value="Confirmer" class="button">
-                <input type="submit" value="Deconnexion" name="deco" class="button">
+                <input type="submit" value="Deconnexion" name="deconnexion" class="button">
             </form>
         </div>
     </fieldset>
@@ -157,7 +161,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                                             $_SESSION['fonction_'.$i] = $_POST['nom_'.$i];
                                         }
                                         echo "\" id='fonction_$i' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
-                                        <input type='text' name='ld_".$i."' id='' class='ld' value=\"";
+                                        <input type='tel' name='ld_".$i."' id='' class='ld' value=\"";
                                         if (!empty($_POST['fonction_'.$i]))
                                         {
                                             echo $_POST['ld_'.$i];
@@ -182,7 +186,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
         echo "</div>
               <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
                     <div class='apercu' style='height: 375px; padding: 15px;'></div>
-                    <div class='pub'></div>
+                    <div class='pub'>
+                       <a href='".$_SESSION['site']."' target='_blank' rel='noopener noreferrer'>
+                         <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
+                       </a>
+                    </div>
               </div>
             </div>
         </div>";

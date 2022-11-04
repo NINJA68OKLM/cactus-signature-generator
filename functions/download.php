@@ -3,7 +3,7 @@ session_start();
 session_id();
 $i = $_COOKIE['id'];
 ob_start();
-require_once('objects/signature'.$_SESSION['sign'].'.php');
+require_once('../objects/signature'.$_SESSION['sign'].'.php');
 $signature = ob_get_clean();
 $test= "<!DOCTYPE html>
 <html lang='en'>
@@ -22,6 +22,6 @@ $filename = 'Signature_'.$_COOKIE['nom_'.$i].'_'.$_COOKIE['prenom_'.$i].'.html';
 $fp = fopen($filename, 'w+');
 fwrite($fp, $test);
 // Déplacement du fichier
-$newlocation = "signatures/".$filename;
+$newlocation = "../signatures/".$filename;
 rename($filename, $newlocation);
 ?>

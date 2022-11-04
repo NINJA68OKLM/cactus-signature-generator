@@ -1,6 +1,9 @@
 <?php
-session_start();
-session_id();
+if (session_id() == '')
+{
+    session_start();
+    session_id();
+}
 // Connexion à la base de données
 $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
 $servername = "localhost";
@@ -17,4 +20,6 @@ $recherche = "SELECT id FROM entreprise WHERE nom='".$_SESSION['entr']."'";
 $ligne = $conn->query($recherche);
 $id = $ligne->fetch_row();
 echo $id[0];
+$_SESSION['bddid'] = $id[0];
+$_COOKIE['bddid'] = $id[0];
 ?>

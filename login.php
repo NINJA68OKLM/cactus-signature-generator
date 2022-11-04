@@ -18,6 +18,7 @@ session_id();
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
+    <script src="js/accept-cookie.js"></script>
     <title>Signature Generator</title>
 </head>
 <body>
@@ -62,11 +63,9 @@ session_id();
             echo $requete;
             $result = $conn->query($requete);
             if ($result->num_rows >= 1) {
-                // echo "<p class='confirmation' style='margin: 15px;'>Vous allez être redirigé vers votre espace client.</p>";
                 // Récupération des informations de la personne et déclaration en tant que cookie qui se connecte pour les afficher dans son espace client
                 $rechercheinfos = $result -> fetch_array(MYSQLI_ASSOC);
                 setcookie("idd", $rechercheinfos["id"], time()+3600);
-                // echo "<br>Admin : ".$rechercheinfos["admin"]."<br>";
                 // Si la personne authentifié n'est pas administrateur un seul utilisateur lui est affilié dans l'espace client
                 if ($rechercheinfos["admin"] == 0)
                 {
@@ -81,12 +80,12 @@ session_id();
                 // Sinon tous les employés de l'entreprise le sont
                 else
                 {
-                    $drequete = "SELECT * FROM employes WHERE id='".$rechercheinfos["id"]."'";
-                    // echo $drequete;
+                    // On décide de sélectionner tous les employés de l'entreprise excepté le compte avec admin = 1
+                    $drequete = "SELECT * FROM employes WHERE id='".$rechercheinfos["id"]."' AND admin=0";
                     $dresult = $conn->query($drequete);
                     $nb_client = $dresult->fetch_assoc();
-                    var_dump($dresult->num_rows);
                     $l = 0;
+                    // Mise en place des cookies des employés
                     setcookie("nb_client", $dresult->num_rows, time()+3600);
                     foreach ($dresult as $cle => $val) {
                         setcookie("nom_".$l, $val["nom"], time()+3600);
@@ -97,7 +96,10 @@ session_id();
                         setcookie("admin_".$l, $val["admin"], time()+3600);
                         $l++;
                     }
+                    // Mise en place du cookie "id" de l'entrperise pour pouvoir afficher les infos propres à l'entreprise
+                    setcookie("bddid", $rechercheinfos["id"], time()+3600);
                 }
+                var_dump($rechercheinfos);
                 header('Location: client_test.php');
             }
             else

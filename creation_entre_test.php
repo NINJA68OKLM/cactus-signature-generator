@@ -24,8 +24,9 @@ session_id();
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
-    <script src="js/app.js"></script>
+    
     <script src="js/accept-cookie.js"></script>
+    <script src="js/app.js"></script>
 </head>
 <body>
     <fieldset>
@@ -60,9 +61,9 @@ session_id();
                         <p style="margin-top: 25px;">Logo :</p> <br>
                     </div>
                     <div class="col4">
-                        <input type="text" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } ?>"><br>
+                        <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } ?>"><br>
                         <input type="email" name="adrmail" id="" value="<?php if (!empty($_POST['adrmail'])) { echo $_POST['adrmail'] ; } ?>"><br>
-                        <input type="text" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; } ?>"><br>
+                        <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; } ?>"><br>
                         <input type="text" name="empl" id="" value="<?php if (!empty($_POST['empl'])) { echo $_POST['empl'] ; } ?>"><br>
                         <input type="radio" name="sign" value="haut" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="haut")) { echo "checked='checked'"; } ?>> Haut 
                         <input type="radio" name="sign" value="bas" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="bas")) { echo "checked='checked'"; } ?>> Bas <br>
@@ -131,10 +132,16 @@ session_id();
                 echo "<p class='confirmation' style='margin: 15px;'>Cette entreprise existe déjà dans notre base de données !</p>";
             }
             else {
+                // Enregistrement des identifiants dans l'entreprise
                 $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs, ide, mdp, facebook, twitter, instagram, linkedin, youtube, rs_style) VALUES ('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', ".$_SESSION['empl'].", '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '', '', '', '', '', '', '', '', '')";
-                // echo $sql."<br>"; 
+                // echo $sql."<br>";
+                // Execution des deux requêtes 
                 $conn->query($sql);
+                
                 if ($conn->query($sql) === TRUE) {
+                    // Enregistrement d'un "employé" dans l'entreprise qui aura l'admin 1 et permettra d'afficher tous les autres dans l'espace client 
+                    $sqll = "INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (, '".$_SESSION['entr'].", '-----', '-----', '------', '".$_SESSION["adrmail"]."', 1, '', '')";
+                    $conn->query($sqll);
                     // Message pour déclarer les employés
                     echo "<p class='confirmation' style='margin: 15px;'>Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.</p><br>";
                     echo "<p class='confirmation' style='margin: 15px;'>Vos identifiants vous ont étés envoyés par mail</p>";
@@ -150,18 +157,44 @@ session_id();
                     $update = "UPDATE entreprise SET ide='".$ide."', mdp='".$randomString."' WHERE nom='".$_SESSION['entr']."'";
                     // echo $update;
                     $conn->query($update);
-                    // Remettre le code de "select_id.php" au cas où
+                    // !!! Remettre le code de "select_id.php" au cas où le cookie qui permet la récupération de l'id de l'entreprise dans la bdd ne fonctionne pas
+                    // Code de functions/select-id()
+                    // Connexion à la base de données
+                    $requete= "SELECT * FROM entreprise WHERE nom='".$_SESSION['entr']."'";
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "signature";
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Vérification de la connexion
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    // Récupération de l'id de l'entreprise dans la base de données pour la réutiliser plus tard
+                    $recherche = "SELECT id FROM entreprise WHERE nom='".$_SESSION['entr']."'";
+                    $ligne = $conn->query($recherche);
+                    $id = $ligne->fetch_row();
+                    // echo $id[0];
+                    $_SESSION['bddid'] = $id[0];
+                    $_COOKIE['bddid'] = $id[0];
     ?>
-    <script>
+    <!-- <script>
         // Récupération de l'id de l'entreprise dans la bdd et déclaration en tant que cookie pour la réutiliser plus tard
         jQuery(function ($) {
-            $.get("select_id.php", function(data) {
+            $.get("functions/select_id.php", function(data) {
                 console.log(data)
-                $.cookie("bddid", data)
+                $.cookie("bddid", data, { expires : 1 })
+                $("body").append("Le chiffre est : "+data)
             })
         })
-    </script>
+    </script> -->
     <?php
+                    // Enregistrement d'un "employé" dans l'entreprise qui aura l'admin 1 et permettra d'afficher tous les autres dans l'espace client 
+                    $sqll = "INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (".$_COOKIE['bddid'].", '".$_SESSION['entr']."', '', '', '', '".$_SESSION["adrmail"]."', 1, '', '')";
+                    $conn->query($sqll);
+                    // Enregistrement de ses identifiants
+                    $updatee = "UPDATE employes SET ide='".$ide."', mdp='".$randomString."' WHERE nom='".$_SESSION['entr']."'";
+                    $conn->query($updatee);
                     // Envoi du mail
                     // $to      = ''.$_POST['adrmail'].'';
                     // $subject = 'Identifiants entreprise Signature Generator';

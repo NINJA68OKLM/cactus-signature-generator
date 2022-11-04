@@ -54,7 +54,8 @@ p.trait
 {
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    /* width: 75%; */
+    width: 600px;
 }
 /* Cookies */
 .ligne
