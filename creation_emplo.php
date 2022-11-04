@@ -204,5 +204,11 @@ include("functions/select_id.php");
     <div id="infoRS"></div>
     <div class="employes"></div>
     <div class="values"></div>
+    <!-- <script lang="javascript">
+        const reloadUsingLocationHash = () => {
+            window.location.hash = "reload";
+        }
+        window.onload = reloadUsingLocationHash();
+    </script> -->
 </body>
 </html>

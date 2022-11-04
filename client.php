@@ -316,5 +316,11 @@ if ($conn->connect_error) {
     //     header("Location: login.php");
     // }
     ?> -->
+    <script lang="javascript">
+        const reloadUsingLocationHash = () => {
+            window.location.hash = "reload";
+        }
+        window.onload = reloadUsingLocationHash();
+    </script>
 </body>
 </html>
