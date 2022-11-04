@@ -95,7 +95,7 @@ for ($z=0; $z < $_COOKIE['nb_client']; $z++) {
                     </div>
                 </div>
                 <p>Tous les champs précédés d'un "<b> * </b>" sont obligatoires !</p> <br>
-                <input type="submit" name="ok" id="okk" value="Confirmer" class="button">
+                <input type="submit" name="ok" id="okk" value="Enregistrer" class="button">
                 <input type="submit" value="Deconnexion" name="deconnexion" class="button">
             </form>
         </div>

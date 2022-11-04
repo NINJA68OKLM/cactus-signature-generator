@@ -136,7 +136,7 @@ session_id();
             else {
                 // Enregistrement des identifiants dans l'entreprise
                 $sql = "INSERT INTO entreprise (nom, adresse, tel, ville, cp, site, employe, signature, logo, rs, adr_mail, ide, mdp, facebook, twitter, instagram, linkedin, youtube, rs_style) VALUES ('".$_SESSION['entr']."', '".$_SESSION['adre']."', ".$_SESSION['tel'].", '".$_SESSION['vill']."', ".$_SESSION['cp'].", '".$_SESSION['site']."', ".$_SESSION['empl'].", '".$_SESSION['sign']."', '".$_SESSION['logonom']."', '', '".$_SESSION['adrmail']."', '', '', '', '', '', '', '', '')";
-                echo $sql."<br>";
+                // echo $sql."<br>";
                 // Execution des deux requêtes 
                 // $conn->query($sql);
                 

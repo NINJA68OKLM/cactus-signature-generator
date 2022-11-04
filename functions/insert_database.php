@@ -20,15 +20,16 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-// Récupération de l'id de l'entreprise en cookie "bddid"
+// // Récupération de l'id de l'entreprise en cookie "bddid"
 $requete= "SELECT id FROM entreprise WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
 $result = $conn->query($requete);
-// Vérifie si l'employé existe déjà exite dans la base de données
-$requete= "SELECT * FROM employes WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
-$result = $conn->query($requete);
+
+// Vérifie si l'employé existe déjà existe dans la base de données
+$requetee= "SELECT * FROM employes WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
+$resultt = $conn->query($requetee);
 
 // if ($result->num_rows > 0) {
-if ($result->num_rows >= 1) {
+if ($resultt->num_rows >= 1) {
   echo "<p class='confirmation' style='margin: 7.5px;'>Cet employé existe déjà dans notre base de données !</p>";
 }
 else

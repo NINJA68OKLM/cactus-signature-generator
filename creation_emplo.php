@@ -23,9 +23,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
     $_SESSION['sign']=$sign=$_POST['sign'];
 }
 // Appelle à la fonction select-id() pour pouvoir obtenir l'id de l'entreprise
-$iddd = file_get_contents("functions/select_id.php");
 include("functions/select_id.php");
-// echo "<?php".$iddd."?>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,64 +122,66 @@ include("functions/select_id.php");
     <?php
     echo "<div class='results'>
         <div class='emplo'>";
+        $_COOKIE['nb_client'] = 0;
             for ($i=0; $i < $empl; $i++) {
                 $a=$i+1;
-                        echo "<hr style='width: 420px; color: white; margin-bottom: 25px; margin-right: 20px;'>";
-                        echo $employ=
-                        "<form action=".$_SERVER['PHP_SELF']." method='post' style='max-width: 450px;' class='form_employ form_employ_$i' id='form_employ_$i'>
-                            <div class='".$entr."'>
-                                <h2 style='color: #FFFFFF; margin-top: 0px; margin-bottom: 25px; padding-left: 15px;'>Employé n° $a</h2>
-                                <div class='form' id='".$i."'>
-                                    <div class='col5'>
-                                        <p>Nom :</p> <br>
-                                        <p>Prénom :</p> <br>
-                                        <p>Fonction :</p> <br>
-                                        <p>Ligne directe :</p> <br>
-                                        <p>Mail :</p> <br>
-                                    </div>
-                                    <div class='col6'>
-                                        <input type='text' name='nom_".$i."' id='' class='nom' value='";
-                                        if (!empty($_POST['nom_'.$i]))
-                                        {
-                                            echo $_POST['nom_'.$i];
-                                            $_SESSION['nom_'.$i] = $_POST['nom_'.$i];
-                                        }
-                                        echo "' id='nom_$i' data-name-id='$i' placeholder='Ex : Durand'><br>
-                                        <input type='text' name='prenom_".$i."' id='' class='prenom' value=\"";
-                                        if (!empty($_POST['prenom_'.$i]))
-                                        {
-                                            echo $_POST['prenom_'.$i];
-                                            $_SESSION['prenom_'.$i] = $_POST['nom_'.$i];
-                                        }
-                                        echo "\" id='prenom_$i' data-firstname-id='$i' placeholder='Ex : Martin'><br>
-                                        <input type='text' name='fonction_".$i."' id='' class='fonction' value=\"";
-                                        if (!empty($_POST['fonction_'.$i]))
-                                        {
-                                            echo $_POST['fonction_'.$i];
-                                            $_SESSION['fonction_'.$i] = $_POST['nom_'.$i];
-                                        }
-                                        echo "\" id='fonction_$i' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
-                                        <input type='tel' name='ld_".$i."' id='' class='ld' value=\"";
-                                        if (!empty($_POST['fonction_'.$i]))
-                                        {
-                                            echo $_POST['ld_'.$i];
-                                            $_SESSION['ld_'.$i] = $_POST['nom_'.$i];
-                                        }
-                                        echo "\" id='ld_$i' data-ld-id='$i' maxlength='10' placeholder='Ex : 06********'><br>
-                                        <input type='email' name='mail_".$i."' id='' class='mail' value=\"";
-                                        if (!empty($_POST['mail_'.$i]))
-                                        {
-                                            echo $_POST['mail_'.$i];
-                                            $_SESSION['mail_'.$i] = $_POST['nom_'.$i];
-                                        }
-                                        echo "\" id='mail_$i' data-mail-id='$i' placeholder='Ex : prenom.nom@mail.fr'>
-                                        <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer' data-form-id='$i' >
-                                    </div>
-                                </div>
+                $_SESSION['nb_client'] = $a;
+                echo "<hr style='width: 420px; color: white; margin-bottom: 25px; margin-right: 20px;'>";
+                echo $employ=
+                "<form action=".$_SERVER['PHP_SELF']." method='post' style='max-width: 450px;' class='form_employ form_employ_$i' id='form_employ_$i'>
+                    <div class='".$entr."'>
+                        <h2 style='color: #FFFFFF; margin-top: 0px; margin-bottom: 25px; padding-left: 15px;'>Employé n° $a</h2>
+                        <div class='form' id='".$i."'>
+                            <div class='col5'>
+                                <p>Nom :</p> <br>
+                                <p>Prénom :</p> <br>
+                                <p>Fonction :</p> <br>
+                                <p>Ligne directe :</p> <br>
+                                <p>Mail :</p> <br>
                             </div>
-                            <div class='zone' id='zone_$i'></div>
-                            <p class='erreur erreur_".$i."'></p>
-                        </form>";     
+                            <div class='col6'>
+                                <input type='text' name='nom_".$i."' id='' class='nom' value='";
+                                if (!empty($_POST['nom_'.$i]))
+                                {
+                                    echo $_POST['nom_'.$i];
+                                    $_SESSION['nom_'.$i] = $_POST['nom_'.$i];
+                                }
+                                echo "' id='nom_$i' data-name-id='$i' placeholder='Ex : Durand'><br>
+                                <input type='text' name='prenom_".$i."' id='' class='prenom' value=\"";
+                                if (!empty($_POST['prenom_'.$i]))
+                                {
+                                    echo $_POST['prenom_'.$i];
+                                    $_SESSION['prenom_'.$i] = $_POST['nom_'.$i];
+                                }
+                                echo "\" id='prenom_$i' data-firstname-id='$i' placeholder='Ex : Martin'><br>
+                                <input type='text' name='fonction_".$i."' id='' class='fonction' value=\"";
+                                if (!empty($_POST['fonction_'.$i]))
+                                {
+                                    echo $_POST['fonction_'.$i];
+                                    $_SESSION['fonction_'.$i] = $_POST['nom_'.$i];
+                                }
+                                echo "\" id='fonction_$i' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
+                                <input type='tel' name='ld_".$i."' id='' class='ld' value=\"";
+                                if (!empty($_POST['fonction_'.$i]))
+                                {
+                                    echo $_POST['ld_'.$i];
+                                    $_SESSION['ld_'.$i] = $_POST['nom_'.$i];
+                                }
+                                echo "\" id='ld_$i' data-ld-id='$i' maxlength='10' placeholder='Ex : 06********'><br>
+                                <input type='email' name='mail_".$i."' id='' class='mail' value=\"";
+                                if (!empty($_POST['mail_'.$i]))
+                                {
+                                    echo $_POST['mail_'.$i];
+                                    $_SESSION['mail_'.$i] = $_POST['nom_'.$i];
+                                }
+                                echo "\" id='mail_$i' data-mail-id='$i' placeholder='Ex : prenom.nom@mail.fr'>
+                                <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer' data-form-id='$i' >
+                            </div>
+                        </div>
+                    </div>
+                    <div class='zone' id='zone_$i'></div>
+                    <p class='erreur erreur_".$i."'></p>
+                </form>";
             }
         echo "</div>
               <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
