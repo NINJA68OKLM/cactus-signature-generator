@@ -3,7 +3,6 @@ session_start();
 session_id();
 $logo=$_SESSION['logo'];
 $logonom=$_SESSION['logonom'];
-$logotmp=$_SESSION['logo_tmp'];
 $entr=$_SESSION['entr'];
 $adre=$_SESSION['adre'];
 $cp=$_SESSION['cp'];
@@ -12,14 +11,21 @@ $tel=$_SESSION['tel'];
 $site=$_SESSION['site'];
 $empl=$_SESSION['empl'];
 $sign=$_SESSION['sign'];
-if (isset($_POST['ok']))
+if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empty($_POST['adre']) | !empty($_POST['cp']) | !empty($_POST['vill']) | !empty($_POST['tel']) | !empty($_POST['site']) | !empty($_POST['empl']))
 {
-    $empl=$_POST['empl'];
+    $_SESSION['empl']=$empl=$_POST['empl'];
+    $_SESSION['entr']=$entr=$_POST['entr'];
+    $_SESSION['adre']=$adre=$_POST['adre'];
+    $_SESSION['cp']=$cp=$_POST['cp'];
+    $_SESSION['vill']=$vill=$_POST['vill'];
+    $_SESSION['tel']=$tel=$_POST['tel'];
+    $_SESSION['site']=$site=$_POST['site'];
+    $_SESSION['sign']=$sign=$_POST['sign'];
 }
-if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) && empty($tel) && empty($site) && empty($empl) && empty($sign))
-{
-    header("Location: creation_entre.php");
-}
+// Appelle à la fonction select-id() pour pouvoir obtenir l'id de l'entreprise
+$iddd = file_get_contents("functions/select_id.php");
+include("functions/select_id.php");
+// echo "<?php".$iddd."?>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +33,18 @@ if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) &
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style_O.css" media="screen and (min-width: 1200px)">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
+    <link rel="stylesheet" href="styles/background_1.css">
+    <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
     <title>Signature Generator</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			  crossorigin="anonymous"></script>
-    <script src="app.js"></script>
+    <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
+    <script src="js/app.js"></script>
+    <script src="js/accept-cookie.js"></script>
 </head>
 <body>
     <fieldset>
@@ -44,53 +54,83 @@ if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) &
         </div>
         <div class="droite">
             <h1>Déclarez vos employés</h1>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <div class="form">
-                    <div class="col1">
-                        <p>Nom d'entreprise :</p> <br>
-                        <p>Adresse :</p> <br>
-                        <p>Ville :</p> <br>
-                        <p>Code postal :</p> <br>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="formprinc">
+                <div class="flex">
+                    <div class="form">
+                        <div class="col1">
+                            <p>*Nom d'entreprise :</p> <br>
+                            <p>*Adresse :</p> <br>
+                            <p>*Ville :</p> <br>
+                            <p>*Code postal :</p> <br>
+                        </div>
+                        <div class="col2">
+                            <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $entr; } ?>"><br>
+                            <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $adre; } ?>"><br>
+                            <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $vill; } ?>"><br>
+                            <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $cp; } ?>">
+                        </div>
                     </div>
-                    <div class="col2">
-                        <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $entr; } ?>"><br>
-                        <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $adre; } ?>"><br>
-                        <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $cp; } ?>"><br>
-                        <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $vill; } ?>">
+                    <p class="trait"></p>
+                    <div class="form">
+                        <div class="col3">
+                            <p>*Numéro de teléphone :</p> <br>
+                            <p>*Site internet :</p> <br>
+                            <p>*Nombre d'employés :</p> <br>
+                            <p>*Signature :</p> <br>
+                            <p class="plogo">*Logo :</p> <br>
+                        </div>
+                        <div class="col4">
+                            <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
+                            <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
+                            <input type="text" name="empl" id="" value="<?php echo $empl;?>" class="employ"><br>
+                            <input type="radio" name="sign" value="haut" id="haut" <?php if ($sign=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
+                            <input type="radio" name="sign" value="bas" id="bas" <?php if ($sign=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
+                            <input type="radio" name="sign" value="gauche" id="gauche" <?php if ($sign=="gauche" | (isset($_POST['sign']) && ($_POST['sign']=="gauche"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Gauche 
+                            <input type="radio" name="sign" value="droite" id="droite" <?php if ($sign=="droite" | (isset($_POST['sign']) && ($_POST['sign']=="droite"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Droite <br>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="100000"><br>
+                            <?php 
+                            // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
+                            echo "<img class='logoimg' src='img/uploads/$logonom' width='120'>";
+                            ?> <br>
+                        </div>
+                    </div>
+                    <p class="trait ele"></p>
+                    <div class="form formRS">
+                        <div class="col5">
+                            <p class="ele">Réseaux sociaux :</p> <br>
+                        </div>
+                        <div class="col6">
+                            <div class="ele">
+                                <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
+                                <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
+                                <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
+                                <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
+                                <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
+                                <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
+                                <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
+                                <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>
+                                <div class="champsrs"></div>
+                                <input type="submit" name="val" id="okk" value="<?php if (!isset($_POST['rs'])) { echo "Confirmer le style"; } else { echo "Renseigner les réseaux"; } ?>" class="button rs" style="margin-bottom: 15px;">
+                            </div> 
+                        </div>
                     </div>
                 </div>
-                <div class="form">
-                    <div class="col3">
-                        <p>Numéro de teléphone :</p> <br>
-                        <p>Site internet :</p> <br>
-                        <p>Nombre d'employés :</p> <br>
-                        <p>Signature :</p> <br>
-                        <p>Logo :</p> <br>
-                    </div>
-                    <div class="col4">
-                        <input type="text" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
-                        <input type="text" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
-                        <input type="text" name="empl" id="" value="<?php echo $empl;?>" class="employ"><br>
-                        <input type="radio" name="sign" value="bloc" id="" <?php if ($sign=="bloc" | (isset($_POST['sign']) && ($_POST['sign']=="bloc"))) { echo "checked='checked'"; } ?>> Bloc 
-                        <input type="radio" name="sign" value="colonnes" id="" <?php if ($sign=="colonnes" | (isset($_POST['sign']) && ($_POST['sign']=="colonnes"))) { echo "checked='checked'"; } ?>> Colonnes <br>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="100000"><br>
-                        <?php 
-                        echo $logonom;
-                        ?> 
-                    </div>
-                </div>
-                <input type="submit" name="ok" value="Confirmer" class="button">
-                <input type="submit" value="Deconnexion" name="deco" class="button">
+                <p>Tous les champs précédés d'un "<b> * </b>" sont obligatoires !</p> <br>
+                <input type="submit" name="ok" id="okk" value="Confirmer" class="button">
+                <input type="submit" value="Deconnexion" name="deconnexion" class="button">
             </form>
         </div>
     </fieldset>
     <?php
     echo "<div class='results'>
         <div class='emplo'>";
-            for ($i=0; $i < $empl; $i++) { 
-                        echo "<hr style='max-width: 420px; margin-left: 0px;'>".$employ=
-                        "<form action=".$_SERVER['PHP_SELF']." method='post' style='max-width: 420px; margin-right: 10px;' class='form_employ form_employ_$i' id='form_employ_$i'>
+            for ($i=0; $i < $empl; $i++) {
+                $a=$i+1;
+                        echo "<hr style='width: 420px; color: white; margin-bottom: 25px; margin-right: 20px;'>";
+                        echo $employ=
+                        "<form action=".$_SERVER['PHP_SELF']." method='post' style='max-width: 450px;' class='form_employ form_employ_$i' id='form_employ_$i'>
                             <div class='".$entr."'>
+                                <h2 style='color: #FFFFFF; margin-top: 0px; margin-bottom: 25px; padding-left: 15px;'>Employé n° $a</h2>
                                 <div class='form' id='".$i."'>
                                     <div class='col5'>
                                         <p>Nom :</p> <br>
@@ -100,144 +140,59 @@ if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) &
                                         <p>Mail :</p> <br>
                                     </div>
                                     <div class='col6'>
-                                        <input type='text' name='nom_".$i."' id='' value=\"";
+                                        <input type='text' name='nom_".$i."' id='' class='nom' value='";
                                         if (!empty($_POST['nom_'.$i]))
                                         {
                                             echo $_POST['nom_'.$i];
+                                            $_SESSION['nom_'.$i] = $_POST['nom_'.$i];
                                         }
-                                        echo "\"><br>
-                                        <input type='text' name='prenom_".$i."' id='' value=\"";
+                                        echo "' id='nom_$i' data-name-id='$i' placeholder='Ex : Durand'><br>
+                                        <input type='text' name='prenom_".$i."' id='' class='prenom' value=\"";
                                         if (!empty($_POST['prenom_'.$i]))
                                         {
                                             echo $_POST['prenom_'.$i];
+                                            $_SESSION['prenom_'.$i] = $_POST['nom_'.$i];
                                         }
-                                        echo "\"><br>
-                                        <input type='text' name='fonction_".$i."' id='' value=\"";
+                                        echo "\" id='prenom_$i' data-firstname-id='$i' placeholder='Ex : Martin'><br>
+                                        <input type='text' name='fonction_".$i."' id='' class='fonction' value=\"";
                                         if (!empty($_POST['fonction_'.$i]))
                                         {
                                             echo $_POST['fonction_'.$i];
+                                            $_SESSION['fonction_'.$i] = $_POST['nom_'.$i];
                                         }
-                                        echo "\"><br>
-                                        <input type='text' name='ld_".$i."' id='' value=\"";
-                                        if (!empty($_POST['ld_'.$i]))
+                                        echo "\" id='fonction_$i' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
+                                        <input type='tel' name='ld_".$i."' id='' class='ld' value=\"";
+                                        if (!empty($_POST['fonction_'.$i]))
                                         {
                                             echo $_POST['ld_'.$i];
+                                            $_SESSION['ld_'.$i] = $_POST['nom_'.$i];
                                         }
-                                        echo "\"><br>
-                                        <input type='text' name='mail_".$i."' id='' value=\"";
+                                        echo "\" id='ld_$i' data-ld-id='$i' maxlength='10' placeholder='Ex : 06********'><br>
+                                        <input type='email' name='mail_".$i."' id='' class='mail' value=\"";
                                         if (!empty($_POST['mail_'.$i]))
                                         {
                                             echo $_POST['mail_'.$i];
+                                            $_SESSION['mail_'.$i] = $_POST['nom_'.$i];
                                         }
-                                        echo "\">
-                                        <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer ji' data-form-id='$i' >
+                                        echo "\" id='mail_$i' data-mail-id='$i' placeholder='Ex : prenom.nom@mail.fr'>
+                                        <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer' data-form-id='$i' >
                                     </div>
                                 </div>
                             </div>
                             <div class='zone' id='zone_$i'></div>
-                        </form>";
-                        // $_SESSION['employe']=$employ;
-                        // $form= array($i => array(
-                        //     "nom" => "nom_".$i,
-                        //     "prenom" => "prenom_".$i,
-                        //     "fonction" => "fonction_".$i,
-                        //     "mail" => "mail_".$i,
-                        //     "ld" => "ld_".$i,
-                        //     "confirm" => "confirm_".$i
-                        // ));
-                        // $_SESSION['form']=$form;
-                        // if (isset($_POST[$form[$i]['confirm']]) && !empty($_POST[$form[$i]['nom']]) && !empty($_POST[$form[$i]['prenom']]) && !empty($_POST[$form[$i]['fonction']]) && !empty($_POST[$form[$i]['ld']]) && !empty($_POST[$form[$i]['mail']])) {
-                        //     echo "<p style='margin-left: 15px; font-weight: bold;'>La signature de cette personne a bien été créé !</p> <br>";
-                        //     echo "<div style='display: flex; justify-content: left;'><input type='submit' name='apercu_".$i."' value='Aperçu' class='button apercu_submit' id='apercu_$i' style='margin-left: 15px;' data-form-id='$i'>";
-                        //     echo "<input type='submit' name='telecharger_".$i."' value='telécharger' class='button' style='margin-left: 15px;'></div>";
-                        //     echo $_POST['apercu_'.$i];
-                        // }
-                        // else
-                        // {
-                        //     echo "<p><b>Déclarez votre employé</b></p>";
-                        // }
-                }
+                            <p class='erreur erreur_".$i."'></p>
+                        </form>";     
+            }
         echo "</div>
-              <div class='apercu' style='height: 300px;'>";
-                // if (isset($form["apercu"]))
-                // {
-
-                //         for ($i=0; $i < $empl; $i++)
-                //         {
-                //             $form= array($i => array(
-                //                 "nom" => "nom_".$i,
-                //                 "prenom" => "prenom_".$i,
-                //                 "fonction" => "fonction_".$i,
-                //                 "mail" => "mail_".$i,
-                //                 "ld" => "ld_".$i,
-                //                 "confirm" => "confirm_".$i,
-                //                 "apercu" => "apercu_".$i,
-                //                 "telecharger" => "telecharger_".$i
-                //             ));
-                //             if (isset($_POST[$form[$i]['apercu']]) && !empty($_POST[$form[$i]['nom']]) && !empty($_POST[$form[$i]['prenom']]) && !empty($_POST[$form[$i]['fonction']]) && !empty($_POST[$form[$i]['ld']]) && !empty($_POST[$form[$i]['mail']]))
-                //             {
-                //                     if ($sign=="bloc" || $_POST['sign']=="bloc")
-                //                     {
-                //                         echo "<h1>Michel</h1>";
-                //                     }
-                //                     if ($sign=="colonnes" || $_POST['sign']=="colonnes"){
-                //                         echo $_SESSION['signature']="<table style='padding: 2px; border-style: none; border-color: black; border-style: none; border-collapse: inherit; direction: ltr; width: 100%' cellpadding='0' cellspacing='0'>
-                //                         <tbody>
-                //                             <tr>
-                //                                 <td style='font-size:1pt; vertical-align:top; width: 95px;' valign='top'>               
-                //                                     <table style='' cellpadding='0' cellspacing='0'>
-                //                                         <tbody>
-                //                                             <tr>
-                //                                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
-                //                                                 <td style='height:55px; vertical-align:top;' valign='top'>
-                //                                                     <img src='".$logotmp."' style='border:0;' height='70'>
-                //                                                 </td>
-                //                                             </tr>      
-                //                                         </tbody>
-                //                                     </table>
-                //                                 </td>
-                //                                 <td style='padding-left:5px; text-align: left; vertical-align:top; ' valign='top'>
-                //                                     <table style=' margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; ' cellpadding='0' cellspacing='0' id='table'>
-                //                                         <tbody>
-                //                                             <tr style='font-size: 14px;'>
-                //                                                 <!-- Identité -->
-                //                                                 <td style='height:35px; vertical-align:center; text-align: left;' valign='center' align='right'>
-                //                                                     <span id='nom' style='font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif !important;'>".$form[$i]['nom']." ".$form[$i]['prenom']."/span>
-                //                                                     <br>
-                //                                                     <span style='color: rgb(100, 99, 99); font-style: italic; font-family: Arial, Helvetica, sans-serif;'>
-                //                                                             ".$form[$i]['fonction']."
-                //                                                     </span>
-                //                                                     <br>
-                //                                                 <!-- Mail -->
-                //                                                     <span style='color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important;'><a href='mailto:".$form[$i]['mail']."' style='color: rgb(100, 99, 99); text-decoration: none;'>".$form[$i]['mail']."</a></span>
-                //                                                     <br>
-                //                                                     <!-- Numéro de téléphone -->
-                //                                                 <span style='color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;'>
-                //                                                         tel : <a style='text-decoration: none; color: rgb(100, 99, 99);' href='tel:".$form[$i]['ld']."'>".$form[$i]['ld']." (ligne directe)</a>
-                //                                                 </span>
-                //                                                 </td>
-                //                                             </tr>
-                //                                         </tbody>
-                //                                     </table>
-                //                                 </td>
-                //                             </tr>
-                //                         </tbody>
-                //                     </table>";
-                //                     }
-                //             }
-                //         }
-                // }
-                // else
-                // {
-                //     echo "<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;'>
-                //         <strong>APERCU</strong>
-                //     </div>";
-                // }
-                // echo $apercu;
-        echo "</div>
-              <div class='pub'>
-                
+              <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
+                    <div class='apercu' style='height: 375px; padding: 15px;'></div>
+                    <div class='pub'>
+                       <a href='".$_SESSION['site']."' target='_blank' rel='noopener noreferrer'>
+                         <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
+                       </a>
+                    </div>
               </div>
+            </div>
         </div>";
         if (isset($_POST['deco']))
         {
@@ -245,5 +200,9 @@ if (empty($logo) && empty($entr) && empty($adre) && empty($cp) && empty($vill) &
             session_destroy();
         }
     ?>
+    <div class="logonom" data-nom-id="<?php echo $_SESSION['logonom']; ?>"></div>
+    <div id="infoRS"></div>
+    <div class="employes"></div>
+    <div class="values"></div>
 </body>
 </html>

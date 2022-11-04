@@ -1,38 +1,26 @@
 <?php
 session_start();
 session_id();
-$_SESSION['hery'];
-$_SESSION['hery']= "drdr";
-echo $de;
 // Connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
+// Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
+if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
+{
+    // $_COOKIE['logo'];
+    $cookie="dd";
+}
+else
+{
+    header("Location: login.php");
+}
 // Vérification de la connexion
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-// Recherche du nom de l'entreprise de l'employé
-$requete= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
-$result = $conn->query($requete);
-
-if ($result->num_rows > 0) {
-    $ligne = $result->fetch_array(MYSQLI_ASSOC);
-    $entr = $ligne["nom"];
-    $adre = setcookie("adre", $ligne["adresse"], time()+3600);
-    $adre = setcookie("cp", $ligne["cp"], time()+3600);
-    $adre = setcookie("vill", $ligne["ville"], time()+3600);
-    $adre = setcookie("site", $ligne["site"], time()+3600);
-    $adre = setcookie("tel", $ligne["tel"], time()+3600);
-    $adre = setcookie("logo", $ligne["logo"], time()+3600);
-    $adre = setcookie("signature", $ligne["signature"], time()+3600);
-    $adre = setcookie("rs", "", time()+3600);
-    $_SESSION['logonnom'] = $_COOKIE['logo'];
-}
-// else
-// {}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,119 +38,143 @@ if ($result->num_rows > 0) {
 			  crossorigin="anonymous"></script>
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
-    <script src="js/accept-cookie.js"></script>
 </head>
 <body>
     <?php
-    // echo $_COOKIE['nb_client'];
-     if ($_COOKIE['nb_client'] == 1)
-     {
+    // Si la personne authentifié est administrateur on va afficher les informations de l'entreprise qui peuvent êtres modifiables
+    if ($_COOKIE['nb_client'] > 1) 
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "signature";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Vérification de la connexion
+        if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+        }
+        // Récupération de l'id de l'entreprise en cookie "bddid"
+        $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['bddid']."'";
+        $result = $conn->query($requete);
+        $result =$result -> fetch_array(MYSQLI_ASSOC);
+        // var_dump($result);
+        // Cookies entreprise
+        setcookie("entr", $result["nom"], time()+3600);
+        setcookie("adre", $result["adresse"], time()+3600);
+        setcookie("vill", $result["ville"], time()+3600);
+        setcookie("cp", $result["cp"], time()+3600);
+        setcookie("tel", $result["tel"], time()+3600);
+        setcookie("site", $result["site"], time()+3600);
+        setcookie("empl", $result["employe"], time()+3600);
+        setcookie("sign", $result["signature"], time()+3600);
+        setcookie("logo", $result["logo"], time()+3600);
+        setcookie("rsnbr", $result["rs"], time()+3600);
+        setcookie("rs_style", $result["rs_style"], time()+3600);
+        setcookie("facebook", $result["facebook"], time()+3600);
+        setcookie("instagram", $result["instagram"], time()+3600);
+        setcookie("twitter", $result["twitter"], time()+3600);
+        setcookie("linkedin", $result["linkedin"], time()+3600);
+        setcookie("youtube", $result["youtube"], time()+3600);
+        // Récupération du formulaire :
+        include("functions/formulaire.php");
+    }
         echo "<fieldset class='field_client'>
                 <div class='gauche'>
                     <img src='img/logo.png' alt='' style='width: 100%;'>
                     <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
-                </div>
-                <div class='droite'>
-                    <h1>Vos informations personnelles</h1>
-                    <form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient'>
-                            <div class='".$_COOKIE['nom_0']." formclientt'>
-                                <div class='form' id='0'>
-                                    <div class='col5 client'>
-                                        <p>Nom :</p> <br>
-                                        <p>Prénom :</p> <br>
-                                        <p>Fonction :</p> <br>
-                                        <p>Ligne directe :</p> <br>
-                                        <p>Mail :</p> <br>
-                                    </div>
-                                    <div class='col6 client'>
-                                        <input type='text' name='nom_0' id='' value='";
-                                        if (!empty($_POST['nom_0']))
-                                        {
-                                            $_COOKIE['nom_0'] = $_POST['nom_0'];
-                                            echo $_COOKIE['nom_0'];
-                                        }
-                                        else
-                                        {
-                                            echo $_COOKIE['nom_0'];
-                                        }
-                                        echo "'><br>
-                                        <input type='text' name='prenom_0' id='' value='";
-                                        if (!empty($_POST['prenom_0']))
-                                        {
-                                            $_COOKIE['prenom_0'] = $_POST['prenom_0'];
-                                            echo $_COOKIE['prenom_0'];
-                                        }
-                                        else
-                                        {
-                                            echo $_COOKIE['prenom_0'];
-                                        }
-                                        echo "'><br>
-                                        <input type='text' name='fonction_0' id='' value='";
-                                        if (!empty($_POST['fonction_0']))
-                                        {
-                                            $_COOKIE['fonction_0'] = $_POST['fonction_0'];
-                                            echo $_COOKIE['fonction_0'];
-                                        }
-                                        else
-                                        {
-                                            echo $_COOKIE['fonction_0'];
-                                        }
-                                        echo "'><br>
-                                        <input type='text' name='ld_0' id='' value='";
-                                        if (!empty($_POST['ld_0']))
-                                        {
-                                            $_COOKIE['ld_0'] = $_POST['ld_0'];
-                                            echo $_COOKIE['ld_0'];
-                                        }
-                                        else
-                                        {
-                                            echo $_COOKIE['ld_0'];
-                                        }
-                                        echo "'><br>
-                                        <input type='text' name='mail_0' id='' value='";
-                                        if (!empty($_POST['mail_0']))
-                                        {
-                                            $_COOKIE['mail_0'] = $_POST['mail_0'];
-                                            echo $_COOKIE['mail_0'];
-                                        }
-                                        else
-                                        {
-                                            echo $_COOKIE['mail_0'];
-                                        }
-                                        echo "'> <br>
-                                    </div>
+                </div>";
+                if ($_COOKIE['nb_client'] == 1)
+                {
+                  echo "<div class='droite'>
+                  <h1>Vos informations personnelles</h1>
+                  <form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_0 formclient'>
+                          <div class='".$_COOKIE['nom_0']." formclientt'>
+                              <div class='form form_0' id='0'>
+                                  <div class='col5 client'>
+                                      <p>Nom :</p> <br>
+                                      <p>Prénom :</p> <br>
+                                      <p>Fonction :</p> <br>
+                                      <p>Ligne directe :</p> <br>
+                                      <p>Mail :</p> <br>
+                                  </div>
+                                  <div class='col6 client'>
+                                      <input type='text' name='nom_0' id='' value='";
+                                      if (!empty($_POST['nom_0']))
+                                      {
+                                          $_COOKIE['nom_0'] = $_POST['nom_0'];
+                                          echo $_COOKIE['nom_0'];
+                                      }
+                                      else
+                                      {
+                                          echo $_COOKIE['nom_0'];
+                                      }
+                                      echo "'><br>
+                                      <input type='text' name='prenom_0' id='' value='";
+                                      if (!empty($_POST['prenom_0']))
+                                      {
+                                          $_COOKIE['prenom_0'] = $_POST['prenom_0'];
+                                          echo $_COOKIE['prenom_0'];
+                                      }
+                                      else
+                                      {
+                                          echo $_COOKIE['prenom_0'];
+                                      }
+                                      echo "'><br>
+                                      <input type='text' name='fonction_0' id='' value='";
+                                      if (!empty($_POST['fonction_0']))
+                                      {
+                                          $_COOKIE['fonction_0'] = $_POST['fonction_0'];
+                                          echo $_COOKIE['fonction_0'];
+                                      }
+                                      else
+                                      {
+                                          echo $_COOKIE['fonction_0'];
+                                      }
+                                      echo "'><br>
+                                      <input type='text' name='ld_0' id='' value='";
+                                      if (!empty($_POST['ld_0']))
+                                      {
+                                          $_COOKIE['ld_0'] = $_POST['ld_0'];
+                                          echo $_COOKIE['ld_0'];
+                                      }
+                                      else
+                                      {
+                                          echo $_COOKIE['ld_0'];
+                                      }
+                                      echo "'><br>
+                                      <input type='text' name='mail_0' id='' value='";
+                                      if (!empty($_POST['mail_0']))
+                                      {
+                                          $_COOKIE['mail_0'] = $_POST['mail_0'];
+                                          echo $_COOKIE['mail_0'];
+                                      }
+                                      else
+                                      {
+                                          echo $_COOKIE['mail_0'];
+                                      }
+                                      echo "'> <br>
+                                  </div>
+                                  <div class='croix ".$_COOKIE['nom_0']."'>
+                                    <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='0'>
                                 </div>
-                            </div>
-                            <input type='submit' name='confirm_0' value='Enregistrer' class='button'>
-                            <input type='submit' name='apercu_0' value='Aperçu' class='button apercu_0 apercu_submit' style='margin-left: 95px;'>
-                            <input type='submit' value='Télécharger' class='button' name='telecharger_0'>
-                        </form>
-                </div>
-                <div class='droitedeux'>
-                    <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
-                        <div class='apercu' style='height: 375px; padding: 15px;'></div>
-                        <div class='pub'></div>
-                    </div>
-                    <form action='".$_SERVER['PHP_SELF']."' method='post'>
-                        <input name='deconnexion' class='button' type='submit' value='Deconnexion' style='margin-top: 10px; margin-left: 85px;'>
-                    </form>
-                </div>
-            </fieldset>";
-     }
-     else
-     {
-        echo "<fieldset class='field_client'>
-                <div class='gauche'>
-                    <img src='img/logo.png' alt='' style='width: 100%;'>
-                    <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
-                </div>
-                <div class='droite'>
-                    <h1>Les employés de votre entreprise</h1>";
+                              </div>
+                          </div>
+                          <input type='submit' name='confirm_0' value='Enregistrer' class='button enregsitre_0 enregistrer'>
+                          <input type='submit' name='apercu_0' value='Aperçu' class='button apercu_0 apercu_submit' style='margin-left: 95px;'>
+                          <a href='signatures/Signature_".$_COOKIE['nom_0']."_".$_COOKIE['prenom_0'].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_0' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
+                      </form>
+                <div class='reponse_client reponse_client_0'></div>
+              </div>";
+                }
+                else
+                {
+                  echo "<div class='droite'>
+                    <h2 style='font-size: 35px;'>Les employés de votre entreprise</h2>";
                     for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
-                        echo "<form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient'>
+                        echo "<form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_".$z." formclient'>
                                 <div class='".$_COOKIE['nom_'.$z]." formclientt'>
                                 <h2 style='margin-top: 25px; margin-bottom: 25px; padding-left: 15px;'>Employé n° ".($z+1)."</h2>
-                                    <div class='form' id='0'>
+                                    <div class='form form_".$z."' id='".$z."'>
                                         <div class='col5 client'>
                                             <p>Nom :</p> <br>
                                             <p>Prénom :</p> <br>
@@ -227,27 +239,43 @@ if ($result->num_rows > 0) {
                                             }
                                             echo "'> <br>
                                         </div>
+                                        <div class='croix ".$_COOKIE['nom_'.$z]."'>
+                                            <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='".$z."'>
+                                        </div>
                                     </div>
                                 </div>
-                                <input type='submit' name='confirm_".$z."' value='Enregistrer' class='button enregistrer_".$z."'>
+                                <input type='submit' name='confirm_".$z."' value='Enregistrer' class='button enregistrer_".$z." enregistrer'>
                                 <input type='submit' name='apercu_".$z."' value='Aperçu' class='button apercu_".$z." apercu_submit' style='margin-left: 95px;'>
-                                <input type='submit' value='Télécharger' class='button' name='telecharger_0'>
+                                <a href='signatures/Signature_".$_COOKIE['nom_'.$z]."_".$_COOKIE['prenom_'.$z].".html' download value='Télécharger' class='button telecharger button telech' name='telecharger_".$z."' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
                                 <!-- <hr class='hrclient' style='background: black; width: 350px; margin-left: 0px;'> -->
-                            </form>";
+                            </form>
+                        <div class='reponse_client reponse_client_".$z."'></div>";
                     }
-                echo "</div>
-                <div class='droitedeux'>
+                echo "</div>";
+                }
+                // Si la personne a déclaré son entreprise mais pas ses employés, on fait une redirection
+                if ($_COOKIE['nb_client'] == 0)
+                {
+                    echo "<p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo_test.php' class='button' style='color: #000000;'>Déclarer les employés</a>";
+                }
+                else
+                {
+                    echo "<p style='color: #000000;'>Michou</p>";
+                }
+                echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
                         <div class='apercu' style='height: 375px; padding: 15px;'></div>
-                        <div class='pub'></div>
+                        <div class='pub'>
+                            <a href='".$_COOKIE['site']."' target='_blank' rel='noopener noreferrer'>
+                                <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
+                            </a>
+                        </div>
                     </div>
                     <form action='".$_SERVER['PHP_SELF']."' method='post'>
                         <input name='deconnexion' class='button' type='submit' value='Deconnexion' style='margin-top: 10px; margin-left: 85px;'>
                     </form>
                 </div>
-                </div>
             </fieldset>";
-     }
     ?>
     <!-- <fieldset>
         <div class="gauche">
@@ -280,15 +308,13 @@ if ($result->num_rows > 0) {
                     <input type="submit" value="Télécharger" class="button" name="telecharger_0">
                 </form>
         </div>
-        <?php
-        ?>
     </fieldset> -->
-    <?php
-    if (isset($_POST['deconnexion']))
-    {
-        session_destroy();
-        header("Location: login.php");
-    }
-    ?>
+    <!-- <?php
+    // if (isset($_POST['deconnexion']))
+    // {
+    //     session_destroy();
+    //     header("Location: login.php");
+    // }
+    ?> -->
 </body>
 </html>

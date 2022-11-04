@@ -38,7 +38,7 @@ session_id();
         <?php
         if (isset($_POST['choix']) && ($_POST['choix']=="creation") && isset($_POST['ok']))
         {
-            header('Location: creation_entre_test.php');
+            header('Location: creation_entre.php');
         }
         if (isset($_POST['choix']) && ($_POST['choix']=="login") && isset($_POST['ok']))
         {

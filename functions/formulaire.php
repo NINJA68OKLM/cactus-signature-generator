@@ -1,10 +1,38 @@
-      <fieldset>
+<?php
+// Connexion à la base de données
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "signature";
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Requête
+$requete= $requete= "SELECT * FROM entreprise WHERE id='".$_COOKIE['idd']."'";
+$result = $conn->query($requete);
+// Cookies généraux pour l'entreprise
+$ligne = $result->fetch_array(MYSQLI_ASSOC);
+$entr = $ligne["nom"];
+$adre = setcookie("adre", $ligne["adresse"], time()+3600);
+$adre = $_SESSION['adre']=$ligne['adresse'];
+$cp = setcookie("cp", $ligne["cp"], time()+3600);
+$vill = setcookie("vill", $ligne["ville"], time()+3600);
+$site = setcookie("site", $ligne["site"], time()+3600);
+$tel = setcookie("tel", $ligne["tel"], time()+3600);
+$logo = setcookie("logo", $ligne["logo"], time()+3600);
+$signature = setcookie("signature", $ligne["signature"], time()+3600);
+$rs = setcookie("rs", "", time()+3600);
+$_SESSION["logonom"] = $_COOKIE['logo'];
+// Cookies spécifiques pour chaque employé
+for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
+    $_SESSION['nom_'.$z]=$_COOKIE['nom_'.$z];
+}
+?>
+    <fieldset>
         <div class="gauche">
             <img src="img/logo.png" alt="" style="width: 100%;">
             <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
         </div>
         <div class="droite">
-            <h1>Déclarez vos employés</h1>
+            <h1>Les informations de votre entreprise</h1>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="formprinc">
                 <div class="flex">
                     <div class="form">

@@ -9,7 +9,7 @@ jQuery(function ($) {
     // creation_entre.php
     
     // Affichage du bouton pour la redirection vers la déclaration d'employés ou la connexion
-    if (window.location.href.indexOf("/creation_entre_test.php")!=-1) {
+    if (window.location.href.indexOf("/creation_entre.php")!=-1) {
         if ($("[name='tel']").val()!== "" && $("[name='site']").val()!== "" && $("[name='empl']").val()!== "" && $("[name='sign']").val()!=="" && $("[name='entr']").val()!== "" && $("[name='adre']").val()!== "" && $("[name='vill']").val()!== "" && $("[name='vill']").val().match(maj) && $("[name='cp']").val()!== "" && $(".filename").html() !== " Aucun fichier selectionné...") {
             if ($(".confirmation").html() !== "Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.")
             {
@@ -32,7 +32,7 @@ jQuery(function ($) {
         e.preventDefault()
         // Redirection lors de la validation du formulaire
         setTimeout(function () {
-            window.location.replace("creation_emplo_test.php")
+            window.location.replace("creation_emplo.php")
         }, 1000)
     })
     // Clic sur "Connexion"
@@ -52,11 +52,11 @@ jQuery(function ($) {
     }
     // Redirection au cas où un internaute tenterait d'accéder à la page sans avoir déclaré l'entreprise
     // if (window.location.href.indexOf(window.location.host+"/Proto/creation_emplo_test.php")!=-1)
-    if (window.location.href.indexOf("/creation_emplo_test.php")!=-1)
+    if (window.location.href.indexOf("/creation_emplo.php")!=-1)
     {
         if ($("[name='tel']").val()== "" && $("[name='site']").val()== "" && $("[name='empl']").val()== "" && $("[name='sign']").val("") && $("[name='entr']").val()== "" && $("[name='adre']").val()== "" && $("[name='vill']").val()== "" && $("[name='cp']").val()== "" && $(".logoimg").attr("src") ==  "img/uploads/")
         {
-            window.location.replace("creation_entre_test.php")
+            window.location.replace("creation_entre.php")
         }
     }
 
@@ -479,7 +479,7 @@ jQuery(function ($) {
     // }
     
     
-    if (window.location.href.indexOf("client_test.php")!=-1)
+    if (window.location.href.indexOf("client.php")!=-1)
     {
         // Affichage de l'aperçu espace client
         $(".apercu_submit").on("click", function (w) {

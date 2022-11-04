@@ -100,7 +100,7 @@ session_id();
                     setcookie("bddid", $rechercheinfos["id"], time()+3600);
                 }
                 var_dump($rechercheinfos);
-                header('Location: client_test.php');
+                header('Location: client.php');
             }
             else
             {
