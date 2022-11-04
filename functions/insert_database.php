@@ -27,7 +27,7 @@ $result = $conn->query($requete);
 // Vérifie si l'employé existe déjà existe dans la base de données
 $requetee= "SELECT * FROM employes WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
 $resultt = $conn->query($requetee);
-
+echo $requetee;
 // if ($result->num_rows > 0) {
 if ($resultt->num_rows >= 1) {
   echo "<p class='confirmation' style='margin: 7.5px;'>Cet employé existe déjà dans notre base de données !</p>";
@@ -44,7 +44,7 @@ else
     // Préparation de l'insertion de l'employé dans la base de données
     $insert="INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (".$ligne[0].",'".$_COOKIE['nom_'.$i]."', '".$_COOKIE['prenom_'.$i]."', '".$_COOKIE['fonction_'.$i]."', ".$_COOKIE['ld_'.$i].", '".$_COOKIE['mail_'.$i]."', 0, '', '')";
     // Echo test pour voir ce que retourne la requête SQL
-    // echo $insert;
+    echo $insert;
     // Génération des identifiants
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);

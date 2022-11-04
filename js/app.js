@@ -556,9 +556,9 @@ jQuery(function ($) {
             // Suppression du formulaire correspondant à l'employé
             $("#"+formId).parent().parent().remove()
             // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
-            // $.get("functions/client_delete.php", function(data){
-            //     console.log(data)
-            // })
+            $.get("functions/client_delete.php", function(data){
+                console.log(data)
+            })
             // Suppression des cookies liés au formulaire supprimé
             $.removeCookie("nom_"+formId)
             $.removeCookie("prenom_"+formId)
@@ -578,6 +578,7 @@ jQuery(function ($) {
                 $.cookie("ld_"+j, $("[name='ld_"+(j+1)+"']").val())
                 $.cookie("fonction_"+j, $("[name='fonction_"+(j+1)+"']").val())
                 $.cookie("admin_"+j, $("[name='admin_"+(j+1)+"']").val())
+                $.cookie("idd_"+j, $.cookie("idd_"+(j+1)))
                 // Renommage des id
                 $(".form_"+(j+1)).attr("id", j)
                 // Renommage des champs
@@ -597,10 +598,14 @@ jQuery(function ($) {
                 $(".formclient_"+(j+1)+">div>h2").html("Employé n° "+j)
             }
 
-            console.log("Test : "+$.cookie("id"))
+            // console.log($(".formclient>div>h2"))
+            $.each($(".formclient>div>h2"), function (x, y)
+            {
+                console.log(y)
+                $(y).html("Employé n°"+(x+1))
+            })
 
             // Actualisation des numéros des employés
-            console.log($(".formclientt").length)
             $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
         })
     }

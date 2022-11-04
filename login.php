@@ -75,6 +75,7 @@ session_id();
                     setcookie("mail_0", $rechercheinfos["mail"], time()+3600);
                     setcookie("ld_0", $rechercheinfos["ld"], time()+3600);
                     setcookie("admin_0", $rechercheinfos["admin"], time()+3600);
+                    setcookie("idd_0", $rechercheinfos["idd"], time()+3600);
                     setcookie("nb_client", $result->num_rows, time()+3600);
                 }
                 // Sinon tous les employés de l'entreprise le sont
@@ -94,6 +95,7 @@ session_id();
                         setcookie("mail_".$l, $val["mail"], time()+3600);
                         setcookie("ld_".$l, $val["ld"], time()+3600);
                         setcookie("admin_".$l, $val["admin"], time()+3600);
+                        setcookie("idd_".$l, $val["idd"], time()+3600);
                         $l++;
                     }
                     // Mise en place du cookie "id" de l'entrperise pour pouvoir afficher les infos propres à l'entreprise

@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 $recherche = "SELECT id FROM entreprise WHERE nom='".$_SESSION['entr']."'";
 $ligne = $conn->query($recherche);
 $id = $ligne->fetch_row();
-echo $id[0];
+// echo $id[0];
 $_SESSION['bddid'] = $id[0];
 $_COOKIE['bddid'] = $id[0];
 ?>
