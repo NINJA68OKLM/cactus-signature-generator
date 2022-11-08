@@ -374,6 +374,7 @@ if ($conn->connect_error) {
     {
         $requete= "INSERT INTO employes (id, nom, prenom, mail, ld, fonction, admin, ide, mdp) VALUES ('".$_COOKIE['idd']."', '".$_POST['nom']."', '".$_POST['prenom']."', '".$_POST['mail']."', '".$_POST['ld']."', '".$_POST['fonction']."', 0, '', '')";
         $result = $conn->query($requete);
+        echo "<p>Votre nouvel employé a bien été ajouté !</p>";
     }
     
     ?>

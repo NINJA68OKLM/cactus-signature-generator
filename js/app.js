@@ -452,7 +452,7 @@ jQuery(function ($) {
                     })
                     for (let d = 0; d < check.length; d++) {
                         $.cookie("rs_href_"+d, $(".URL:eq("+d+")").val())
-                        $.cookie("rs_icon_"+d, check[d])
+                        $.cookie("rs_"+d, check[d])
                         
                     }
                     // Enregistrement des informations propres aux réseaux sociaux dans la base de données

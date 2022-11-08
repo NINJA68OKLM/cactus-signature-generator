@@ -1,5 +1,4 @@
 <?php
-echo "DDDDD : KI";
 session_start();
 session_id();
 
@@ -19,7 +18,7 @@ $kfresult = $conn->query($kfrequete);
 for ($d=0; $d < $_COOKIE['rsnbr']; $d++) {
   $frequete= $requete= "UPDATE entreprise SET ".$_COOKIE['rs_'.$d]."='".$_COOKIE['rs_href_'.$d]."' WHERE id='".$_COOKIE['bddid']."'";
   $fresult = $conn->query($frequete);
-  echo "<br>".$frequete."<br>";
+  // echo "<br>".$frequete."<br>";
 }
 // Enregistrement du style
 $trequete= "UPDATE entreprise SET rs_style='".$_COOKIE['rs_style']."' WHERE id='".$_COOKIE['bddid']."'";
