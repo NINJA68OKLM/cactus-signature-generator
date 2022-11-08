@@ -151,28 +151,28 @@ include("functions/select_id.php");
                                 if (!empty($_POST['prenom_'.$i]))
                                 {
                                     echo $_POST['prenom_'.$i];
-                                    $_SESSION['prenom_'.$i] = $_POST['nom_'.$i];
+                                    $_SESSION['prenom_'.$i] = $_POST['prenom_'.$i];
                                 }
                                 echo "\" id='prenom_$i' data-firstname-id='$i' placeholder='Ex : Martin'><br>
                                 <input type='text' name='fonction_".$i."' id='' class='fonction' value=\"";
                                 if (!empty($_POST['fonction_'.$i]))
                                 {
                                     echo $_POST['fonction_'.$i];
-                                    $_SESSION['fonction_'.$i] = $_POST['nom_'.$i];
+                                    $_SESSION['fonction_'.$i] = $_POST['fonction_'.$i];
                                 }
                                 echo "\" id='fonction_$i' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
                                 <input type='tel' name='ld_".$i."' id='' class='ld' value=\"";
-                                if (!empty($_POST['fonction_'.$i]))
+                                if (!empty($_POST['ld_'.$i]))
                                 {
                                     echo $_POST['ld_'.$i];
-                                    $_SESSION['ld_'.$i] = $_POST['nom_'.$i];
+                                    $_SESSION['ld_'.$i] = $_POST['ld_'.$i];
                                 }
                                 echo "\" id='ld_$i' data-ld-id='$i' maxlength='10' placeholder='Ex : 06********'><br>
                                 <input type='email' name='mail_".$i."' id='' class='mail' value=\"";
                                 if (!empty($_POST['mail_'.$i]))
                                 {
                                     echo $_POST['mail_'.$i];
-                                    $_SESSION['mail_'.$i] = $_POST['nom_'.$i];
+                                    $_SESSION['mail_'.$i] = $_POST['mail_'.$i];
                                 }
                                 echo "\" id='mail_$i' data-mail-id='$i' placeholder='Ex : prenom.nom@mail.fr'>
                                 <input type='submit' name='confirm_".$i."' value='Enregistrer' class='button enregistrer_$i enregistrer' data-form-id='$i' >
@@ -204,11 +204,13 @@ include("functions/select_id.php");
     <div id="infoRS"></div>
     <div class="employes"></div>
     <div class="values"></div>
-    <!-- <script lang="javascript">
-        const reloadUsingLocationHash = () => {
-            window.location.hash = "reload";
+    <script type="text/javascript">
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
         }
-        window.onload = reloadUsingLocationHash();
-    </script> -->
+    </script>
 </body>
 </html>

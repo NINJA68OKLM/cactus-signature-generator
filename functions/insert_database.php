@@ -20,19 +20,18 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-// // Récupération de l'id de l'entreprise en cookie "bddid"
+// Récupération de l'id de l'entreprise en cookie "bddid"
 $requete= "SELECT id FROM entreprise WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
 $result = $conn->query($requete);
 
 // Vérifie si l'employé existe déjà existe dans la base de données
 $requetee= "SELECT * FROM employes WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
 $resultt = $conn->query($requetee);
-echo $requetee;
-// if ($result->num_rows > 0) {
-if ($resultt->num_rows >= 1) {
-  echo "<p class='confirmation' style='margin: 7.5px;'>Cet employé existe déjà dans notre base de données !</p>";
-}
-else
+// Echo et Var_dump requete pour test
+// echo $requetee;
+// var_dump($resultt->num_rows);
+// echo "Nombre de lignes trouvés : "+$resultt->num_rows."<br>";
+if ($resultt->num_rows == 0)
 {
   // echo "<p class='confirmation' style='margin: 15px;'>Cet employé n'existe pas.</p>";
   echo "<p class='confirmation' style='margin: 7.5px;'>Cet employé a bien été enregistré dans la base de données !</p>";
@@ -44,7 +43,7 @@ else
     // Préparation de l'insertion de l'employé dans la base de données
     $insert="INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (".$ligne[0].",'".$_COOKIE['nom_'.$i]."', '".$_COOKIE['prenom_'.$i]."', '".$_COOKIE['fonction_'.$i]."', ".$_COOKIE['ld_'.$i].", '".$_COOKIE['mail_'.$i]."', 0, '', '')";
     // Echo test pour voir ce que retourne la requête SQL
-    echo $insert;
+    // echo $insert;
     // Génération des identifiants
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -69,6 +68,9 @@ else
     $conn->query($update);
     // echo "<br>".$_COOKIE['nom_'.$i];
   }
+}
+else {
+  echo "<p class='confirmation' style='margin: 7.5px;'>Cet employé existe déjà dans notre base de données !</p>";
 }
 $conn->close();
 ?>

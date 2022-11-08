@@ -93,8 +93,20 @@ jQuery(function ($) {
             return emptyfield
         }
 
-        // Enregistrement d'un employé
+        // Enregistrement d'un employé si tous les champs sont bien remplies
         if (emptyfield==false && $.isNumeric($("[name='ld_" + formId + "']").val()) && $("[name='ld_" + formId + "']").val().length >= 10 && $("[name='nom_" + formId + "']").val().match(maj) && $("[name='prenom_" + formId + "']").val().match(maj) && $("[name='fonction_" + formId + "']").val().match(maj) && $("[name='mail_" + formId + "']").val().match(mail)) {
+            // Création des cookies pour le téléchargement et l'insertion des employés dans la base de données
+            var nomm= $("[name='nom_"+formId+"']").val()
+            var prenomm= $("[name='prenom_"+formId+"']").val()
+            var fonctionm= $("[name='fonction_"+formId+"']").val()
+            var ldm= $("[name='ld_"+formId+"']").val()
+            var mailm= $("[name='mail_"+formId+"']").val()
+            $.cookie("nom_"+formId, nomm, {expires: 7})
+            $.cookie("prenom_"+formId, prenomm, {expires: 7})
+            $.cookie("fonction_"+formId, fonctionm, {expires: 7})
+            $.cookie("ld_"+formId, ldm, {expires: 7})
+            $.cookie("mail_"+formId, mailm, {expires: 7})
+            $.cookie("id", formId,  {expires: 7})
             // Appel du fichier "insert_database.php" pour enregistrer les employés
             $.get("functions/insert_database.php", function(data){
                 console.log(data)
@@ -368,7 +380,7 @@ jQuery(function ($) {
                         $.cookie("rs_href_"+l, href)
                         readFiles()
                         function readFiles() {
-                            $.get('img/Logos/' + $("[name='style']").val() + '/' + valeur + '.svg', function (data) {
+                            $.get('img/Logos/' + $("[name='style']:checked").val() + '/' + valeur + '.svg', function (data) {
                                 $(".icon." + valeur).html(data)
                                 console.log(data)
                                 $.cookie("rs_icon_"+l, data)
@@ -380,18 +392,7 @@ jQuery(function ($) {
             })
             $(".erreur_" + formId).text("")
         }
-        // Création des cookies pour le téléchargement
-        var nomm= $("[name='nom_"+formId+"']").val()
-        var prenomm= $("[name='prenom_"+formId+"']").val()
-        var fonctionm= $("[name='fonction_"+formId+"']").val()
-        var ldm= $("[name='ld_"+formId+"']").val()
-        var mailm= $("[name='mail_"+formId+"']").val()
-        $.cookie("nom_"+formId, nomm, {expires: 7})
-        $.cookie("prenom_"+formId, prenomm, {expires: 7})
-        $.cookie("fonction_"+formId, fonctionm, {expires: 7})
-        $.cookie("ld_"+formId, ldm, {expires: 7})
-        $.cookie("mail_"+formId, mailm, {expires: 7})
-        $.cookie("id", formId,  {expires: 7})
+        
         // Téléchargement
         $("[name='telecharger_"+formId+"']").on("click", function () {
             $.get("functions/download.php", function(data){
@@ -433,7 +434,6 @@ jQuery(function ($) {
                 $.cookie("rs_style", $("[name='style']:checked").val())
                 // console.log("Cookie :"+$("[name='style']").is(":checked"))
                 // $("body").append(`<div class="values"></div>`)
-                $.get("functions/add_social_media.php", function(data){ console.log(data)})
                 $(".rs").on("click", function () {
                     $(".values").html(" ")
                     $("#infoRS").html(" ")
@@ -447,11 +447,18 @@ jQuery(function ($) {
                             var rsnbr = check.length
                             $.cookie("rsnbr", rsnbr)
                             $.cookie("rs_"+q, a)
-                            // Enregistrement des informations propres aux réseaux sociaux dans la base de données
-                            
+                            console.log("HREF :"+check[q])
                         }
                     })
-                    
+                    for (let d = 0; d < check.length; d++) {
+                        $.cookie("rs_href_"+d, $(".URL:eq("+d+")").val())
+                        $.cookie("rs_icon_"+d, check[d])
+                        
+                    }
+                    // Enregistrement des informations propres aux réseaux sociaux dans la base de données
+                    $.get("functions/add_social_media.php", function(data){
+                        console.log(data)
+                    })
                 })
             }
             if ($(".RSvalue").length > 0)

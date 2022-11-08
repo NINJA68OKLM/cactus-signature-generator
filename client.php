@@ -13,10 +13,10 @@ if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['m
     // $_COOKIE['logo'];
     $cookie="dd";
 }
-else
-{
-    header("Location: login.php");
-}
+// else
+// {
+//     header("Location: login.php");
+// }
 // Vérification de la connexion
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -309,18 +309,82 @@ if ($conn->connect_error) {
                 </form>
         </div>
     </fieldset> -->
-    <!-- <?php
-    // if (isset($_POST['deconnexion']))
-    // {
-    //     session_destroy();
-    //     header("Location: login.php");
-    // }
-    ?> -->
-    <script lang="javascript">
-        const reloadUsingLocationHash = () => {
-            window.location.hash = "reload";
+    <!-- Formulaire pour ajouter un client -->
+    <fieldset>
+        <div class="gauche">
+            <img src="img/logo.png" alt="" style="width: 100%;">
+            <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
+        </div>
+        <div class="droite">
+            <h1>Ajouter un employé</h1>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="formprinc">
+            <div class='form' id='".$i."'>
+                            <div class='col5'>
+                                <p style="color: #000000 !important;">Nom :</p> <br>
+                                <p style="color: #000000 !important;">Prénom :</p> <br>
+                                <p style="color: #000000 !important;">Fonction :</p> <br>
+                                <p style="color: #000000 !important;">Ligne directe :</p> <br>
+                                <p style="color: #000000 !important;">Mail :</p> <br>
+                            </div>
+                            <div class='col6'>
+                                <input type='text' name='nom' id='' class='nom' value='<?php
+                                if (!empty($_POST['nom']))
+                                {
+                                    echo $_POST['nom'];
+                                    $_SESSION['nom'] = $_POST['nom'];
+                                }
+                                ?>' id='nom' data-name-id='' placeholder='Ex : Durand'><br>
+                                <input type='text' name='prenom' id='' class='prenom' value="<?php
+                                if (!empty($_POST['prenom']))
+                                {
+                                    echo $_POST['prenom'];
+                                    $_SESSION['prenom'] = $_POST['prenom'];
+                                }
+                                ?>" id='prenom' data-firstname-id='' placeholder='Ex : Martin'><br>
+                                <input type='text' name='fonction' id='' class='fonction' value="<?php
+                                if (!empty($_POST['fonction']))
+                                {
+                                    echo $_POST['fonction'];
+                                    $_SESSION['fonction'] = $_POST['fonction'];
+                                }
+                                ?>" id='fonction' data-function-id='$i' placeholder='Ex : Stagiaire'><br>
+                                <input type='tel' name='ld' id='' class='ld' value="<?php
+                                if (!empty($_POST['ld']))
+                                {
+                                    echo $_POST['ld'];
+                                    $_SESSION['ld'] = $_POST['ld'];
+                                }
+                                ?>" id='ld' data-ld-id='' maxlength='10' placeholder='Ex : 06********'><br>
+                                <input type='email' name='mail' id='' class='mail' value="<?php
+                                if (!empty($_POST['mail']))
+                                {
+                                    echo $_POST['mail'];
+                                    $_SESSION['mail'] = $_POST['mail'];
+                                }
+                                ?>" id='mail' data-mail-id='' placeholder='Ex : prenom.nom@mail.fr'>
+                                <input type='submit' name='confirm' value='Enregistrer' class='button' data-form-id='$i' >
+                            </div>
+                        </div>
+            </form>
+        </div>
+    </fieldset>
+    <!-- Ajouter le client à la base de données -->
+    <?php
+    if (isset($_POST['confirm']))
+    {
+        $requete= "INSERT INTO employes (id, nom, prenom, mail, ld, fonction, admin, ide, mdp) VALUES ('".$_COOKIE['idd']."', '".$_POST['nom']."', '".$_POST['prenom']."', '".$_POST['mail']."', '".$_POST['ld']."', '".$_POST['fonction']."', 0, '', '')";
+        $result = $conn->query($requete);
+    }
+    
+    ?>
+    <!-- La page est d'abord chargé mais ne reconnait pas les cookies, on actualise la page puis on change l'URL afin qu'il ne recharge pas à l'infini -->
+    <script type="text/javascript">
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
         }
-        window.onload = reloadUsingLocationHash();
     </script>
 </body>
 </html>

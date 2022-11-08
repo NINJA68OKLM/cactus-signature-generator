@@ -24,6 +24,7 @@ foreach ($rresult as $cle => $val) {
 foreach ($sresult as $cle => $val) {
   setcookie("style", $val["rs_style"], time()+3600);
 }
+
 // Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
 foreach ($result as $cle => $val) {
   $ch=0;
