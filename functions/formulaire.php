@@ -2,8 +2,8 @@
 session_id();
 // Connexion à la base de données
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin__";
+$password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Requête
