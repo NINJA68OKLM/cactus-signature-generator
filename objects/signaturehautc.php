@@ -1,13 +1,14 @@
 <?php
 $id=$_COOKIE['id'];
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin__";
+$password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Sélection de tous les champs de réseuax sociaux
 $requete= "SELECT facebook, twitter, instagram, youtube, linkedin FROM entreprise WHERE id='".$_COOKIE['idd']."'";
 $result = $conn->query($requete);
+// $result =$result -> fetch_array(MYSQLI_ASSOC);
 // Sélection du nombre de réseuax sociaux
 $rrequete= "SELECT rs FROM entreprise WHERE id='".$_COOKIE['idd']."'";
 $rresult = $conn->query($rrequete);
@@ -24,7 +25,6 @@ foreach ($rresult as $cle => $val) {
 foreach ($sresult as $cle => $val) {
   setcookie("style", $val["rs_style"], time()+3600);
 }
-
 // Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
 foreach ($result as $cle => $val) {
   $ch=0;
@@ -32,11 +32,11 @@ foreach ($result as $cle => $val) {
     // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
     if ($val[$tab[$r]] !== "")
     {
-      // En-dessous -> exemples pour voir les résultats pris en compte
+      // En-dessous -> exemples pour voir les résultats pris en compte pour voir ce que la base de données retourne
       // echo $r." : ".$val[$tab[$r]]."<br>";
-      setcookie("rs_".$ch, $tab[$r]);
-      setcookie("rs_href_".$ch, $val[$tab[$r]]);
-      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
+      setcookie("rs_".$ch, $tab[$r], time()+3600);
+      setcookie("rs_href_".$ch, $val[$tab[$r]], time()+3600);
+      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg", time()+3600));
       // echo $_COOKIE['rs_icon_0'];
       $ch++;
     }
@@ -49,7 +49,7 @@ foreach ($result as $cle => $val) {
       <!-- Identité -->
       <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
         <span>
-          <img src="img/uploads/<?= $_COOKIE['logo'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
         <br>
         <span id="nom" style="font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif;"><?= $_COOKIE['prenom_'.$id]." ".strtoupper($_COOKIE['nom_'.$id]) ?></span>

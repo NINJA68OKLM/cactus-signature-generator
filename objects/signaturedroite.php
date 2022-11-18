@@ -52,7 +52,7 @@ $id=$_COOKIE['id'];
                             <tr>
                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
                                 <td style="height:55px; vertical-align:top;" valign="top">
-                                    <img src="img/uploads/<?= $_SESSION['logonom'] ?>" style="border:0;" height="70">
+                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" style="border:0;" height="70">
                                 </td>
                             </tr>      
                         </tbody>

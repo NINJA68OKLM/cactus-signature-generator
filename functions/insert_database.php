@@ -66,6 +66,27 @@ if ($resultt->num_rows == 0)
     }
     // Attribution des identifiants
     $conn->query($update);
+    // Envoi d'un mail pour informer le client que ses identifiants ont éts enregistrés
+    // Pour ne pas modifier le fichier php.ini, on utilise ce bout de code afin de connecter le fichier au SMTP
+    ini_set("SMTP","localhost");
+    ini_set("smtp_port","25");
+    // Envoi du mail
+    $destinataire = $_COOKIE['mail_'.$i];
+    $expediteur   = 'generator@signature.cactus.com';
+    $reponse      = $expediteur;
+    echo "<p class='confirmation' style='margin: 15px;'>Vos identifiants vous ont étés envoyés par mail.</p>";
+    $codehtml=
+        "<font face='arial'>
+        Vos identifiants pour l'accès à Signature Generator sont disponibles.<br><br>
+        Identifiant : ".$ide."<br>
+        Mot de passe : ".$randomString."
+        </font>";
+    mail($destinataire,
+        'Email au format HTML',
+        $codehtml,
+        "From: $expediteur\r\n".
+            "Reply-To: $reponse\r\n".
+            "Content-Type: text/html; charset=\"UTF-8\"\r\n");
     // echo "<br>".$_COOKIE['nom_'.$i];
   }
 }

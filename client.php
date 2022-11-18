@@ -3,8 +3,8 @@ session_start();
 session_id();
 // Connexion à la base de données
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin__";
+$password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
@@ -31,7 +31,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
     <link rel="stylesheet" href="styles/background_2_O.css" media="screen and (min-width: 1200px)">
-    <title>Signature Generator</title>
+    <title>Signature Generator : Espace client</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -45,8 +45,8 @@ if ($conn->connect_error) {
     if ($_COOKIE['nb_client'] > 1) 
     {
         $servername = "localhost";
-        $username = "root";
-        $password = "";
+        $username = "admin__";
+        $password = "5YbsW6lVuo4wwh^a";
         $dbname = "signature";
         $conn = new mysqli($servername, $username, $password, $dbname);
         // Vérification de la connexion
@@ -256,11 +256,7 @@ if ($conn->connect_error) {
                 // Si la personne a déclaré son entreprise mais pas ses employés, on fait une redirection
                 if ($_COOKIE['nb_client'] == 0)
                 {
-                    echo "<p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo_test.php' class='button' style='color: #000000;'>Déclarer les employés</a>";
-                }
-                else
-                {
-                    echo "<p style='color: #000000;'>Michou</p>";
+                    echo "<p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo.php' class='button' style='color: #000000;'>Déclarer les employés</a>";
                 }
                 echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
@@ -272,43 +268,11 @@ if ($conn->connect_error) {
                         </div>
                     </div>
                     <form action='".$_SERVER['PHP_SELF']."' method='post'>
-                        <input name='deconnexion' class='button' type='submit' value='Deconnexion' style='margin-top: 10px; margin-left: 85px;'>
+                        <input name='deconnexion' class='button' type='submit' value='Deconnexion' style='margin-top: 105px; margin-left: 85px;'>
                     </form>
                 </div>
             </fieldset>";
     ?>
-    <!-- <fieldset>
-        <div class="gauche">
-            <img src="img/logo.png" alt="" style="width: 100%;">
-            <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
-        </div>
-        <div class="droite">
-            <h1>Vos informations personnelles ?</h1>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="<?php $entr ?>">
-                        <div class="form" id="$i">
-                            <div class="col5 client">
-                                <p>Nom :</p> <br>
-                                <p>Prénom :</p> <br>
-                                <p>Fonction :</p> <br>
-                                <p>Ligne directe :</p> <br>
-                                <p>Mail :</p> <br>
-                            </div>
-                            <div class="col6">
-                                <input type="text" name="nom_0" id="" value="<?php if (!empty($_POST['nom'])) { $_COOKIE['nom'] = $_POST['nom']; echo $_COOKIE['nom']; } else { echo $_COOKIE['nom']; } ?>"><br>
-                                <input type="text" name="prenom_0" id="" value="<?php if (!empty($_POST['prenom'])) { $_COOKIE['prenom'] = $_POST['prenom']; echo $_COOKIE['prenom']; } else { echo $_COOKIE['prenom']; } ?>"><br>
-                                <input type="text" name="fonction_0" id="" value="<?php if (!empty($_POST['fonction'])) { $_COOKIE['fonction'] = $_POST['fonction']; echo $_COOKIE['fonction']; } else { echo $_COOKIE['nom']; } ?>"><br>
-                                <input type="text" name="ld_0" id="" value="<?php if (!empty($_POST['ld'])) { $_COOKIE['ld'] = $_POST['ld']; echo $_COOKIE['ld']; } else { echo $_COOKIE['ld']; } ?>"><br>
-                                <input type="text" name="mail_0" id="" value="<?php if (!empty($_POST['mail'])) { $_COOKIE['mail'] = $_POST['mail']; echo $_COOKIE['mail']; } else { echo $_COOKIE['mail']; } ?>"> <br>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="submit" name="confirm" value="Enregistrer" class="button">
-                    <input type="submit" value="Aperçu" class="button" style="margin-left: 95px;">
-                    <input type="submit" value="Télécharger" class="button" name="telecharger_0">
-                </form>
-        </div>
-    </fieldset> -->
     <!-- Formulaire pour ajouter un client -->
     <fieldset>
         <div class="gauche">
@@ -366,17 +330,26 @@ if ($conn->connect_error) {
                             </div>
                         </div>
             </form>
+            <div class="confirmuti"></div>
         </div>
     </fieldset>
     <!-- Ajouter le client à la base de données -->
     <?php
-    if (isset($_POST['confirm']))
-    {
-        $requete= "INSERT INTO employes (id, nom, prenom, mail, ld, fonction, admin, ide, mdp) VALUES ('".$_COOKIE['idd']."', '".$_POST['nom']."', '".$_POST['prenom']."', '".$_POST['mail']."', '".$_POST['ld']."', '".$_POST['fonction']."', 0, '', '')";
-        $result = $conn->query($requete);
-        echo "<p>Votre nouvel employé a bien été ajouté !</p>";
-    }
-    
+    // if (isset($_POST['confirm']))
+    // {
+    //     $requete= "INSERT INTO employes (id, nom, prenom, mail, ld, fonction, admin, ide, mdp) VALUES ('".$_COOKIE['idd']."', '".$_POST['nom']."', '".$_POST['prenom']."', '".$_POST['mail']."', '".$_POST['ld']."', '".$_POST['fonction']."', 0, '', '')";
+    //     $result = $conn->query($requete);
+    //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //     $charactersLength = strlen($characters);
+    //     $randomString = '';
+    //     for ($i = 0; $i < 20; $i++) {
+    //         $randomString .= $characters[rand(0, $charactersLength - 1)];
+    //     }
+    //     $ide = strtolower($_SESSION['entr']).".signature-cactus.fr";
+    //     $update = "UPDATE employes SET ide='".$ide."', mdp='".$randomString."' WHERE id='".$_COOKIE['idd']."'";
+    //     $conn->query($update);
+    //     echo "<p>Votre nouvel employé a bien été ajouté !</p>";
+    // }
     ?>
     <!-- La page est d'abord chargé mais ne reconnait pas les cookies, on actualise la page puis on change l'URL afin qu'il ne recharge pas à l'infini -->
     <script type="text/javascript">

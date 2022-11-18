@@ -52,7 +52,7 @@ $id=$_COOKIE['id'];
         </span> 
           <br>
         <span>
-          <img src="img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
       </td>
     </tr>

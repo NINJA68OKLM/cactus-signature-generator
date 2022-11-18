@@ -7,7 +7,7 @@ $id=$_COOKIE['id'];
       <!-- Identité -->
       <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
         <span>
-          <img src="img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
         <br>
         <span id="nom" style="font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif;"><?= $_COOKIE['prenom_'.$id]." ".strtoupper($_COOKIE['nom_'.$id]) ?></span>

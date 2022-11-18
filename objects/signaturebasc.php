@@ -1,8 +1,8 @@
 <?php
 $id=$_COOKIE['id'];
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin__";
+$password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Sélection de tous les champs de réseuax sociaux
@@ -93,7 +93,7 @@ foreach ($result as $cle => $val) {
         </span> 
           <br>
         <span>
-          <img src="img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
       </td>
     </tr>

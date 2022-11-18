@@ -18,7 +18,7 @@ session_id();
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
     <link rel="stylesheet" href="styles/background_1.css">
     <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
-    <title>Signature Generator</title>
+    <title>Signature Generator : Création entreprise</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -117,8 +117,8 @@ session_id();
             // Enregistrement de l'entreprise dans la base de données
             // Connexion à la base de données
             $servername = "localhost";
-            $username = "root";
-            $password = "";
+            $username = "admin__";
+            $password = "5YbsW6lVuo4wwh^a";
             $dbname = "signature";
             $conn = new mysqli($servername, $username, $password, $dbname);
             // Vérification de la connexion
@@ -146,7 +146,6 @@ session_id();
                     $conn->query($sqll);
                     // Message pour déclarer les employés
                     echo "<p class='confirmation' style='margin: 15px;'>Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.</p><br>";
-                    echo "<p class='confirmation' style='margin: 15px;'>Vos identifiants vous ont étés envoyés par mail</p>";
                     // Génération des identifiants
                     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                     $charactersLength = strlen($characters);
@@ -185,61 +184,26 @@ session_id();
                     // Enregistrement de ses identifiants
                     $updatee = "UPDATE employes SET ide='".$ide."', mdp='".$randomString."' WHERE nom='".$_SESSION['entr']."'";
                     $conn->query($updatee);
+                    // Pour ne pas modifier le fichier php.ini, on utilise ce bout de code afin de connecter le fichier au SMTP
+                    ini_set("SMTP","localhost");
+                    ini_set("smtp_port","25");
                     // Envoi du mail
-                    // $to      = ''.$_POST['adrmail'].'';
-                    // $subject = 'Identifiants entreprise Signature Generator';
-                    // $message = 'Voici vos identifiants pour l\'accès à votre espace client dans Signature Generator : <br> Identifiant : '.$ide.'<br> Mot de passe : '.$randomString.'.<br> Ne répondez pas, ceci est un message automatique.';
-                    // $headers = 'From: support@signature-generator.com' . "\r\n" .
-                    //            'Reply-To: support@signature-generator.com' . "\r\n" .
-                    //            'X-Mailer: PHP/' . phpversion();
-
-                    // // mail($to, $subject, $message, $headers);
-
-                    // $destinataire = ''.$_POST['adrmail'].'';
-                    // $expediteur   = 'support.signature-generator@gmail.com';
-                    // $reponse      = $expediteur;
-                    // echo "Ce script envoie un mail à $destinataire ".
-                    //     "en précisant que l'expediteur est $expediteur ".
-                    //     "et que la réponse doit être envoyée à $reponse";
-                    // mail($destinataire,
-                    //     $subject,
-                    //     $message,
-                    //     "From: $expediteur\r\nReply-To: $reponse");
-
-
-                    // // Nouvel essai
-
-                    // $mail = new PHPMailer();
-                    // $mail->IsSMTP();
-                    // $mail->Host = '127.0.0.1';               //Adresse IP ou DNS du serveur SMTP
-                    // // $mail->Port = 465;                          //Port TCP du serveur SMTP
-                    // $mail->Port = 3306;
-                    // $mail->SMTPAuth = 1;                        //Utiliser l'identification
-
-                    // if($mail->SMTPAuth){
-                    //     $mail->SMTPSecure = 'ssl';               //Protocole de sécurisation des échanges avec le SMTP
-                    //     $mail->Username   =  'support@gmail.com';   //Adresse email à utiliser
-                    //     $mail->Password   =  'password';         //Mot de passe de l'adresse email à utiliser    
-                    // }
-                    // // Format de l'email
-                    // $mail->CharSet = 'UTF-8'; //Format d'encodage à utiliser pour les caractères
-                    // $mail->smtpConnect();
-                    // $mail->From       =  'support@signature-generator@ovh.com';                //L'email à afficher pour l'envoi
-                    // $mail->FromName   = 'Contact de ovh.net';             //L'alias à afficher pour l'envoi
-                    // $mail->Subject    =  $subject;                      //Le sujet du mail
-                    // $mail->WordWrap   = 50; 			                   //Nombre de caracteres pour le retour a la ligne automatique
-                    // $mail->AltBody = $message; 	       //Texte brut
-                    // $mail->IsHTML(false);                                  //Préciser qu'il faut utiliser le texte brut
-
-                    // // if($Use_HTML == true){
-                    // // $mail->MsgHTML('<div>Mon message en <code>HTML</code></div>'); 		                //Le contenu au format HTML
-                    // // $mail->IsHTML(true);
-                    // // }
-                    // if (!$mail->send()) {
-                    //     echo $mail->ErrorInfo;
-                    // } else{
-                    //     echo 'Message bien envoyé';
-                    // }
+                    $destinataire = $_SESSION['adrmail'];
+                    $expediteur   = 'generator@signature.cactus.com';
+                    $reponse      = $expediteur;
+                    echo "<p class='confirmation' style='margin: 15px;'>Vos identifiants vous ont étés envoyés par mail.</p>";
+                    $codehtml=
+                        "<font face='arial'>
+                        Vos identifiants administrateur pour l'accès à Signature Generator sont disponibles.<br><br>
+                        Identifiant : ".$ide."<br>
+                        Mot de passe : ".$randomString."
+                        </font>";
+                    mail($destinataire,
+                        'Email au format HTML',
+                        $codehtml,
+                        "From: $expediteur\r\n".
+                            "Reply-To: $reponse\r\n".
+                            "Content-Type: text/html; charset=\"UTF-8\"\r\n");
                 } else {
                     echo "<p class='confirmation' style='margin: 15px;'>Un problème a été détecté, veuillez réessayer plus tard</p>";
                 }

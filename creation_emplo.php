@@ -35,7 +35,7 @@ include("functions/select_id.php");
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
     <link rel="stylesheet" href="styles/background_1.css">
     <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
-    <title>Signature Generator</title>
+    <title>Signature Generator : Créa employe</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="

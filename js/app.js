@@ -3,7 +3,8 @@ jQuery(function ($) {
     // Expressions régulières
     var maj = /^[A-Z][a-z]{1,}$/
     // var ld = /^[0][0-9]{9}$/
-    var mail = /^[a-zA-Z]{4,}.[a-z]{1,}@[a-z]{1,}[-.][a-z]{2,3}$/
+    // var mail = /^[a-zA-Z]{4,}.[a-z]{1,}@[a-z]{1,}[-.][a-z]{2,3}$/
+    var mail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     // var sw = /^w{3}.[a-z]{3,}.[a-z]{2,3}$/
 
     // creation_entre.php
@@ -124,7 +125,9 @@ jQuery(function ($) {
                         <tr style="font-size: 14px;">
                             <!-- Identité -->
                             <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
+                                <div class='dfdddd'>OLOLO</div>
                                 <span>
+                                <!-- Michel Platinni -->
                                     <img src="img/uploads/${$(".logonom").data("nomId")}" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
                                 </span>
                                 <br>
@@ -451,6 +454,8 @@ jQuery(function ($) {
                         }
                     })
                     for (let d = 0; d < check.length; d++) {
+                        $.cookie("rs_href_"+d, $(".URL:eq("+d+")").val(), { expires:-1, path: '/' })
+                        $.cookie("rs_"+d, check[d], { expires:-1, path: '/' })
                         $.cookie("rs_href_"+d, $(".URL:eq("+d+")").val())
                         $.cookie("rs_"+d, check[d])
                         
@@ -497,7 +502,6 @@ jQuery(function ($) {
             // Création du cookie Id pour l'apercu et le téléchargement
             $.cookie("id", tabb[1])
             w.preventDefault()
-            console.log("KIKIKIKI")
             // Changement d'aperçu en fonction du choix de signature
             $.get("objects/signature"+$.cookie("signature")+"c.php", function(data) {
                 $(".apercu").html(data)
@@ -546,7 +550,9 @@ jQuery(function ($) {
                 $.cookie("fonction_"+formId, $("[name='fonction_"+formId+"']").val())
                 // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
                 $.get("functions/client_save.php", function(data){
-                    // console.log(data)
+                    console.log(data)
+                    $.cookie("nom_pre_"+formId, $("[name='nom_"+formId+"']").val())
+                    $.cookie("prenom_pre_"+formId, $("[name='prenom_"+formId+"']").val())
                 })
                 $(".reponse_client"+formId).text("Vos modifications ont bien étés enregistrés !")
             }
@@ -614,6 +620,23 @@ jQuery(function ($) {
 
             // Actualisation des numéros des employés
             $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
+        })
+
+        // Fonction d'ajout de client
+        $("[name='confirm']").on("click", function (g) {
+            g.preventDefault()
+            var contenu = $("fieldset:last>form").html()
+            $.get("functions/add_client.php", function(data){
+                $.cookie("nom", $("[name='nom']").val())
+                $.cookie("prenom", $("[name='prenom']").val())
+                $.cookie("mail", $("[name='mail']").val())
+                $.cookie("fonction", $("[name='fonction']").val())
+                $.cookie("ld", $("[name='ld']").val())
+                console.log(data)
+
+                $(".confirmuti").append(data)
+                console.log($(".confirmuti"))
+            })
         })
     }
 

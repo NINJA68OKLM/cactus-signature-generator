@@ -19,7 +19,7 @@ session_id();
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
     <script src="js/accept-cookie.js"></script>
-    <title>Signature Generator</title>
+    <title>Signature Generator : Connexion</title>
 </head>
 <body>
     <fieldset>
@@ -60,7 +60,7 @@ session_id();
             }
             // Vérifie si les identifiants existent dans la base de données
             $requete= "SELECT * FROM employes WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
-            echo $requete;
+            // echo $requete;
             $result = $conn->query($requete);
             if ($result->num_rows >= 1) {
                 // Récupération des informations de la personne et déclaration en tant que cookie qui se connecte pour les afficher dans son espace client
