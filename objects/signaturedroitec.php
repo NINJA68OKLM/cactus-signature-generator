@@ -17,30 +17,30 @@ $sresult = $conn->query($srequete);
 // Déclaration des cookies
 $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
 // Récupération du nombre de réseaux sociaux
-foreach ($rresult as $cle => $val) {
-  setcookie("rsnbr", $val["rs"], time()+3600);
-}
+// foreach ($rresult as $cle => $val) {
+//   setcookie("rsnbr", $val["rs"], time()+3600);
+// }
 // Récupération du style
-foreach ($sresult as $cle => $val) {
-  setcookie("style", $val["rs_style"], time()+3600);
-}
-// Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
-foreach ($result as $cle => $val) {
-  $ch=0;
-  for ($r=0; $r < 5; $r++) {
-    // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
-    if ($val[$tab[$r]] !== "")
-    {
-      // En-dessous -> exemples pour voir les résultats pris en compte
-      // echo $r." : ".$val[$tab[$r]]."<br>";
-      setcookie("rs_".$ch, $tab[$r]);
-      setcookie("rs_href_".$ch, $val[$tab[$r]]);
-      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
-      // echo $_COOKIE['rs_icon_0'];
-      $ch++;
-    }
-  }
-}
+// foreach ($sresult as $cle => $val) {
+//   setcookie("style", $val["rs_style"], time()+3600);
+// }
+// // Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
+// foreach ($result as $cle => $val) {
+//   $ch=0;
+//   for ($r=0; $r < 5; $r++) {
+//     // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
+//     if ($val[$tab[$r]] !== "")
+//     {
+//       // En-dessous -> exemples pour voir les résultats pris en compte
+//       // echo $r." : ".$val[$tab[$r]]."<br>";
+//       setcookie("rs_".$ch, $tab[$r]);
+//       setcookie("rs_href_".$ch, $val[$tab[$r]]);
+//       setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
+//       // echo $_COOKIE['rs_icon_0'];
+//       $ch++;
+//     }
+//   }
+// }
 ?>
 <div style="font-family: Arial, Helvetica, sans-serif !important; min-height: 250px; min-width: 320px; max-width: 650px; min-height: 250px; display: flex; align-items: center">
     <table style="padding: 2px; border-style: none; border-color: black; border-style: none; border-collapse: inherit; direction: ltr; min-width: 320px !important" cellpadding="0" cellspacing="0">
@@ -66,6 +66,20 @@ foreach ($result as $cle => $val) {
                                     <span style="color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;">
                                         Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:<?= $_COOKIE['ld_'.$id]?>"><?= $_COOKIE['ld_'.$id] ?> (ligne directe)</a>
                                     </span>
+                                    <br> <br> 
+                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                    <?= $_COOKIE['adre']?>, <? $_COOKIE['cp']?> <?= $_COOKIE['vill']?>
+                                    </span>
+                                    <br>
+                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                    Tél : <a href="tel: <?= $_COOKIE['tel']?>" style="color: #156cad; text-decoration: none;"><?= $_COOKIE['tel']?></a>
+                                    </span>
+                                    <br>
+                                    <span style="display: flex;" class='cacher'>
+                                    <!-- Site web -->
+                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                    <a style="color: #156cad; text-decoration: none;" href="<?= $_COOKIE['site'] |$_COOKIE['site'] ?>"><?= $_COOKIE['site']?></a>
+                                    </span>
                                     <div class="signRS" <?php if (isset($_COOKIE['rsnbr']) && ($_COOKIE['rsnbr'] >=2)) { echo "style=\"display: flex;\"";}  ?>>
                                     <?php
                                     if (isset($_COOKIE['rsnbr']))
@@ -73,8 +87,8 @@ foreach ($result as $cle => $val) {
                                     for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
                                         echo "<span style='margin-left: 5px; margin-top: 3px;'>
                                             <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
-                                                <div style='display: flex; width: 15px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                                                ".$_COOKIE['rs_icon_'.$r]."
+                                                <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
+                                                    <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                                                 </div>
                                             </a>
                                             </span>";
@@ -93,7 +107,7 @@ foreach ($result as $cle => $val) {
                             <tr>
                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
                                 <td style="height:55px; vertical-align:top;" valign="top">
-                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" style="border:0;" height="70">
+                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" style="border:0;" height="70">
                                 </td>
                             </tr>      
                         </tbody>

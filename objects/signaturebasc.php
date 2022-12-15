@@ -17,30 +17,30 @@ $sresult = $conn->query($srequete);
 // Déclaration des cookies
 $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
 // Récupération du nombre de réseaux sociaux
-foreach ($rresult as $cle => $val) {
-  setcookie("rsnbr", $val["rs"], time()+3600);
-}
+// foreach ($rresult as $cle => $val) {
+//   setcookie("rsnbr", $val["rs"], time()+3600);
+// }
 // Récupération du style
-foreach ($sresult as $cle => $val) {
-  setcookie("style", $val["rs_style"], time()+3600);
-}
+// foreach ($sresult as $cle => $val) {
+//   setcookie("style", $val["rs_style"], time()+3600);
+// }
 // Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
-foreach ($result as $cle => $val) {
-  $ch=0;
-  for ($r=0; $r < 5; $r++) {
-    // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
-    if ($val[$tab[$r]] !== "")
-    {
-      // En-dessous -> exemples pour voir les résultats pris en compte
-      // echo $r." : ".$val[$tab[$r]]."<br>";
-      setcookie("rs_".$ch, $tab[$r]);
-      setcookie("rs_href_".$ch, $val[$tab[$r]]);
-      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
-      // echo $_COOKIE['rs_icon_0'];
-      $ch++;
-    }
-  }
-}
+// foreach ($result as $cle => $val) {
+//   $ch=0;
+//   for ($r=0; $r < 5; $r++) {
+//     // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
+//     if ($val[$tab[$r]] !== "")
+//     {
+//       // En-dessous -> exemples pour voir les résultats pris en compte
+//       // echo $r." : ".$val[$tab[$r]]."<br>";
+//       setcookie("rs_".$ch, $tab[$r]);
+//       setcookie("rs_href_".$ch, $val[$tab[$r]]);
+//       setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg"));
+//       // echo $_COOKIE['rs_icon_0'];
+//       $ch++;
+//     }
+//   }
+// }
 ?>
 <table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; " cellpadding="0" cellspacing="0" id="table">
   <tbody>
@@ -82,8 +82,8 @@ foreach ($result as $cle => $val) {
           for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
             echo "<span style='margin-left: 5px; margin-top: 3px;'>
                   <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
-                    <div style='display: flex; width: 15px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                      ".$_COOKIE['rs_icon_'.$r]."
+                    <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
+                      <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                     </div>
                   </a>
                 </span>";
@@ -93,7 +93,7 @@ foreach ($result as $cle => $val) {
         </span> 
           <br>
         <span>
-          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
       </td>
     </tr>

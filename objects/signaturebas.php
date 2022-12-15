@@ -41,8 +41,8 @@ $id=$_COOKIE['id'];
           for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
             echo "<span style='margin-left: 5px; margin-top: 3px;'>
                   <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
-                    <div style='display: flex; width: 15px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                      ".$_COOKIE['rs_icon_'.$r]."
+                    <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
+                      <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                     </div>
                   </a>
                 </span>";

@@ -2,6 +2,7 @@ body
     {
         margin: 0px;
         font-family: Arial, Helvetica, sans-serif;
+        background: #A2006E;
     }
     .flex
     {
@@ -16,10 +17,14 @@ body
         width: auto;
         margin: 15px;
     }
+    .gauche>img, .gauche>a>img
+    {
+        max-width: 310px;
+    }
     .button
     {
-        background: rgb(195, 210, 0) !important;
-        color: white;
+        background: #009ABC !important;
+        color: #FFFFFF;
         
     }
     fieldset, .form
@@ -42,7 +47,7 @@ body
     {
         margin-bottom: 15px;
     }
-    .col1, .col3, .col5
+    .col1, .col3, .col5, .col7
     {
         width: 173px;
     }
@@ -99,8 +104,7 @@ body
     }
     .pub
     {
-        max-height: 55px;
-        background: red;
+        max-height: 150px;
     }
     fieldset, .apercu
     {
@@ -162,4 +166,14 @@ body
 .formclient>.enregistrer
 {
     margin-left: 11px;
+}
+.messagerassur
+{
+    color: #000000 !important;
+}
+/* Boutons deconnexion */
+form>input.button[name="deconnexion"]
+{
+    margin-top: 25px !important;
+    margin-left: 15px !important;
 }

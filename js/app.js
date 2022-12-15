@@ -1,7 +1,7 @@
 jQuery(function ($) {
     
     // Expressions régulières
-    var maj = /^[A-Z][a-z]{1,}$/
+    var maj = /^[A-Z]/
     // var ld = /^[0][0-9]{9}$/
     // var mail = /^[a-zA-Z]{4,}.[a-z]{1,}@[a-z]{1,}[-.][a-z]{2,3}$/
     var mail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -118,14 +118,13 @@ jQuery(function ($) {
             $(".champsrs").css("display", "initial")
             $(".formRS").css("display", "flex")
             // Création des boutons d'aperçu, de téléchargement et de connexion
-            $(zone).html("<p style='margin-left: 15px; font-weight: bold;'>La signature de cette personne a bien été créé !</p> <br> <div style='display: flex; justify-content: left;'><input type='submit' name='apercu_" + formId + "' value='Aperçu' class='button apercu_submit' id='apercu_" + formId + "' style='margin-left: 15px;' data-form-id='" + formId + "'> <a href='signatures/Signature_"+$("[name='nom_"+formId+"']").val()+"_"+$("[name='prenom_"+formId+"']").val()+".html' download class='button telecharger' style='border-top: 1px solid #FFF; margin-left: 15px;' data-form-id='"+ formId +"' name='telecharger_" + formId + "'> Télécharger </a> <a class='button connexion' style='border-top: 1px solid #FFF; margin-left: 15px;' href='/login.php'>Connexion</a> </div>");
+            $(zone).html("<p style='margin-left: 15px; font-weight: bold;'>La signature de cette personne a bien été créé !</p> <br> <div style='display: flex; justify-content: left;'><input type='submit' name='apercu_" + formId + "' value='Aperçu' class='button apercu_submit' id='apercu_" + formId + "' style='margin-left: 15px;' data-form-id='" + formId + "'> <a href='signatures/Signature_"+$("[name='nom_"+formId+"']").val()+"_"+$("[name='prenom_"+formId+"']").val()+".htm' download class='button telecharger' style='border-top: 1px solid #FFF; margin-left: 15px;' data-form-id='"+ formId +"' name='telecharger_" + formId + "'> Télécharger </a> <a class='button connexion' style='border-top: 1px solid #FFF; margin-left: 15px;' href='/login.php'>Connexion</a> </div>");
             // Signatures
-            var signaturehaut = `<table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; " cellpadding="0" cellspacing="0" id="table">
+            var signaturehaut = `<table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; " cellpadding="0" cellspacing="0" id="table">
                     <tbody>
                         <tr style="font-size: 14px;">
                             <!-- Identité -->
                             <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
-                                <div class='dfdddd'>OLOLO</div>
                                 <span>
                                 <!-- Michel Platinni -->
                                     <img src="img/uploads/${$(".logonom").data("nomId")}" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
@@ -165,7 +164,7 @@ jQuery(function ($) {
                         </tr>
                     </tbody>
                 </table>`
-            var signaturebas = `<table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; " cellpadding="0" cellspacing="0" id="table">
+            var signaturebas = `<table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; " cellpadding="0" cellspacing="0" id="table">
                     <tbody>
                         <tr style="font-size: 14px;">
                             <!-- Identité -->
@@ -244,6 +243,22 @@ jQuery(function ($) {
                                                                         <span style="color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;">
                                                                             Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:${$("[name='ld_" + formId + "']").val()}">${$("[name='ld_" + formId + "']").val()} (ligne directe)</a>
                                                                         </span>
+                                                                        <br> <br> 
+                                                                        <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                                                            ${$("[name='adre']").val()}, ${$("[name='cp']").val()} ${$("[name='vill']").val()}
+                                                                        </span>
+                                                                        <br>
+                                                                        <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                                                            Tél : <a href="tel: ${$("[name='tel']").val()}" style="color: #156cad; text-decoration: none;">${$("[name='tel']").val()}</a>
+                                                                        </span>
+                                                                        <br>
+                                                                        <span style="display: flex;" class='cacher'>
+                                                                            <!-- Site web -->
+                                                                            <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                                                                <a style="color: #156cad; text-decoration: none;" href="${$("[name='site']").val()}">${$("[name='site']").val()}</a>
+                                                                            </span>
+                                                                            <span class="signRS" style='display: flex; margin-left: 5px;'></span> 
+                                                                        </span>
                                                                         <div class="signRS" style="display: flex;"></div>
                                                                         </td>
                                                                     </tr>
@@ -290,6 +305,22 @@ jQuery(function ($) {
                                                                             <!-- Numéro de téléphone -->
                                                                         <span style="color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;">
                                                                             Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:${$("[name='ld_" + formId + "']").val()}">${$("[name='ld_" + formId + "']").val()} (ligne directe)</a>
+                                                                        </span>
+                                                                        <br> <br> 
+                                                                        <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                                                            ${$("[name='adre']").val()}, ${$("[name='cp']").val()} ${$("[name='vill']").val()}
+                                                                        </span>
+                                                                        <br>
+                                                                        <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                                                            Tél : <a href="tel: ${$("[name='tel']").val()}" style="color: #156cad; text-decoration: none;">${$("[name='tel']").val()}</a>
+                                                                        </span>
+                                                                        <br>
+                                                                        <span style="display: flex;" class='cacher'>
+                                                                            <!-- Site web -->
+                                                                            <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                                                                <a style="color: #156cad; text-decoration: none;" href="${$("[name='site']").val()}">${$("[name='site']").val()}</a>
+                                                                            </span>
+                                                                            <span class="signRS" style='display: flex; margin-left: 5px;'></span> 
                                                                         </span>
                                                                         <div class="signRS" style="display: flex;"></div>
                                                                         </td>
@@ -355,16 +386,32 @@ jQuery(function ($) {
                 e.preventDefault()
                 // Changement d'aperçu en fonction du choix de signature
                 if ($("#haut").prop("checked")) {
-                    $(".apercu").html(signaturehaut)
+                    $(".apercu").html(signaturehaut+`<div class='pub'>
+                    <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                        <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                    </a>
+                </div>`)
                 }
                 if ($("#bas").prop("checked")) {
-                    $(".apercu").html(signaturebas)
+                    $(".apercu").html(signaturebas+`<div class='pub'>
+                    <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                        <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                    </a>
+                </div>`)
                 }
                 if ($("#gauche").prop("checked")) {
-                    $(".apercu").html(signaturegauche)
+                    $(".apercu").html(signaturegauche+`<div class='pub'>
+                    <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                        <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                    </a>
+                </div>`)
                 }
                 if ($("#droite").prop("checked")) {
-                    $(".apercu").html(signaturedroite)
+                    $(".apercu").html(signaturedroite+`<div class='pub'>
+                    <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                        <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                    </a>
+                </div>`)
                 }
                 // Intégration des RS  
                 if ($(".RS").length > 0) {
@@ -377,18 +424,27 @@ jQuery(function ($) {
                         icones = $(".signRS").html()
                         $(".signRS").append(`<span style="margin-left: 5px; margin-top: 3px;">
                                                     <a style="text-decoration: none;" href="${href}" target="_blank" rel="noopener noreferrer" style="" >
-                                                        <div style="display: flex; width: 15px; justify-content: space-between;" class="icon ${valeur}"></div>
+                                                        <div style="display: flex; width: 14px; height: 14px; justify-content: space-between;" class="icon ${valeur}"></div>
                                                     </a>
                                                 </span>`)
                         $.cookie("rs_href_"+l, href)
                         readFiles()
                         function readFiles() {
-                            $.get('img/Logos/' + $("[name='style']:checked").val() + '/' + valeur + '.svg', function (data) {
-                                $(".icon." + valeur).html(data)
-                                console.log(data)
-                                $.cookie("rs_icon_"+l, data)
-                                return data
-                            }, "html");
+                            // $.get('img/Logos/' + $("[name='style']:checked").val() + '/' + valeur + '.svg', function (data) {
+                            //     $(".icon." + valeur).html(data)
+                            //     console.log(data)
+                            //     $.cookie("rs_icon_"+l, data)
+                            //     return data
+                            // }, "html");
+                            // $.get('img/Logos/' + $("[name='style']:checked").val() + '/' + valeur + '.png', function (data) {
+                            //     $(".icon." + valeur).html("<img width='14' height='14' src='"+data+"'>")
+                            //     console.log(data)
+                            //     $.cookie("rs_icon_"+l, data)
+                            //     return data
+                            // }, "html");
+                            $(".icon." + valeur).html("<img width='14' height='14' src='img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png'>")
+                            $.cookie("rs_icon_"+l, "img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png")
+                            console.log($.cookie("rs_icon_"+l))
                         }
                     })
                 }
@@ -463,6 +519,7 @@ jQuery(function ($) {
                     // Enregistrement des informations propres aux réseaux sociaux dans la base de données
                     $.get("functions/add_social_media.php", function(data){
                         console.log(data)
+                        $(".messagerassur").html("Les réseaux sociaux ont bien étés enregistrés")
                     })
                 })
             }
@@ -477,7 +534,35 @@ jQuery(function ($) {
     })
 
     // Zone d'aperçu
-    $(".apercu").html("<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;'><strong>APERCU</strong></div>")
+    // Mise en place de la publicité
+    if (typeof $.cookie('pub') === 'undefined')
+    {
+        console.log("Non définie")
+        var site = $.cookie("site")
+    }
+    else
+    {
+        console.log("Défini")
+        site = $.cookie("pub")
+    }
+    if (typeof $.cookie('bannierenom') === 'undefined')
+    {
+        console.log("Non définie")
+        // var banniere = $.cookie("banniere", "banniere.png")
+        var banniere = 'banniere.png'
+    }
+    else
+    {
+        console.log("Défini")
+        banniere = "uploads/"+$.cookie("bannierenom")
+    }
+    // Mise en place de la publicité
+    $(".apercu").html(`<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 290px;'>
+                            <strong>APERCU</strong>
+                        </div>
+                        <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                            <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                        </a>`)
 
     // client.php
 
@@ -493,7 +578,7 @@ jQuery(function ($) {
     
     if (window.location.href.indexOf("client.php")!=-1)
     {
-        // Affichage de l'aperçu espace client
+        // Affichage de l'aperçu Espace Client
         $(".apercu_submit").on("click", function (w) {
             var tab = $(this).attr("name")
             var tabb = tab.split('_')
@@ -504,7 +589,12 @@ jQuery(function ($) {
             w.preventDefault()
             // Changement d'aperçu en fonction du choix de signature
             $.get("objects/signature"+$.cookie("signature")+"c.php", function(data) {
-                $(".apercu").html(data)
+                $(".apercu").html(data+`<div class='pub'>
+                    <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                        <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                    </a>
+                </div>`)
+                $(".apercu").css("height", "")
             }, "text")
         })
         
@@ -625,19 +715,84 @@ jQuery(function ($) {
         // Fonction d'ajout de client
         $("[name='confirm']").on("click", function (g) {
             g.preventDefault()
-            var contenu = $("fieldset:last>form").html()
-            $.get("functions/add_client.php", function(data){
-                $.cookie("nom", $("[name='nom']").val())
-                $.cookie("prenom", $("[name='prenom']").val())
-                $.cookie("mail", $("[name='mail']").val())
-                $.cookie("fonction", $("[name='fonction']").val())
-                $.cookie("ld", $("[name='ld']").val())
-                console.log(data)
+            console.log("Nombre : "+$.cookie("nb_client"))
+            let nb_client = parseInt($.cookie("nb_client"))
+            // Si les champs ont étés remplis in crée les cookies qui permettront de stocker l'utilisateur et l'ajouter à la liste
+            if ($(".ajout_employ>.col6>.nom").val()!== "" && $(".ajout_employ>.col6>.prenom").val()!== "" && $(".ajout_employ>.col6>.mail").val()!== "" && $(".ajout_employ>.col6>.ld").val()!== "" && $(".ajout_employ>.col6>.fonction").val()!== "")
+            {
+                
+                var contenu = $("fieldset:last>form").html()
+                $.get("functions/add_client.php", function(data){
+                    $.cookie("nom_"+$.cookie("nb_client"), $("[name='nom']").val())
+                    $.cookie("prenom_"+$.cookie("nb_client"), $("[name='prenom']").val())
+                    $.cookie("mail_"+$.cookie("nb_client"), $("[name='mail']").val())
+                    $.cookie("fonction_"+$.cookie("nb_client"), $("[name='fonction']").val())
+                    $.cookie("ld_"+$.cookie("nb_client"), $("[name='ld']").val())
+                    console.log(data)
 
-                $(".confirmuti").append(data)
-                console.log($(".confirmuti"))
-            })
+                    $(".confirmuti").append(data)
+                    console.log($(".confirmuti"))
+                })
+                // On ajoute le nouvel employé
+                $(".field_client>.droite").append(`<form action='' method='post' class='formclient_${$.cookie("nb_client")} formclient'>
+                    <div class='${$.cookie("nom_"+$.cookie("nb_client"))} formclientt'>
+                    <h2 style='margin-top: 25px; margin-bottom: 25px; padding-left: 15px;'>Employé n° ${nb_client+1}</h2>
+                        <div class='form form_${$.cookie("nb_client")}' id='0'>
+                            <div class='col5 client'>
+                                <p>Nom :</p> <br>
+                                <p>Prénom :</p> <br>
+                                <p>Fonction :</p> <br>
+                                <p>Ligne directe :</p> <br>
+                                <p>Mail :</p> <br>
+                            </div>
+                            <div class='col6 client'>
+                                <input type='text' name='nom_${$.cookie("nb_client")}' id='' value='${$.cookie("nom_"+$.cookie("nb_client"))}'><br>
+                                <input type='text' name='prenom_${$.cookie("nb_client")}' id='' value='${$.cookie("prenom_"+$.cookie("nb_client"))}'><br>
+                                <input type='text' name='fonction_${$.cookie("nb_client")}' id='' value='${$.cookie("fonction_"+$.cookie("nb_client"))}'><br>
+                                <input type='text' name='ld_${$.cookie("nb_client")}' id='' value='${$.cookie("ld_"+$.cookie("nb_client"))}'><br>
+                                <input type='text' name='mail_${$.cookie("nb_client")}' id='' value='${$.cookie("mail_"+$.cookie("nb_client"))}'> <br>
+                            </div>
+                            <div class='croix ${$.cookie("nom_"+$.cookie("nb_client"))}'>
+                              <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='${$.cookie("nb_client")}'>
+                          </div>
+                        </div>
+                    </div>
+                    <input type='submit' name='confirm_${$.cookie("nb_client")}' value='Enregistrer' class='button enregistre_${$.cookie("nb_client")} enregistrer'>
+                    <input type='submit' name='apercu_${$.cookie("nb_client")}' value='Aperçu' class='button apercu_${$.cookie("nb_client")} apercu_submit' style='margin-left: 95px;'>
+                    <a href='signatures/Signature_${$.cookie("nom_"+$.cookie("nb_client"))}_${$.cookie("prenom_"+$.cookie("nb_client"))}.htm' download value='Télécharger' class='button telecharger button telech' name='telecharger_${$.cookie("rsnbr")}' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
+                </form>
+                <div class='reponse_client reponse_client_${$.cookie("nb_client")}'></div>`)
+                // Incrémentation du cookie
+                nb_client++
+                
+                console.log("Resulttt t : "+nb_client)
+                $.cookie("nb_client", nb_client)
+                return nb_client
+            }
+
+            // $.cookie("nb_client", nb_client)
+
+            // $(".ajout_employ>.col6>.nom")
         })
+
+        // Fonction de modification du lien de la publicité
+        // $("[name='enregi_confirm']").on("click", function (g) {
+        //     g.preventDefault()
+        //     $.cookie("pub", $("[name='pub']").val())
+        //     $.cookie("banniere", "")
+        //     $.get("functions/update_ad.php", function(data){
+        //         // La page recharge pour actualiser les cookies de la publicité
+        //         // window.location.reload()
+        //         console.log(data)
+
+        //         $(".confirmutii").append(data)
+        //     })
+        //      $.get("functions/banniere_save.php", function(data){
+        //          console.log(data)
+
+        //         $(".php_inser").append(data)
+        //     })
+        // })
     }
 
     // Fonction de déconnexion

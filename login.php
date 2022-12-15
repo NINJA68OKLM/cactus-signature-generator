@@ -10,8 +10,8 @@ session_id();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
-    <link rel="stylesheet" href="styles/background_2.css">
-    <link rel="stylesheet" href="styles/background_2_O.css" media="screen and (min-width: 1200px)">
+    <!-- <link rel="stylesheet" href="styles/background_2.css">
+    <link rel="stylesheet" href="styles/background_2_O.css" media="screen and (min-width: 1200px)"> -->
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -24,7 +24,9 @@ session_id();
 <body>
     <fieldset>
         <div class="gauche">
-            <img src="img/logo.png" alt="" style="width: 100%;">
+            <a href="/">
+                <img src="img/logo.png" alt="" style="width: 100%;">
+            </a>
             <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
         </div>
         <div class="droite">

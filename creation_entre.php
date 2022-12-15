@@ -16,8 +16,8 @@ session_id();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
-    <link rel="stylesheet" href="styles/background_1.css">
-    <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
+    <!-- <link rel="stylesheet" href="styles/background_1.css">
+    <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)"> -->
     <title>Signature Generator : Création entreprise</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -31,68 +31,79 @@ session_id();
 <body>
     <fieldset>
         <div class="gauche">
-            <img src="img/logo.png" alt="" style="width: 100%;">
+            <a href="/">
+                <img src="img/logo.png" alt="" style="width: 100%;">
+            </a>
             <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
         </div>
         <div class="droite">
             <h1>Votre entreprise</h1>
-            <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form_entre">
-                <div class="form">
-                    <div class="col1">
-                        <p>Nom d'entreprise :</p> <br>
-                        <p>Adresse :</p> <br>
-                        <p>Ville :</p> <br>
-                        <p>Code postal :</p> <br>
+            <div style="display: flex;">
+                <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form_entre">
+                    <div class="form">
+                        <div class="col1">
+                            <p>Nom d'entreprise :</p> <br>
+                            <p>Adresse :</p> <br>
+                            <p>Ville :</p> <br>
+                            <p>Code postal :</p> <br>
+                        </div>
+                        <div class="col2">
+                            <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } ?>"><br>
+                            <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } ?>"><br>
+                            <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } ?>" id="ville" autocomplete="on"><br>
+                            <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } ?>">
+                        </div>
                     </div>
-                    <div class="col2">
-                        <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } ?>"><br>
-                        <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } ?>"><br>
-                        <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } ?>" id="ville" autocomplete="on"><br>
-                        <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } ?>">
-                    </div>
-                </div>
-                <div class="form">
-                    <div class="col3">
-                        <p>Numéro de teléphone :</p> <br>
-                        <p>Adresse mail</p> <br>
-                        <p>Site internet :</p> <br>
-                        <p>Nombre d'employés :</p> <br>
-                        <p>Signature :</p> <br>
-                        <p style="margin-top: 25px;">Logo :</p> <br>
-                    </div>
-                    <div class="col4">
-                        <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } ?>"><br>
-                        <input type="email" name="adrmail" id="" value="<?php if (!empty($_POST['adrmail'])) { echo $_POST['adrmail'] ; } ?>"><br>
-                        <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; } ?>"><br>
-                        <input type="text" name="empl" id="" value="<?php if (!empty($_POST['empl'])) { echo $_POST['empl'] ; } ?>"><br>
-                        <input type="radio" name="sign" value="haut" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="haut")) { echo "checked='checked'"; } ?>> Haut 
-                        <input type="radio" name="sign" value="bas" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="bas")) { echo "checked='checked'"; } ?>> Bas <br>
-                        <input type="radio" name="sign" value="gauche" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="gauche")) { echo "checked='checked'"; } ?>> Gauche 
-                        <input type="radio" name="sign" value="droite" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="droite")) { echo "checked='checked'"; } ?>> Droite <br>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="100000000"> <br class="br">
-                        <input type="file" name="logo" id="files" value=""> <br>
-                        <label for="files" id="label_file" style="display: none;"> <div class="file" style="color: black;">Parcourir...</div> <p name="filename" class="filename"> <?php
-                            if (!empty($_FILES["logo"]) && is_uploaded_file($_FILES["logo"]["tmp_name"]))
-                            {
-                                // Importation du logo/image
-                                $target='img/uploads/'.basename($_FILES['logo']['name']);
-                                if(move_uploaded_file($_FILES['logo']['tmp_name'],$target)) {
-                                    $fp = fopen($target, "r");
+                    <div class="form">
+                        <div class="col3">
+                            <p>Numéro de teléphone :</p> <br>
+                            <p>Adresse mail</p> <br>
+                            <p>Site internet :</p> <br>
+                            <p>Nombre d'employés :</p> <br>
+                            <p>Signature :</p> <br>
+                            <p style="margin-top: 25px;">Logo :</p> <br>
+                        </div>
+                        <div class="col4">
+                            <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } ?>"><br>
+                            <input type="email" name="adrmail" id="" value="<?php if (!empty($_POST['adrmail'])) { echo $_POST['adrmail'] ; } ?>"><br>
+                            <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; } ?>"><br>
+                            <input type="text" name="empl" id="" value="<?php if (!empty($_POST['empl'])) { echo $_POST['empl'] ; } ?>"><br>
+                            <input type="radio" name="sign" value="haut" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="haut")) { echo "checked='checked'"; } ?>> Haut 
+                            <input type="radio" name="sign" value="bas" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="bas")) { echo "checked='checked'"; } ?>> Bas <br>
+                            <input type="radio" name="sign" value="gauche" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="gauche")) { echo "checked='checked'"; } ?>> Gauche 
+                            <input type="radio" name="sign" value="droite" id="" <?php if (isset($_POST['sign']) && ($_POST['sign']=="droite")) { echo "checked='checked'"; } ?>> Droite <br>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="100000000"> <br class="br">
+                            <input type="file" name="logo" id="files" value=""> <br>
+                            <label for="files" id="label_file" style="display: none;"> <div class="file" style="color: black;">Parcourir...</div> <p name="filename" class="filename"> <?php
+                                if (!empty($_FILES["logo"]) && is_uploaded_file($_FILES["logo"]["tmp_name"]))
+                                {
+                                    // Importation du logo/image
+                                    $target='img/uploads/'.basename($_FILES['logo']['name']);
+                                    if(move_uploaded_file($_FILES['logo']['tmp_name'],$target)) {
+                                        $fp = fopen($target, "r");
+                                    }
+                                    $_SESSION['logonom']=$_FILES['logo']['name'];
+                                    echo $_SESSION['logonom'];
                                 }
-                                $_SESSION['logonom']=$_FILES['logo']['name'];
-                                echo $_SESSION['logonom'];
-                            }
-                            else
-                            {
-                                echo "Aucun fichier selectionné...";
-                            }
-                        ?></p></label>
+                                else
+                                {
+                                    echo "Aucun fichier selectionné...";
+                                }
+                            ?></p></label>
+                        </div>
+                        
                     </div>
+                    <input type="submit" name="ok" value="Déclarez l'entreprise" class="button entre_decla"> 
+                    <input type="submit" name="next" value="Déclarez les employés" class="button entre_confirm" style="display: none;">
+                    <p style="font-weight: bold; color: #000000; margin-top: 15px; margin-bottom: 15px;">*Le nom de l'entreprise et la ville doivent obligatoirement commencer par une majuscule !</p>
+                    <input type="submit" name="connex" value="Connexion" class="button entre_connex" style="display: none;">
+                </form>
+                <div class="col5">
+                    <p style="font-weight: bold; color: #000000 !important;">Signatures :</p> <br>
+                    <img src="img/signa-exemple.jpg" alt="Aperçu des signatures" loading="lazy" style="max-width: 850px;">
                 </div>
-                <input type="submit" name="ok" value="Déclarez l'entreprise" class="button entre_decla"> 
-                <input type="submit" name="next" value="Déclarez les employés" class="button entre_confirm" style="display: none;">
-                <input type="submit" name="connex" value="Connexion" class="button entre_connex" style="display: none;">
-            </form>
+                
+            </div>
         </div>
     </fieldset>
     <?php

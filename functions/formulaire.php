@@ -45,6 +45,10 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
 }
 ?>
 <!-- Corps du formulaire -->
+
+
+
+
 <fieldset>
     <div class="gauche">
         <img src="img/logo.png" alt="" style="width: 100%;">
@@ -54,64 +58,75 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
         <h1>Les informations de votre entreprise</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="formprinc" enctype="multipart/form-data">
             <div class="flex">
-                <div class="form">
-                    <div class="col1">
-                        <p>*Nom d'entreprise :</p> <br>
-                        <p>*Adresse :</p> <br>
-                        <p>*Ville :</p> <br>
-                        <p>*Code postal :</p> <br>
+                <div class="flex" style="flex-direction: column;">
+                    <div class="form">
+                        <div class="col1">
+                            <p>*Nom d'entreprise :</p> <br>
+                            <p>*Adresse :</p> <br>
+                            <p>*Ville :</p> <br>
+                            <p>*Code postal :</p> <br>
+                        </div>
+                        <div class="col2">
+                            <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $_COOKIE['entr']; } ?>"><br>
+                            <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $_COOKIE['adre']; } ?>"><br>
+                            <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $_COOKIE['vill']; } ?>"><br>
+                            <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $_COOKIE['cp']; } ?>">
+                        </div>
                     </div>
-                    <div class="col2">
-                        <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $_COOKIE['entr']; } ?>"><br>
-                        <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $_COOKIE['adre']; } ?>"><br>
-                        <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $_COOKIE['vill']; } ?>"><br>
-                        <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $_COOKIE['cp']; } ?>">
+                    <div class="form">
+                        <div class="col3">
+                            <p>*Numéro de teléphone :</p> <br>
+                            <p>*Site internet :</p> <br>
+                            <p>*Nombre d'employés :</p> <br>
+                            <p>*Signature :</p> <br>
+                            <p class="plogo">*Logo :</p> <br>
+                        </div>
+                        <div class="col4">
+                            <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $_COOKIE['tel']; } ?>"><br>
+                            <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; } else { echo $_COOKIE['site']; } ?>"><br>
+                            <input type="text" name="empl" id="" value="<?php if (!empty($_POST['empl'])) { echo $_POST['empl'] ; }  else { echo $_COOKIE['empl']; } ?>" class="employ"><br>
+                            <input type="radio" name="sign" value="haut" id="haut" <?php if ($_COOKIE['sign']=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
+                            <input type="radio" name="sign" value="bas" id="bas" <?php if ($_COOKIE['sign']=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
+                            <input type="radio" name="sign" value="gauche" id="gauche" <?php if ($_COOKIE['sign']=="gauche" | (isset($_POST['sign']) && ($_POST['sign']=="gauche"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Gauche 
+                            <input type="radio" name="sign" value="droite" id="droite" <?php if ($_COOKIE['sign']=="droite" | (isset($_POST['sign']) && ($_POST['sign']=="droite"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Droite <br>
+                            <br>
+                            <?php 
+                            // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
+                            echo "<img class='logoimg' src='img/uploads/".$_COOKIE['logo']."' width='120'>";
+                            ?> <br> 
+                            <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+                            <input type="file" name="logo" id="files" value=""> <br>
+                            <br>
+                        </div>
                     </div>
                 </div>
                 <p class="trait"></p>
-                <div class="form">
-                    <div class="col3">
-                        <p>*Numéro de teléphone :</p> <br>
-                        <p>*Site internet :</p> <br>
-                        <p>*Nombre d'employés :</p> <br>
-                        <p>*Signature :</p> <br>
-                        <p class="plogo">*Logo :</p> <br>
+                <div class="flex" style="flex-direction: column;">
+                    <div class="form formRS">
+                        <div class="col5">
+                            <p class="ele">Réseaux sociaux :</p> <br>
+                        </div>
+                        <div class="col6">
+                            <div class="ele">
+                                <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
+                                <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Twitter")) { echo "checked=\"checked\""; } ?>>Twitter 
+                                <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Instagram")) { echo "checked=\"checked\""; } ?>>Instagram <br>
+                                <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="LinkedIn")) { echo "checked=\"checked\""; } ?>>LinkedIn 
+                                <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="youtube")) { echo "checked=\"checked\""; } ?>>YouTube <br>
+                                <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
+                                <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
+                                <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>
+                                <div class="champsrs"></div>
+                                <input type="submit" name="val" id="okk" value="<?php if (!isset($_POST['rs'])) { echo "Confirmer le style"; } else { echo "Renseigner les réseaux"; } ?>" class="button rs" style="margin-bottom: 15px;"> <br>
+                                <p class="messagerassur"></p>
+                            </div> 
+                        </div>
                     </div>
-                    <div class="col4">
-                        <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $_COOKIE['tel']; }?>"><br>
-                        <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $_COOKIE['site']; }?>"><br>
-                        <input type="text" name="empl" id="" value="<?php if (!empty($_POST['empl'])) { echo $_POST['empl'] ; }  else { echo $_COOKIE['empl']; }?>" class="employ"><br>
-                        <input type="radio" name="sign" value="haut" id="haut" <?php if ($_COOKIE['sign']=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
-                        <input type="radio" name="sign" value="bas" id="bas" <?php if ($_COOKIE['sign']=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
-                        <input type="radio" name="sign" value="gauche" id="gauche" <?php if ($_COOKIE['sign']=="gauche" | (isset($_POST['sign']) && ($_POST['sign']=="gauche"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Gauche 
-                        <input type="radio" name="sign" value="droite" id="droite" <?php if ($_COOKIE['sign']=="droite" | (isset($_POST['sign']) && ($_POST['sign']=="droite"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Droite <br>
-                        
-                        <?php 
-                        // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
-                        echo "<img class='logoimg' src='img/uploads/".$_COOKIE['logo']."' width='120'>";
-                        ?> <br> 
-                        <input type="hidden" name="MAX_FILE_SIZE" value="100000000"> <br class="br">
-                        <input type="file" name="logo" id="files" value=""> <br>
-                    </div>
-                </div>
-                <p class="trait ele"></p>
-                <div class="form formRS">
-                    <div class="col5">
-                        <p class="ele">Réseaux sociaux :</p> <br>
-                    </div>
-                    <div class="col6">
-                        <div class="ele">
-                            <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
-                            <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
-                            <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
-                            <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
-                            <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
-                            <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
-                            <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
-                            <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>
-                            <div class="champsrs"></div>
-                            <input type="submit" name="val" id="okk" value="<?php if (!isset($_POST['rs'])) { echo "Confirmer le style"; } else { echo "Renseigner les réseaux"; } ?>" class="button rs" style="margin-bottom: 15px;">
-                        </div> 
+                    <div class="form ele" style="display: flex; flex-direction: column;">
+                        <div class="col7">
+                            <p style="color: #000000 !important;">Styles réseaux sociaux :</p> <br>
+                            <img src="img/rendu rs.jpg" alt="Exemple réseaux sociaux" width="185px">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,10 +139,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
     <div class="employes"></div>
     <div class="values"></div>
 </fieldset>
-<!-- Enregistrement des modifications dans la base de données -->
+<!-- Enregistrement des modifications de l'entreprise dans la base de données -->
 <?php
 if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empty($_POST['adre']) | !empty($_POST['cp']) | !empty($_POST['vill']) | !empty($_POST['tel']) | !empty($_POST['site']) | !empty($_POST['empl']))
 {
+    echo "Ton grand-père l'opposum !";
     $requete = "UPDATE entreprise SET nom='".$_POST['entr']."', adresse='".$_POST['adre']."', tel='".$_POST['tel']."', ville='".$_POST['vill']."', cp='".$_POST['cp']."', site='".$_POST['site']."', employe='".$_POST['empl']."', signature='".$_POST['sign']."' WHERE id='".$_COOKIE['bddid']."'";
     $result = $conn->query($requete);
 }

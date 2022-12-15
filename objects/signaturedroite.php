@@ -25,6 +25,20 @@ $id=$_COOKIE['id'];
                                     <span style="color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;">
                                         Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:<?= $_COOKIE['ld_'.$id]?>"><?= $_COOKIE['ld_'.$id] ?> (ligne directe)</a>
                                     </span>
+                                    <br> <br> 
+                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                    <?= $_SESSION['adre']?>, <? $_SESSION['cp']?> <?= $_SESSION['vill']?>
+                                    </span>
+                                    <br>
+                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
+                                    Tél : <a href="tel: <?= $_SESSION['tel']?>" style="color: #156cad; text-decoration: none;"><?= $_SESSION['tel']?></a>
+                                    </span>
+                                    <br>
+                                    <span style="display: flex;" class='cacher'>
+                                    <!-- Site web -->
+                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                    <a style="color: #156cad; text-decoration: none;" href="<?= $_SESSION['site'] |$_SESSION['site'] ?>"><?= $_SESSION['site']?></a>
+                                    </span>
                                     <div class="signRS" <?php if (isset($_COOKIE['rsnbr']) && ($_COOKIE['rsnbr'] >=2)) { echo "style=\"display: flex;\"";}  ?>>
                                     <?php
                                     if (isset($_COOKIE['rsnbr']))
@@ -32,8 +46,8 @@ $id=$_COOKIE['id'];
                                     for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
                                         echo "<span style='margin-left: 5px; margin-top: 3px;'>
                                             <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
-                                                <div style='display: flex; width: 15px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                                                ".$_COOKIE['rs_icon_'.$r]."
+                                                <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
+                                                    <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                                                 </div>
                                             </a>
                                             </span>";

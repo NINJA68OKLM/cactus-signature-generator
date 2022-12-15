@@ -21,13 +21,15 @@ $logo=$_SESSION['logo'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
-    <link rel="stylesheet" href="styles/background_2_O.css" media="screen and (min-width: 1200px)">
+    <!-- <link rel="stylesheet" href="styles/background_2_O.css" media="screen and (min-width: 1200px)"> -->
     <title>Signature Generator</title>
 </head>
 <body>
 <fieldset>
         <div class="gauche">
-            <img src="img/logo.png" alt="" style="width: 100%;">
+            <a href="/">
+                <img src="img/logo.png" alt="" style="width: 100%;">
+            </a>
             <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
         </div>
         <div class="droite">

@@ -33,8 +33,8 @@ include("functions/select_id.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/style_O.css" media="screen and (min-width: 1200px)">
-    <link rel="stylesheet" href="styles/background_1.css">
-    <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)">
+    <!-- <link rel="stylesheet" href="styles/background_1.css">
+    <link rel="stylesheet" href="styles/background_1_O.css" media="screen and (min-width: 1200px)"> -->
     <title>Signature Generator : Créa employe</title>
     <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -47,69 +47,81 @@ include("functions/select_id.php");
 <body>
     <fieldset>
         <div class="gauche">
-            <img src="img/logo.png" alt="" style="width: 100%;">
+            <a href="/">
+                <img src="img/logo.png" alt="" style="width: 100%;">
+            </a>
             <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
         </div>
         <div class="droite">
             <h1>Déclarez vos employés</h1>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="formprinc">
                 <div class="flex">
-                    <div class="form">
-                        <div class="col1">
-                            <p>*Nom d'entreprise :</p> <br>
-                            <p>*Adresse :</p> <br>
-                            <p>*Ville :</p> <br>
-                            <p>*Code postal :</p> <br>
+                    <div class="flex" style="flex-direction: column;">
+                        <div class="form">
+                            <div class="col1">
+                                <p>*Nom d'entreprise :</p> <br>
+                                <p>*Adresse :</p> <br>
+                                <p>*Ville :</p> <br>
+                                <p>*Code postal :</p> <br>
+                            </div>
+                            <div class="col2">
+                                <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $entr; } ?>"><br>
+                                <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $adre; } ?>"><br>
+                                <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $vill; } ?>"><br>
+                                <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $cp; } ?>">
+                            </div>
                         </div>
-                        <div class="col2">
-                            <input type="text" name="entr" id="" value="<?php if (!empty($_POST['entr'])) { echo $_POST['entr'] ; } else { echo $entr; } ?>"><br>
-                            <input type="text" name="adre" id="" value="<?php if (!empty($_POST['adre'])) { echo $_POST['adre'] ; } else { echo $adre; } ?>"><br>
-                            <input type="text" name="vill" id="" value="<?php if (!empty($_POST['vill'])) { echo $_POST['vill'] ; } else { echo $vill; } ?>"><br>
-                            <input type="text" name="cp" id="" maxlength="5" value="<?php if (!empty($_POST['cp'])) { echo $_POST['cp'] ; } else { echo $cp; } ?>">
+                        <div class="form">
+                            <div class="col3">
+                                <p>*Numéro de teléphone :</p> <br>
+                                <p>*Site internet :</p> <br>
+                                <p>*Nombre d'employés :</p> <br>
+                                <p>*Signature :</p> <br>
+                                <p class="plogo">*Logo :</p> <br>
+                            </div>
+                            <div class="col4">
+                                <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
+                                <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
+                                <input type="text" name="empl" id="" value="<?php echo $empl;?>" class="employ"><br>
+                                <input type="radio" name="sign" value="haut" id="haut" <?php if ($sign=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
+                                <input type="radio" name="sign" value="bas" id="bas" <?php if ($sign=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
+                                <input type="radio" name="sign" value="gauche" id="gauche" <?php if ($sign=="gauche" | (isset($_POST['sign']) && ($_POST['sign']=="gauche"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Gauche 
+                                <input type="radio" name="sign" value="droite" id="droite" <?php if ($sign=="droite" | (isset($_POST['sign']) && ($_POST['sign']=="droite"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Droite <br>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="100000"><br>
+                                <?php 
+                                // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
+                                echo "<img class='logoimg' src='img/uploads/$logonom' width='120'>";
+                                ?> <br>
+                            </div>
                         </div>
                     </div>
                     <p class="trait"></p>
-                    <div class="form">
-                        <div class="col3">
-                            <p>*Numéro de teléphone :</p> <br>
-                            <p>*Site internet :</p> <br>
-                            <p>*Nombre d'employés :</p> <br>
-                            <p>*Signature :</p> <br>
-                            <p class="plogo">*Logo :</p> <br>
+                    <div class="flex" style="flex-direction: column;">
+                        <div class="form formRS">
+                            <div class="col5">
+                                <p class="ele">Réseaux sociaux :</p> <br>
+                            </div>
+                            <div class="col6">
+                                <div class="ele">
+                                    <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
+                                    <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
+                                    <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
+                                    <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
+                                    <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
+                                    <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
+                                    <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
+                                    <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>
+                                    <div class="champsrs"></div>
+                                    <input type="submit" name="val" id="okk" value="<?php if (!isset($_POST['rs'])) { echo "Confirmer le style"; } else { echo "Renseigner les réseaux"; } ?>" class="button rs" style="margin-bottom: 15px;"> <br>
+                                    <p class="messagerassur"></p>
+                                </div> 
+                            </div>
                         </div>
-                        <div class="col4">
-                            <input type="tel" name="tel" id="" maxlength="10" value="<?php if (!empty($_POST['tel'])) { echo $_POST['tel'] ; } else { echo $tel; }?>"><br>
-                            <input type="url" name="site" id="" value="<?php if (!empty($_POST['site'])) { echo $_POST['site'] ; }  else { echo $site; }?>"><br>
-                            <input type="text" name="empl" id="" value="<?php echo $empl;?>" class="employ"><br>
-                            <input type="radio" name="sign" value="haut" id="haut" <?php if ($sign=="haut" | (isset($_POST['sign']) && ($_POST['sign']=="haut"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Haut 
-                            <input type="radio" name="sign" value="bas" id="bas" <?php if ($sign=="bas" | (isset($_POST['sign']) && ($_POST['sign']=="bas"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Bas <br>
-                            <input type="radio" name="sign" value="gauche" id="gauche" <?php if ($sign=="gauche" | (isset($_POST['sign']) && ($_POST['sign']=="gauche"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Gauche 
-                            <input type="radio" name="sign" value="droite" id="droite" <?php if ($sign=="droite" | (isset($_POST['sign']) && ($_POST['sign']=="droite"))) { echo "checked='checked'"; } ?> style="margin-bottom: 10px;"> Droite <br>
-                            <input type="hidden" name="MAX_FILE_SIZE" value="100000"><br>
-                            <?php 
-                            // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
-                            echo "<img class='logoimg' src='img/uploads/$logonom' width='120'>";
-                            ?> <br>
-                        </div>
-                    </div>
-                    <p class="trait ele"></p>
-                    <div class="form formRS">
-                        <div class="col5">
-                            <p class="ele">Réseaux sociaux :</p> <br>
-                        </div>
-                        <div class="col6">
-                            <div class="ele">
-                                <input type="checkbox" name="rs[]" id="" value="facebook" <?php if (!empty($_POST['rs']) && ($_POST['rs']=="Facebook")) { echo "checked=\"checked\""; } ?>>Facebook
-                                <input type="checkbox" name="rs[]" id="" value="twitter" <?php if (isset($_POST['rs']) && $_POST['rs']=="Twitter") { echo "checked=\"checked\""; } ?>>Twitter 
-                                <input type="checkbox" name="rs[]" id="" value="instagram" <?php if (isset($_POST['rs']) && $_POST['rs']=="Instagram") { echo "checked=\"checked\""; } ?>>Instagram <br>
-                                <input type="checkbox" name="rs[]" id="rs" value="linkedIn" <?php if (isset($_POST['rs']) && $_POST['rs']=="LinkedIn") { echo "checked=\"checked\""; } ?>>LinkedIn 
-                                <input type="checkbox" name="rs[]" id="rs" value="youtube" <?php if (isset($_POST['rs']) && $_POST['rs']=="Youtube") { echo "checked=\"checked\""; } ?>>YouTube <br>
-                                <input type="radio" name="style" id="" value="StyleUn" style="margin-bottom: 15px; ">Style 1
-                                <input type="radio" name="style" id="" value="StyleDeux" style="margin-bottom: 15px; ">Style 2
-                                <input type="radio" name="style" id="" value="StyleTrois" style="margin-bottom: 15px; ">Style 3 <br>
-                                <div class="champsrs"></div>
-                                <input type="submit" name="val" id="okk" value="<?php if (!isset($_POST['rs'])) { echo "Confirmer le style"; } else { echo "Renseigner les réseaux"; } ?>" class="button rs" style="margin-bottom: 15px;">
-                            </div> 
+                        <div class="form ele" style="display: flex; flex-direction: column;">
+                            <div class="col7">
+                                <p style="color: #000000 !important;">Styles réseaux sociaux :</p> <br>
+                                <img src="img/rendu rs.jpg" alt="Exemple réseaux sociaux" width="185px">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,17 +192,21 @@ include("functions/select_id.php");
                         </div>
                     </div>
                     <div class='zone' id='zone_$i'></div>
+                    <p style='margin-left: 15px; color: #FFFFFF; font-weight: bold; margin-top: 15px;'>*Le nom, le prénom, et la fonction doivent impérativement commencer par une majuscule !</p>
                     <p class='erreur erreur_".$i."'></p>
+
                 </form>";
             }
         echo "</div>
               <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
-                    <div class='apercu' style='height: 375px; padding: 15px;'></div>
-                    <div class='pub'>
-                       <a href='".$_SESSION['site']."' target='_blank' rel='noopener noreferrer'>
-                         <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
-                       </a>
+                    <div class='apercu' style='height: 480px; padding: 15px;'>
+                        <div class='pub'>
+                            <a href='".$_SESSION['site']."' target='_blank' rel='noopener noreferrer'>
+                                <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
+                            </a>
+                        </div>
                     </div>
+                    
               </div>
             </div>
         </div>";

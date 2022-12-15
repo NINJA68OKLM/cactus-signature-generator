@@ -24,7 +24,7 @@ for ($d=0; $d < $_COOKIE['rsnbr']+1; $d++) {
   echo "<br>".$frequete."<br>";
 }
 // Enregistrement du style
-$trequete= "UPDATE entreprise SET rs_style='".$_COOKIE['rs_style']."' WHERE id='".$_COOKIE['bddid']."'";
+$trequete= "UPDATE entreprise SET rs_style='".$_COOKIE['rs_style']."', rs='".$_COOKIE['rsnbr']."' WHERE id='".$_COOKIE['bddid']."'";
 $tresult = $conn->query($trequete);
 echo $trequete;
 ?>

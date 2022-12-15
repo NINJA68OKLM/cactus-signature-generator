@@ -5,11 +5,11 @@ $username = "admin__";
 $password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Sélection de tous les champs de réseuax sociaux
+// Sélection de tous les champs de réseaux sociaux
 $requete= "SELECT facebook, twitter, instagram, youtube, linkedin FROM entreprise WHERE id='".$_COOKIE['idd']."'";
 $result = $conn->query($requete);
 // $result =$result -> fetch_array(MYSQLI_ASSOC);
-// Sélection du nombre de réseuax sociaux
+// Sélection du nombre de réseaux sociaux
 $rrequete= "SELECT rs FROM entreprise WHERE id='".$_COOKIE['idd']."'";
 $rresult = $conn->query($rrequete);
 // Sélection du style
@@ -17,31 +17,35 @@ $srequete= "SELECT rs_style FROM entreprise WHERE id='".$_COOKIE['idd']."'";
 $sresult = $conn->query($srequete);
 // Déclaration des cookies
 $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
-// Récupération du nombre de réseaux sociaux
-foreach ($rresult as $cle => $val) {
-  setcookie("rsnbr", $val["rs"], time()+3600);
-}
-// Récupération du style
-foreach ($sresult as $cle => $val) {
-  setcookie("style", $val["rs_style"], time()+3600);
-}
-// Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
-foreach ($result as $cle => $val) {
-  $ch=0;
-  for ($r=0; $r < 5; $r++) {
-    // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
-    if ($val[$tab[$r]] !== "")
-    {
-      // En-dessous -> exemples pour voir les résultats pris en compte pour voir ce que la base de données retourne
-      // echo $r." : ".$val[$tab[$r]]."<br>";
-      setcookie("rs_".$ch, $tab[$r], time()+3600);
-      setcookie("rs_href_".$ch, $val[$tab[$r]], time()+3600);
-      setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['style']."/".$tab[$ch].".svg", time()+3600));
-      // echo $_COOKIE['rs_icon_0'];
-      $ch++;
-    }
-  }
-}
+// if (!isset($_COOKIE['rsnbr']))
+// {
+//   // Récupération du nombre de réseaux sociaux
+//   foreach ($rresult as $cle => $val) {
+//     setcookie("rsnbr", $val["rs"], time()+3600);
+//   }
+//   // Récupération du style
+//   foreach ($sresult as $cle => $val) {
+//     setcookie("style", $val["rs_style"], time()+3600);
+//   }
+//   // Récupération des réseaux sociaux en vérifiant chacune des valeurs dans la base de données
+//   foreach ($result as $cle => $val) {
+//     $ch=0;
+//     for ($r=0; $r < 5; $r++) {
+//       // Tant qu'aucune des valeurs n'est vide on déclare la valeur en cookie 
+//       if ($val[$tab[$r]] !== "")
+//       {
+//         // En-dessous -> exemples pour voir les résultats pris en compte pour voir ce que la base de données retourne
+//         // echo $r." : ".$val[$tab[$r]]."<br>";
+//         setcookie("rs_".$ch, $tab[$r], time()+3600);
+//         setcookie("rs_href_".$ch, $val[$tab[$r]], time()+3600);
+//         setcookie("rs_icon_".$ch, file_get_contents("../img/Logos/".$_COOKIE['rs_style']."/".$tab[$ch].".svg", time()+3600));
+//         // echo $_COOKIE['rs_icon_0'];
+//         $ch++;
+//       }
+//     }
+//   }
+// }
+
 ?>
 <table style="font-family:Arial, Helvetica, sans-serif !important; margin-right:0; margin-left:auto; line-height:19px; width: 100%; height: 100%; " cellpadding="0" cellspacing="0" id="table">
   <tbody>
@@ -101,3 +105,5 @@ foreach ($result as $cle => $val) {
     </tr>
   </tbody>
 </table>
+
+<!-- file_get_contents("../img/Logos/".$_COOKIE['rs_style']."/".$_COOKIE['rs_'.$r].".svg") -->

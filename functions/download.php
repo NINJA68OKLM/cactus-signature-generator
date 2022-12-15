@@ -18,7 +18,7 @@ $test= "<!DOCTYPE html>
     "
 </body>
 </html>"; 
-$filename = 'Signature_'.$_COOKIE['nom_'.$i].'_'.$_COOKIE['prenom_'.$i].'.html';
+$filename = 'Signature_'.$_COOKIE['nom_'.$i].'_'.$_COOKIE['prenom_'.$i].'.htm';
 $fp = fopen($filename, 'w+');
 fwrite($fp, $test);
 // Déplacement du fichier

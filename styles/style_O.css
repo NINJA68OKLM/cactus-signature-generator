@@ -1,7 +1,7 @@
 fieldset
 {
     flex-direction: row;
-    background: linear-gradient(90deg, white 45%, transparent);
+    background: #FFFFFF;
 }
 .flex
 {
@@ -26,7 +26,7 @@ p.trait
     background: black;
     margin-right: 15px;
 }
-.col5
+.col5, .col7
 {
     margin-left: 15px;
 }
