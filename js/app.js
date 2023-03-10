@@ -102,12 +102,12 @@ jQuery(function ($) {
             var fonctionm= $("[name='fonction_"+formId+"']").val()
             var ldm= $("[name='ld_"+formId+"']").val()
             var mailm= $("[name='mail_"+formId+"']").val()
-            $.cookie("nom_"+formId, nomm, {expires: 7})
-            $.cookie("prenom_"+formId, prenomm, {expires: 7})
-            $.cookie("fonction_"+formId, fonctionm, {expires: 7})
-            $.cookie("ld_"+formId, ldm, {expires: 7})
-            $.cookie("mail_"+formId, mailm, {expires: 7})
-            $.cookie("id", formId,  {expires: 7})
+            $.cookie("nom_"+formId, nomm)
+            $.cookie("prenom_"+formId, prenomm)
+            $.cookie("fonction_"+formId, fonctionm)
+            $.cookie("ld_"+formId, ldm)
+            $.cookie("mail_"+formId, mailm)
+            $.cookie("id", formId)
             // Appel du fichier "insert_database.php" pour enregistrer les employés
             $.get("functions/insert_database.php", function(data){
                 console.log(data)
@@ -386,6 +386,38 @@ jQuery(function ($) {
                 e.preventDefault()
                 // Changement d'aperçu en fonction du choix de signature
                 if ($("#haut").prop("checked")) {
+<<<<<<< HEAD
+                    $(".apercu").html(signaturehaut)
+                //         +`<div class='pub'>
+                //     <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                //         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                //     </a>
+                // </div>`)
+                }
+                if ($("#bas").prop("checked")) {
+                    $(".apercu").html(signaturebas)
+                //     +`<div class='pub'>
+                //     <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                //         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                //     </a>
+                // </div>`)
+                }
+                if ($("#gauche").prop("checked")) {
+                    $(".apercu").html(signaturegauche)
+                //     +`<div class='pub'>
+                //     <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                //         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                //     </a>
+                // </div>`)
+                }
+                if ($("#droite").prop("checked")) {
+                    $(".apercu").html(signaturedroite)
+                //     +`<div class='pub'>
+                //     <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                //         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                //     </a>
+                // </div>`)
+=======
                     $(".apercu").html(signaturehaut+`<div class='pub'>
                     <a href='${site}' target='_blank' rel='noopener noreferrer'>
                         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
@@ -412,6 +444,7 @@ jQuery(function ($) {
                         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
                     </a>
                 </div>`)
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 }
                 // Intégration des RS  
                 if ($(".RS").length > 0) {
@@ -442,7 +475,11 @@ jQuery(function ($) {
                             //     $.cookie("rs_icon_"+l, data)
                             //     return data
                             // }, "html");
+<<<<<<< HEAD
+                            $(".icon." + valeur).html("<img width='14' height='14' src='https://generator.agence-cactus.fr/img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png'>")
+=======
                             $(".icon." + valeur).html("<img width='14' height='14' src='img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png'>")
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                             $.cookie("rs_icon_"+l, "img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png")
                             console.log($.cookie("rs_icon_"+l))
                         }
@@ -545,7 +582,12 @@ jQuery(function ($) {
         console.log("Défini")
         site = $.cookie("pub")
     }
+<<<<<<< HEAD
+    if (typeof $.cookie('banniere') === 'undefined')
+    // if (typeof $.cookie('bannierenom') === 'undefined')
+=======
     if (typeof $.cookie('bannierenom') === 'undefined')
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
     {
         console.log("Non définie")
         // var banniere = $.cookie("banniere", "banniere.png")
@@ -554,15 +596,25 @@ jQuery(function ($) {
     else
     {
         console.log("Défini")
+<<<<<<< HEAD
+        banniere = "uploads/"+$.cookie("banniere")
+=======
         banniere = "uploads/"+$.cookie("bannierenom")
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
     }
     // Mise en place de la publicité
     $(".apercu").html(`<div style='display: flex; justify-content: center; align-items: center; width: 100%; height: 290px;'>
                             <strong>APERCU</strong>
                         </div>
+<<<<<<< HEAD
+                        <!-- <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                            <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                        </a> -->`)
+=======
                         <a href='${site}' target='_blank' rel='noopener noreferrer'>
                             <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
                         </a>`)
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
 
     // client.php
 
@@ -578,24 +630,51 @@ jQuery(function ($) {
     
     if (window.location.href.indexOf("client.php")!=-1)
     {
+<<<<<<< HEAD
+        // On vérifie si la zone des employés est visible à l'écran, s'il l'est on affiche le bouton pour le retour au début de page
+        // while ($("#fieldset_client_emplo").is(":visible")) {
+        //     $(".parentretour").css("display", "initial")
+        // }
+
+console.log("kkkkkkkkkkk")
+=======
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
         // Affichage de l'aperçu Espace Client
         $(".apercu_submit").on("click", function (w) {
+            w.preventDefault()
             var tab = $(this).attr("name")
             var tabb = tab.split('_')
             // console.log(tabb)
             formId = tabb[1]
             // Création du cookie Id pour l'apercu et le téléchargement
             $.cookie("id", tabb[1])
-            w.preventDefault()
+            console.log($.cookie("id"))
+            // Afficher l'URL sans le "https://" et éventuellement le "/" s'il est présent
+            // var url = $(".cacher>span>a").html().split("/")
+            // console.log(url)
+            // console.log(url[2])
+            // url = url[2]
+            // $.cookie("sitee", url)
+            // $(".cacher>span>a").html(url)
             // Changement d'aperçu en fonction du choix de signature
             $.get("objects/signature"+$.cookie("signature")+"c.php", function(data) {
+<<<<<<< HEAD
+                $(".apercu").html(data)
+                // +`<div class='pub'>
+                //     <a href='${site}' target='_blank' rel='noopener noreferrer'>
+                //         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
+                //     </a>
+                // </div>`)
+=======
                 $(".apercu").html(data+`<div class='pub'>
                     <a href='${site}' target='_blank' rel='noopener noreferrer'>
                         <img src='img/${banniere}' alt='' style='width: 600px; height: 150px; margin-top: 15px;'>
                     </a>
                 </div>`)
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 $(".apercu").css("height", "")
             }, "text")
+            
         })
         
         // Fonction de téléchargement
@@ -614,13 +693,24 @@ jQuery(function ($) {
                 $(".formclient_"+formId).html(structure+"<br>"+data)
             })
         })
-        // On enregistre dans des cookies la valeur des champs avant modification de l'internaute
-        for (let bn = 0; bn < $.cookie("nb_client"); bn++) {
-            $.cookie("nom_pre_"+bn, $("[name='nom_"+bn+"']").val())
-            $.cookie("prenom_pre_"+bn, $("[name='prenom_"+bn+"']").val())
-            $.cookie("fonction_pre_"+bn, $("[name='fonction_"+bn+"']").val())
-        }
         
+        // On enregistre dans des cookies la valeur des champs avant modification de l'internaute
+        // for (let bn = 0; bn < $.cookie("nb_client"); bn++) {
+        //     $.cookie("nom_pre_"+bn, $("[name='nom_"+bn+"']").val())
+        //     $.cookie("prenom_pre_"+bn, $("[name='prenom_"+bn+"']").val())
+        //     // $.cookie("fonction_pre_"+bn, $("[name='fonction_"+bn+"']").val())
+        // }
+
+        // Même fonction mais fonctionnelle
+        $("[type='text']").focus(function() {
+            console.log("Oh jaja")
+            var tab = $(this).attr("name")
+            console.log(tab)
+            var tabb = tab.split('_')
+            formId = tabb[1]
+            $.cookie("nom_pre_"+formId, $("[name='nom_"+formId+"']").val())
+            $.cookie("prenom_pre_"+formId, $("[name='prenom_"+formId+"']").val())
+        })
 
         // Fonction d'enregistrement/modification dans la base de données
         $(".enregistrer").on("click", function (f) {
@@ -629,7 +719,11 @@ jQuery(function ($) {
             console.log(tab)
             var tabb = tab.split('_')
             formId = tabb[1]
+
+            
+            
             $.cookie("id", formId)
+            console.log("formID est égal à :"+$.cookie("id"))
             // Vérifie qu'on a pas modifié les données pas des valeurs vides
             if ($("[name='nom_"+formId+"']").val()!=="" && $("[name='prenom_"+formId+"']").val()!=="" && $("[name='mail_"+formId+"']").val()!=="" && $("[name='ld_"+formId+"']").val()!=="" && $("[name='fonction_"+formId+"']").val()!=="")
             {
@@ -641,12 +735,14 @@ jQuery(function ($) {
                 // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
                 $.get("functions/client_save.php", function(data){
                     console.log(data)
-                    $.cookie("nom_pre_"+formId, $("[name='nom_"+formId+"']").val())
-                    $.cookie("prenom_pre_"+formId, $("[name='prenom_"+formId+"']").val())
+                    console.log("nom_pre enregistré")
+                    // $.cookie("nom_pre_"+$.cookie("id"), $("[name='nom_"+$.cookie("id")+"']").val())
+                    // $.cookie("prenom_pre_"+$.cookie("id"), $("[name='prenom_"+$.cookie("id")+"']").val())
                 })
                 $(".reponse_client"+formId).text("Vos modifications ont bien étés enregistrés !")
             }
         })
+
         // Suppression d'un utilisateur
         $(".croix>img").on("click", function (g) {
             g.preventDefault()
@@ -661,14 +757,15 @@ jQuery(function ($) {
             // Appel du fichier pour générer le fichier HTML et télécharger le fichier sur le client
             $.get("functions/client_delete.php", function(data){
                 console.log(data)
+                // Suppression des cookies liés au formulaire supprimé
+                $.removeCookie("nom_"+formId)
+                $.removeCookie("prenom_"+formId)
+                $.removeCookie("mail_"+formId)
+                $.removeCookie("ld_"+formId)
+                $.removeCookie("fonction_"+formId)
+                $.removeCookie("admin_"+formId)
             })
-            // Suppression des cookies liés au formulaire supprimé
-            $.removeCookie("nom_"+formId)
-            $.removeCookie("prenom_"+formId)
-            $.removeCookie("mail_"+formId)
-            $.removeCookie("ld_"+formId)
-            $.removeCookie("fonction_"+formId)
-            $.removeCookie("admin_"+formId)
+            
             // Actualisation du nombre d'employés après la suppression du formulaire
             $.cookie("nb_client", $(".formclientt").length)
             // Nouvelle déclaration des cookies
@@ -710,6 +807,7 @@ jQuery(function ($) {
 
             // Actualisation des numéros des employés
             $(".reponse_client_"+formId).text("L'employé a bien été supprimé !")
+            $(".reponse_client_"+formId).css("margin", "15px 0px")
         })
 
         // Fonction d'ajout de client
@@ -720,9 +818,24 @@ jQuery(function ($) {
             // Si les champs ont étés remplis in crée les cookies qui permettront de stocker l'utilisateur et l'ajouter à la liste
             if ($(".ajout_employ>.col6>.nom").val()!== "" && $(".ajout_employ>.col6>.prenom").val()!== "" && $(".ajout_employ>.col6>.mail").val()!== "" && $(".ajout_employ>.col6>.ld").val()!== "" && $(".ajout_employ>.col6>.fonction").val()!== "")
             {
+<<<<<<< HEAD
+                // Déclaration des cookies nécessaires au bon fonctionnement de l'enregistrement
+                $.cookie("nom", $(".ajout_employ>.col6>.nom").val())
+                $.cookie("prenom", $(".ajout_employ>.col6>.prenom").val())
+                $.cookie("fonction", $(".ajout_employ>.col6>.fonction").val())
+                $.cookie("mail", $(".ajout_employ>.col6>.mail").val())
+                $.cookie("ld", $(".ajout_employ>.col6>.ld").val())
+                console.log($(".ajout_employ>.col6>.nom").val())
+                var contenu = $("fieldset:last>form").html()
+                
+                $.get("functions/add_client.php", function(data){
+                    var new_nb = $.cookie("nb_client", $.cookie("nb_client")-1)
+                    console.log($.cookie("nb_client"))
+=======
                 
                 var contenu = $("fieldset:last>form").html()
                 $.get("functions/add_client.php", function(data){
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                     $.cookie("nom_"+$.cookie("nb_client"), $("[name='nom']").val())
                     $.cookie("prenom_"+$.cookie("nb_client"), $("[name='prenom']").val())
                     $.cookie("mail_"+$.cookie("nb_client"), $("[name='mail']").val())
@@ -732,8 +845,18 @@ jQuery(function ($) {
 
                     $(".confirmuti").append(data)
                     console.log($(".confirmuti"))
+<<<<<<< HEAD
+                    console.log($.cookie("nom_"+nb))
                 })
                 // On ajoute le nouvel employé
+                let nb = $.cookie("nb_client")
+                var recognize = "nom_"+($.cookie("nb_client"));
+                var recognizee = "prenom_"+($.cookie("nb_client"));
+                console.log(nb)
+=======
+                })
+                // On ajoute le nouvel employé
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 $(".field_client>.droite").append(`<form action='' method='post' class='formclient_${$.cookie("nb_client")} formclient'>
                     <div class='${$.cookie("nom_"+$.cookie("nb_client"))} formclientt'>
                     <h2 style='margin-top: 25px; margin-bottom: 25px; padding-left: 15px;'>Employé n° ${nb_client+1}</h2>
@@ -746,6 +869,15 @@ jQuery(function ($) {
                                 <p>Mail :</p> <br>
                             </div>
                             <div class='col6 client'>
+<<<<<<< HEAD
+                                <input type='text' name='nom_${$.cookie("nb_client")}' id='' value='${$.cookie("nom")}'><br>
+                                <input type='text' name='prenom_${$.cookie("nb_client")}' id='' value='${$.cookie("prenom")}'><br>
+                                <input type='text' name='fonction_${$.cookie("nb_client")}' id='' value='${$.cookie("fonction")}'><br>
+                                <input type='text' name='ld_${$.cookie("nb_client")}' id='' value='${$.cookie("ld")}'><br>
+                                <input type='text' name='mail_${$.cookie("nb_client")}' id='' value='${$.cookie("mail")}'> <br>
+                            </div>
+                            <div class='croix ${recognize}'>
+=======
                                 <input type='text' name='nom_${$.cookie("nb_client")}' id='' value='${$.cookie("nom_"+$.cookie("nb_client"))}'><br>
                                 <input type='text' name='prenom_${$.cookie("nb_client")}' id='' value='${$.cookie("prenom_"+$.cookie("nb_client"))}'><br>
                                 <input type='text' name='fonction_${$.cookie("nb_client")}' id='' value='${$.cookie("fonction_"+$.cookie("nb_client"))}'><br>
@@ -753,13 +885,18 @@ jQuery(function ($) {
                                 <input type='text' name='mail_${$.cookie("nb_client")}' id='' value='${$.cookie("mail_"+$.cookie("nb_client"))}'> <br>
                             </div>
                             <div class='croix ${$.cookie("nom_"+$.cookie("nb_client"))}'>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                               <img src='img/croix.png' alt='Icone supression - Signature Generator' loading='lazy' data-form-id='${$.cookie("nb_client")}'>
                           </div>
                         </div>
                     </div>
                     <input type='submit' name='confirm_${$.cookie("nb_client")}' value='Enregistrer' class='button enregistre_${$.cookie("nb_client")} enregistrer'>
                     <input type='submit' name='apercu_${$.cookie("nb_client")}' value='Aperçu' class='button apercu_${$.cookie("nb_client")} apercu_submit' style='margin-left: 95px;'>
+<<<<<<< HEAD
+                    <a href='signatures/Signature_${recognize}_${recognizee}.htm' download value='Télécharger' class='button telecharger button telech' name='telecharger_${$.cookie("rsnbr")}' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
+=======
                     <a href='signatures/Signature_${$.cookie("nom_"+$.cookie("nb_client"))}_${$.cookie("prenom_"+$.cookie("nb_client"))}.htm' download value='Télécharger' class='button telecharger button telech' name='telecharger_${$.cookie("rsnbr")}' style='border-top: 1px solid #FFF; margin-left: 15px;'>Télécharger</a>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 </form>
                 <div class='reponse_client reponse_client_${$.cookie("nb_client")}'></div>`)
                 // Incrémentation du cookie
