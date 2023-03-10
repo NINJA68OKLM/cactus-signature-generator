@@ -1,5 +1,18 @@
 <?php
 $id=$_COOKIE['id'];
+$sitee = explode("/", $_COOKIE['site']);
+// Espacement des numéros de téléphone
+$tel = str_split($_COOKIE['tel'], 2);
+$ld = str_split($_COOKIE['ld_'.$id], 2);
+$li = "";
+$la = "";
+for ($d=0; $d < 5; $d++) { 
+    $li = $li.$tel[$d]." ";
+    $la = $la.$ld[$d]." ";
+}
+$tel = $li;
+$ld = $la;
+// Connexion à la base de données
 $servername = "localhost";
 $username = "admin__";
 $password = "5YbsW6lVuo4wwh^a";
@@ -42,8 +55,8 @@ foreach ($sresult as $cle => $val) {
 //   }
 // }
 ?>
-<div style="font-family: Arial, Helvetica, sans-serif !important; min-height: 250px; min-width: 320px; max-width: 650px; min-height: 250px; display: flex; align-items: center">
-    <table style="padding: 2px; border-style: none; border-color: black; border-style: none; border-collapse: inherit; direction: ltr; width: 100%" cellpadding="0" cellspacing="0">
+<div style="font-family: Arial, Helvetica, sans-serif !important; min-height: 160px; min-width: 320px; max-width: 650px; display: flex; align-items: center">
+    <table style="padding: 2px; border-style: none; border-color: black; border-style: none; border-collapse: inherit; direction: ltr; width: 100%; display: flex; justify-content: center;" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
                 <td style="font-size:1pt; vertical-align:top; width: 95px;" valign="top">   
@@ -76,7 +89,21 @@ foreach ($sresult as $cle => $val) {
                                     <br>
                                     <!-- Numéro de téléphone -->
                                     <span style="color: rgb(100, 99, 99); font-family: Arial, Helvetica, sans-serif !important; font-weight: bold;">
-                                        Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:<?= $_COOKIE['ld_'.$id]?>"><?= $_COOKIE['ld_'.$id] ?> (ligne directe)</a>
+                                        Tél : <a style="text-decoration: none; color: rgb(100, 99, 99);" href="tel:<?= $_COOKIE['ld_'.$id]?>"><?= $ld ?> (ligne directe)</a>
+                                    </span>
+                                    <br> <br> 
+                                    <span style="color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                    <?= $_COOKIE['adre']?>, <? $_COOKIE['cp']?> <?= $_COOKIE['vill']?>
+                                    </span>
+                                    <br>
+                                    <span style="color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                    Tél : <a href="tel: <?= $_COOKIE['tel']?>" style="color: #000000; text-decoration: none;"><?= $tel?></a>
+                                    </span>
+                                    <br>
+                                    <span style="display: flex;" class='cacher'>
+                                    <!-- Site web -->
+                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                    <a style="color: #000000; text-decoration: none;" href="<?= $_COOKIE['site'] | $_COOKIE['site'] ?>"><?= $sitee[2]?></a>
                                     </span>
                                     <br> <br> 
                                     <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
@@ -100,7 +127,11 @@ foreach ($sresult as $cle => $val) {
                                         echo "<span style='margin-left: 5px; margin-top: 3px;'>
                                             <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
                                                 <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
+<<<<<<< HEAD
+                                                    ".$_COOKIE['rs_icon_'.$r]."
+=======
                                                     <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                                                 </div>
                                             </a>
                                         </span>";
@@ -116,4 +147,9 @@ foreach ($sresult as $cle => $val) {
             </tr>
         </tbody>
     </table>
+</div>
+<div class="pub">
+    <a href="<?= $_COOKIE['pub'] ?>" target="_blank" rel="noopener noreferrer">
+        <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
+    </a>
 </div>
