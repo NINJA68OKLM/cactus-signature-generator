@@ -60,6 +60,7 @@ session_id();
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
+            
             // Vérifie si les identifiants existent dans la base de données
             $requete= "SELECT * FROM employes WHERE ide='".$_POST['identifiant']."' AND mdp='".$_POST['mdp']."'";
             // echo $requete;
@@ -68,17 +69,73 @@ session_id();
                 // Récupération des informations de la personne et déclaration en tant que cookie qui se connecte pour les afficher dans son espace client
                 $rechercheinfos = $result -> fetch_array(MYSQLI_ASSOC);
                 setcookie("idd", $rechercheinfos["id"], time()+3600);
+                // On met en place un cookie de signature pour que le télchargmenet et l'aperçu puisse fonctionner
+                $request= "SELECT * FROM entreprise WHERE id='".$rechercheinfos["id"]."'";
+                $resultt = $conn->query($request);
+                $responsee = $resultt -> fetch_array(MYSQLI_ASSOC);
+                // Création d'un tableau pour vérifier quels réseaux sociaux ont des liens vides
+                $tabb = array(
+                    "facebook" => $responsee["facebook"],
+                    "twitter" => $responsee["twitter"],
+                    "instagram" => $responsee["instagram"],
+                    "linkedin" => $responsee["linkedin"],
+                    "youtube" => $responsee["youtube"]
+                );
+                echo "<br>".$request."<br>";
                 // Si la personne authentifié n'est pas administrateur un seul utilisateur lui est affilié dans l'espace client
                 if ($rechercheinfos["admin"] == 0)
                 {
+                    // Mise en place des cokkies employé
                     setcookie("nom_0", $rechercheinfos["nom"], time()+3600);
                     setcookie("prenom_0", $rechercheinfos["prenom"], time()+3600);
+                    setcookie("nom_pre_0", $rechercheinfos["nom"], time()+3600);
+                    setcookie("prenom_pre_0", $rechercheinfos["prenom"], time()+3600);
                     setcookie("fonction_0", $rechercheinfos["fonction"], time()+3600);
                     setcookie("mail_0", $rechercheinfos["mail"], time()+3600);
                     setcookie("ld_0", $rechercheinfos["ld"], time()+3600);
-                    setcookie("admin_0", $rechercheinfos["admin"], time()+3600);
+                    // setcookie("admin_0", $rechercheinfos["admin"], time()+3600);
                     setcookie("idd_0", $rechercheinfos["idd"], time()+3600);
                     setcookie("nb_client", $result->num_rows, time()+3600);
+                    // setcookie("bannierenom", $responsee["pub"], time()+3600);
+                    // setcookie("rsnbr", $responsee["rsnbr"], time()+3600);
+                    // setcookie("rs_style", $responsee["rs_style"], time()+3600);
+                    // Cookies d'entreprise
+                    // setcookie("entr", $responsee["nom"], time()+3600);
+                    
+                    // setcookie("signature", $responsee['signature'], time()+3600);
+                    foreach ($responsee as $cle => $val) {
+                        echo $cle." : ".$val."<br>";
+                        if ($cle == "ville")
+                        {
+                            setcookie("vill", $val, time()+3600);
+                        }
+                        if ($cle == "nom")
+                        {
+                            setcookie("entr", $val, time()+3600);
+                        }
+                        if ($cle == "adresse")
+                        {
+                            setcookie("adre", $val, time()+3600);
+                        }
+                        if ($cle == "rs")
+                        {
+                            $m = 0;
+                            foreach ($tabb as $cl => $va) {
+                                if ($va !== "")
+                                {
+                                    setcookie("rs_".$m, $cl, time()+3600);
+                                    setcookie("rs_href_".$m, $va, time()+3600);
+                                    setcookie("rs_icon_".$m, "<img src='https://generator.agence-cactus.fr/img/Logos/".$responsee['rs_style']."/".$cl.".png'>", time()+3600);
+                                    echo "Hihi : ".$va."<br>";
+                                    $m++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            setcookie($cle, $val, time()+3600);
+                        }
+                    }
                 }
                 // Sinon tous les employés de l'entreprise le sont
                 else
@@ -93,18 +150,23 @@ session_id();
                     foreach ($dresult as $cle => $val) {
                         setcookie("nom_".$l, $val["nom"], time()+3600);
                         setcookie("prenom_".$l, $val["prenom"], time()+3600);
+                        // setcookie("nom_pre_".$l, $val["nom"], time()+3600);
+                        // setcookie("prenom_pre_".$l, $val["prenom"], time()+3600);
                         setcookie("fonction_".$l, $val["fonction"], time()+3600);
                         setcookie("mail_".$l, $val["mail"], time()+3600);
                         setcookie("ld_".$l, $val["ld"], time()+3600);
-                        setcookie("admin_".$l, $val["admin"], time()+3600);
+                        // setcookie("admin_".$l, $val["admin"], time()+3600);
                         setcookie("idd_".$l, $val["idd"], time()+3600);
+                        setcookie("nb_client", $dresult->num_rows, time()+3600);
+                        echo "<p>Nom ".$l." : ".$val["nom"]."</p>";
                         $l++;
                     }
                     // Mise en place du cookie "id" de l'entrperise pour pouvoir afficher les infos propres à l'entreprise
                     setcookie("bddid", $rechercheinfos["id"], time()+3600);
                 }
-                var_dump($rechercheinfos);
                 header('Location: client.php');
+                ?>
+                <?php
             }
             else
             {

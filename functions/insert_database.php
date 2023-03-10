@@ -21,7 +21,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 // Récupération de l'id de l'entreprise en cookie "bddid"
-$requete= "SELECT id FROM entreprise WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
+// $requete= "SELECT id FROM entreprise WHERE nom='".$_COOKIE['nom_'.$i]."' AND prenom='".$_COOKIE['prenom_'.$i]."' AND id='".$_COOKIE['bddid']."'";
+$requete= "SELECT id FROM entreprise WHERE nom='".$_SESSION['entr']."'";
 $result = $conn->query($requete);
 
 // Vérifie si l'employé existe déjà existe dans la base de données

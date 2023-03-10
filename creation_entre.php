@@ -151,9 +151,9 @@ session_id();
                 // Execution des deux requêtes 
                 // $conn->query($sql);
                 
-                if ($conn->query($sql) === TRUE) {
+                if ($conn->query($sql) == TRUE) {
                     // Enregistrement d'un "employé" dans l'entreprise qui aura l'admin 1 et permettra d'afficher tous les autres dans l'espace client 
-                    $sqll = "INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES (, '".$_SESSION['entr'].", '-----', '-----', '------', '".$_SESSION["adrmail"]."', 1, '', '')";
+                    $sqll = "INSERT INTO employes (id, nom, prenom, fonction, ld, mail, admin, ide, mdp) VALUES ('', '".$_SESSION['entr']."', '-----', '-----', '------', '".$_SESSION["adrmail"]."', 1, '', '')";
                     $conn->query($sqll);
                     // Message pour déclarer les employés
                     echo "<p class='confirmation' style='margin: 15px;'>Votre entreprise a bien été enregistré dans notre base de données ! A présent déclarez vos employés.</p><br>";

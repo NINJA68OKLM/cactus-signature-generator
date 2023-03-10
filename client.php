@@ -8,7 +8,7 @@ $password = "5YbsW6lVuo4wwh^a";
 $dbname = "signature";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Vérifie si la personne s'est bien authentifié via le login si ce n'est pas le cas, la personne est redirigé
-if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
+if (isset($_COOKIE['nom_0']) && isset($_COOKIE['prenom_0']) && isset($_COOKIE['mail_0']) && isset($_COOKIE['ld_0']) && isset($_COOKIE['fonction_0']))
 {
     // $_COOKIE['logo'];
     $cookie="dd";
@@ -37,7 +37,27 @@ setcookie("bannierenom", "", time()+3600);
     <script src="js/jquery-cookie-master/src/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
 </head>
-<body>
+<style>
+    html
+    {
+        scroll-behavior: smooth;
+    }
+    .parentretour
+    {
+        display: none;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
+    .boutonretour
+    {
+        background: #FFFFFF;
+        padding: 15px;
+        border-radius: 50%;
+        border: 1px solid #000000;
+    }
+</style>
+<body id="loaded">
     <?php
     // Affichage des employés
     // Si la personne authentifié est administrateur on va afficher les informations de l'entreprise qui peuvent êtres modifiables
@@ -83,7 +103,9 @@ setcookie("bannierenom", "", time()+3600);
         setcookie("site", $result["site"], time()+3600);
         setcookie("empl", $result["employe"], time()+3600);
         setcookie("sign", $result["signature"], time()+3600);
-        setcookie("logo", $result["logo"], time()+3600);
+        setcookie("signature", $result["signature"], time()+3600);
+        setcookie("logo", $result["logo"], time()+6300); 
+        // echo "Cookie base : ".$result['logo'];
         setcookie("rsnbr", $result["rs"], time()+3600);
         setcookie("rs_style", $result["rs_style"], time()+3600);
         // setcookie("facebook", $result["facebook"], time()+3600);
@@ -179,13 +201,21 @@ setcookie("bannierenom", "", time()+3600);
                         </div>
                     </div>
                 </form>
+<<<<<<< HEAD
+                <div class='confirmutii'><b>Pour que votre bannière ne soit pas déformé, il est recommandé de publier une image d'une résolution de 600x150</b></div>
+=======
                 <div class='confirmutii'></div>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
             </div>
         </fieldset>";
         
     }
     // Fin
+<<<<<<< HEAD
+    echo "<fieldset class='field_client' id='fieldset_client_emplo'>
+=======
     echo "<fieldset class='field_client'>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 <div class='gauche'>
                     <img src='img/logo.png' alt='' style='width: 100%;'>
                     <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
@@ -363,12 +393,17 @@ setcookie("bannierenom", "", time()+3600);
                 // Si la personne a déclaré son entreprise mais pas ses employés, on fait une redirection
                 if ($_COOKIE['nb_client'] == 0)
                 {
-                    echo "<p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo.php' class='button' style='color: #000000;'>Déclarer les employés</a>";
+                    echo "<div style='display: flex; flex-direction: column;'><p style='color: #000000;'>Il semble que vous ayez déclaré votre entreprise mais pas vos employés</p><br><a href='creation_emplo.php' class='button' style='color: #000000; text-decoration: none; padding: 10px;'>Déclarer les employés</a></div>";
                 }
                 echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
+<<<<<<< HEAD
+                        <div class='apercu' style='padding: 25px;'>
+                            <!-- <div class='pub'>
+=======
                         <div class='apercu' style='height: 450px; padding: 25px;'>
                             <div class='pub'>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                                 <a href='";
                                 if (isset($_COOKIE['pub']))
                                 {
@@ -381,7 +416,11 @@ setcookie("bannierenom", "", time()+3600);
                                 echo "' target='_blank' rel='noopener noreferrer'>
                                     <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
                                 </a>
+<<<<<<< HEAD
+                            </div> -->
+=======
                             </div>
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                         </div>
                     </div>
                     <form action='".$_SERVER['PHP_SELF']."' method='post'>
@@ -474,8 +513,14 @@ setcookie("bannierenom", "", time()+3600);
     //     echo "<p>Votre nouvel employé a bien été ajouté !</p>";
     // }
     ?>
+    <!-- Bouton pour revenir au début de page -->
+    <!-- <a href="#fieldset_client_emplo" class="parentretour">
+        <div class="boutonretour">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M5 12l7-7 7 7"/></svg>
+        </div>
+    </a> -->
     <!-- La page est d'abord chargé mais ne reconnait pas les cookies, on actualise la page puis on change l'URL afin qu'il ne recharge pas à l'infini -->
-    <script type="text/javascript">
+    <script defer type="text/javascript">
         window.onload = function() {
             if(!window.location.hash) {
                 window.location = window.location + '#loaded';

@@ -12,16 +12,16 @@ $result = $conn->query($requete);
 // Déclaration de cookies généraux pour l'entreprise
 $ligne = $result->fetch_array(MYSQLI_ASSOC);
 $entr = $ligne["nom"];
-$adre = setcookie("adre", $ligne["adresse"], time()+3600);
-$adre = $_SESSION['adre']=$ligne['adresse'];
-$cp = setcookie("cp", $ligne["cp"], time()+3600);
-$vill = setcookie("vill", $ligne["ville"], time()+3600);
-$site = setcookie("site", $ligne["site"], time()+3600);
-$tel = setcookie("tel", $ligne["tel"], time()+3600);
-$logo = setcookie("logo", $ligne["logo"], time()+3600);
-$signature = setcookie("signature", $ligne["signature"], time()+3600);
-$rs = setcookie("rs", "", time()+3600);
-$_SESSION["logonom"] = $_COOKIE['logo'];
+// $adre = setcookie("adre", $ligne["adresse"], time()+3600);
+// $adre = $_SESSION['adre']=$ligne['adresse'];
+// $cp = setcookie("cp", $ligne["cp"], time()+3600);
+// $vill = setcookie("vill", $ligne["ville"], time()+3600);
+// $site = setcookie("site", $ligne["site"], time()+3600);
+// $tel = setcookie("tel", $ligne["tel"], time()+3600);
+// $logo = setcookie("logo", $ligne["logo"], time()+3600);
+// $signature = setcookie("signature", $ligne["signature"], time()+3600);
+// $rs = setcookie("rs", "", time()+3600);
+// $_SESSION["logonom"] = $_COOKIE['logo'];
 // Cookies spécifiques pour chaque employé
 for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
     $_SESSION['nom_'.$z]=$_COOKIE['nom_'.$z];
@@ -32,9 +32,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
 {
     if (isset($_FILES["logo"]) && is_uploaded_file($_FILES["logo"]["tmp_name"]))
     {
+        echo "image changé";
         // Importation du logo/image
         $target='img/uploads/'.basename($_FILES['logo']['name']);
         if(move_uploaded_file($_FILES['logo']['tmp_name'],$target)) {
+            echo "<br>Kalash Charlemagne";
             $fp = fopen($target, "r");
         }
         $_SESSION['logonom']=$_FILES['logo']['name'];
@@ -94,7 +96,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                             // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
                             echo "<img class='logoimg' src='img/uploads/".$_COOKIE['logo']."' width='120'>";
                             ?> <br> 
+<<<<<<< HEAD
+                            <input type="hidden" name="MAX_FILE_SIZE" value="1000000000000">
+=======
                             <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                             <input type="file" name="logo" id="files" value=""> <br>
                             <br>
                         </div>
@@ -143,7 +149,11 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
 <?php
 if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empty($_POST['adre']) | !empty($_POST['cp']) | !empty($_POST['vill']) | !empty($_POST['tel']) | !empty($_POST['site']) | !empty($_POST['empl']))
 {
+<<<<<<< HEAD
+    // echo "Ton grand-père l'opposum ! ".$_FILES['logo']['name'];
+=======
     echo "Ton grand-père l'opposum !";
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
     $requete = "UPDATE entreprise SET nom='".$_POST['entr']."', adresse='".$_POST['adre']."', tel='".$_POST['tel']."', ville='".$_POST['vill']."', cp='".$_POST['cp']."', site='".$_POST['site']."', employe='".$_POST['empl']."', signature='".$_POST['sign']."' WHERE id='".$_COOKIE['bddid']."'";
     $result = $conn->query($requete);
 }

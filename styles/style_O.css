@@ -1,7 +1,11 @@
 fieldset
 {
     flex-direction: row;
+<<<<<<< HEAD
+    background: linear-gradient(90deg, white 75%, transparent);
+=======
     background: #FFFFFF;
+>>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
 }
 .flex
 {

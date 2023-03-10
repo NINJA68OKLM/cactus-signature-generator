@@ -11,7 +11,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // $result = $conn->query($requete);
 $requete= "UPDATE employes SET nom='".$_COOKIE['nom_'.$i]."', prenom='".$_COOKIE['prenom_'.$i]."', mail='".$_COOKIE['mail_'.$i]."', ld='".$_COOKIE['ld_'.$i]."', fonction='".$_COOKIE['fonction_'.$i]."' WHERE id='".$_COOKIE['idd']."' AND nom='".$_COOKIE['nom_pre_'.$i]."' AND prenom='".$_COOKIE['prenom_pre_'.$i]."' AND idd='".$_COOKIE['idd_'.$i]."'";
 $result = $conn->query($requete);
-// echo $requete;
+echo $requete."<br>";
+echo "<p>Vos modifications ont bien étés enregistrés !</p>"
 ?>
 <script type="text/javascript">
         window.onload = function() {
