@@ -51,7 +51,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
 
 
 
-<fieldset>
+<fieldset id="entreprise">
     <div class="gauche">
         <img src="img/logo.png" alt="" style="width: 100%;">
         <h1 style="margin-top: 10px; margin-bottom: 0px !important;">Signature Generator</h1>
@@ -96,11 +96,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
                             // echo "<p style='color: black;' id='namelogo'>$logonom</p>";
                             echo "<img class='logoimg' src='img/uploads/".$_COOKIE['logo']."' width='120'>";
                             ?> <br> 
-<<<<<<< HEAD
                             <input type="hidden" name="MAX_FILE_SIZE" value="1000000000000">
-=======
-                            <input type="hidden" name="MAX_FILE_SIZE" value="100000">
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                             <input type="file" name="logo" id="files" value=""> <br>
                             <br>
                         </div>
@@ -149,11 +145,7 @@ if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empt
 <?php
 if (isset($_POST['ok']) | isset($_POST['sign']) | !empty($_POST['entr']) | !empty($_POST['adre']) | !empty($_POST['cp']) | !empty($_POST['vill']) | !empty($_POST['tel']) | !empty($_POST['site']) | !empty($_POST['empl']))
 {
-<<<<<<< HEAD
     // echo "Ton grand-père l'opposum ! ".$_FILES['logo']['name'];
-=======
-    echo "Ton grand-père l'opposum !";
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
     $requete = "UPDATE entreprise SET nom='".$_POST['entr']."', adresse='".$_POST['adre']."', tel='".$_POST['tel']."', ville='".$_POST['vill']."', cp='".$_POST['cp']."', site='".$_POST['site']."', employe='".$_POST['empl']."', signature='".$_POST['sign']."' WHERE id='".$_COOKIE['bddid']."'";
     $result = $conn->query($requete);
 }

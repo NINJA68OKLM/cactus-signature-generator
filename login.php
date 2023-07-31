@@ -163,6 +163,13 @@ session_id();
                     }
                     // Mise en place du cookie "id" de l'entrperise pour pouvoir afficher les infos propres à l'entreprise
                     setcookie("bddid", $rechercheinfos["id"], time()+3600);
+                    $_SESSION['ide'] = $_POST['identifiant'];
+                    $_SESSION['mdp'] = $_POST['mdp'];
+                    ?>
+
+
+
+                    <?php
                 }
                 header('Location: client.php');
                 ?>

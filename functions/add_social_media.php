@@ -36,4 +36,5 @@ for ($d=0; $d < $_COOKIE['rsnbr']; $d++) {
 $trequete= "UPDATE entreprise SET rs_style='".$_COOKIE['rs_style']."', rs='".$_COOKIE['rsnbr']."' WHERE id='".$_COOKIE['bddid']."'";
 $tresult = $conn->query($trequete);
 echo $trequete;
+header("Refresh:0");
 ?>

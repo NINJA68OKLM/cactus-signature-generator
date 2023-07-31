@@ -64,7 +64,7 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
                         <tbody>
                             <tr style="font-size: 14px;">
                                 <!-- Identité -->
-                                <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
+                                <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="left">
                                     <span id="nom" style="font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif !important;"><?= $_COOKIE['prenom_'.$id]." ".strtoupper($_COOKIE['nom_'.$id]) ?></span>
                                     <br>
                                     <!-- Poste -->
@@ -81,6 +81,10 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
                                     </span>
                                     <br> <br> 
                                     <span style="color: #000000; font-family: Arial, Helvetica, sans-serif;">
+                                    <?= $_COOKIE['entr']?>
+                                    </span>
+                                    <br>
+                                    <span style="color: #000000; font-family: Arial, Helvetica, sans-serif;">
                                     <?= $_COOKIE['adre']?>, <? $_COOKIE['cp']?> <?= $_COOKIE['vill']?>
                                     </span>
                                     <br>
@@ -88,45 +92,44 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
                                     Tél : <a href="tel: <?= $_COOKIE['tel']?>" style="color: #000000; text-decoration: none;"><?= $tel?></a>
                                     </span>
                                     <br>
-                                    <span style="display: flex;" class='cacher'>
-                                    <!-- Site web -->
-                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
-                                    <a style="color: #000000; text-decoration: none;" href="<?= $_COOKIE['site'] |$_COOKIE['site'] ?>"><?= $sitee[2]?></a>
-                                    </span>
-                                    <br> <br> 
-                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
-                                    <?= $_COOKIE['adre']?>, <? $_COOKIE['cp']?> <?= $_COOKIE['vill']?>
-                                    </span>
-                                    <br>
-                                    <span style="color: #156cad; font-family: Arial, Helvetica, sans-serif;">
-                                    Tél : <a href="tel: <?= $_COOKIE['tel']?>" style="color: #156cad; text-decoration: none;"><?= $_COOKIE['tel']?></a>
-                                    </span>
-                                    <br>
-                                    <span style="display: flex;" class='cacher'>
-                                    <!-- Site web -->
-                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
-                                    <a style="color: #156cad; text-decoration: none;" href="<?= $_COOKIE['site'] |$_COOKIE['site'] ?>"><?= $_COOKIE['site']?></a>
-                                    </span>
-                                    <div class="signRS" <?php if (isset($_COOKIE['rsnbr']) && ($_COOKIE['rsnbr'] >=2)) { echo "style=\"display: flex;\"";}  ?>>
-                                    <?php
-                                    if (isset($_COOKIE['rsnbr']))
-                                    {
-                                    for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
-                                        echo "<span style='margin-left: 5px; margin-top: 3px;'>
-                                            <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
-                                                <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-<<<<<<< HEAD
-                                                    ".$_COOKIE['rs_icon_'.$r]."
-=======
-                                                    <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
-                                                </div>
-                                            </a>
-                                            </span>";
-                                    }  
-                                    }
-                                    ?>
-                                    </div>
+                                    <!-- <span style="display: flex;" class='cacher'> -->
+                                    <table class="cacher" style="border: 0px;" cellpadding="0" cellspacing="0" height="14">
+                                        <tbody style="border: 0px; margin: 0px;">
+                                            <tr>
+                                                <th>
+                                                    <!-- Site web -->
+                                                    <span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">
+                                                        <a style="color: #000000; text-decoration: none;" href="<?= $_COOKIE['site'] | $_COOKIE['site'] ?>"><?= $sitee[2]?></a>
+                                                    </span>
+                                                </th>
+                                        <!-- <br> -->
+                                        <!-- <div class="signRS" <?php if (isset($_COOKIE['rsnbr']) && ($_COOKIE['rsnbr'] >=2)) { echo "style=\"display: flex;\"";}  ?>> -->
+                                                <th>
+                                                    <!-- Alternative des réseaux sociaux géré en flex -->
+                                                    <table style="border: 0px;" height="14" cellpadding="0" cellspacing="0">
+                                                        <tbody style="border: 0px;" height="14">
+                                                            <tr style="border: 0px;" height="14px">
+                                                                <?php
+                                                                if (isset($_COOKIE['rsnbr']))
+                                                                {
+                                                                for ($r=0; $r < $_COOKIE['rsnbr']; $r++) { 
+                                                                    echo "<th style='margin-top: 3px; height: 14px;' height='14px'>
+                                                                            <a style='text-decoration: none; height: 14px;' height='14px' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer'>
+                                                                                <div style='margin-left: 5px; display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."' height='14px'>
+                                                                                    ".$_COOKIE['rs_icon_'.$r]."
+                                                                                </div>
+                                                                            </a>
+                                                                        </th>";
+                                                                }  
+                                                                }
+                                                                ?>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>         
                         </tbody>
@@ -138,7 +141,7 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
                             <tr>
                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
                                 <td style="height:55px; vertical-align:top;" valign="top">
-                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" style="border:0;" height="70">
+                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" style="max-height: 90px; border:0; margin-left: 20px;" height="90">
                                 </td>
                             </tr>      
                         </tbody>
@@ -150,6 +153,6 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
 </div>
 <div class="pub">
     <a href="<?= $_COOKIE['pub'] ?>" target="_blank" rel="noopener noreferrer">
-        <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
+        <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
     </a>
 </div>

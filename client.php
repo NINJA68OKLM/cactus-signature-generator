@@ -56,6 +56,52 @@ setcookie("bannierenom", "", time()+3600);
         border-radius: 50%;
         border: 1px solid #000000;
     }
+    .navigation 
+    {
+        position: fixed;
+        top: 50%;
+        right: -160px;
+        transform: translate(0px, -50%);
+    }
+    .navigation>div {
+        display: flex;
+        flex-direction: column;
+    }
+    .navigation>div>.ligne {
+        justify-content: initial;
+    }
+    .navigation>div>div>a {
+        transition: 0.4s;
+        text-decoration: none;
+        color: #FFFFFF;
+        background: #A2006E;
+        padding: 15px 40px 15px 10px;
+        border-radius: 50px 0px 0px 50px;
+        display: flex;
+        align-items: center;
+    }
+    .navigation>div>div>label {
+        /* position: absolute; */
+        border: #FFFFFF 1px solid;
+        border-radius: 50%;
+        background: #A2006E;
+        width: 57px;
+        height: 57px;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navigation>div>div>label>svg {
+        width: 40px;
+        height: 40px;
+    }
+    .navigation>div>div:hover a {
+        transform: translate(-145px);
+    }
+    .navigation>div>.ligne.bout_ajout:hover a {
+        transform: translate(-190px);
+    }
 </style>
 <body id="loaded">
     <?php
@@ -138,12 +184,11 @@ setcookie("bannierenom", "", time()+3600);
             }
         }
         echo $_result['rs'];
-        
         // Récupération du formulaire :
         include("functions/formulaire.php");
         // Affichage de l'option pour modifier la publicité
         echo "
-        <fieldset>
+        <fieldset id='pub'>
             <div class='gauche'>
                 <img src='img/logo.png' alt='' style='width: 100%;'>
                 <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
@@ -201,21 +246,13 @@ setcookie("bannierenom", "", time()+3600);
                         </div>
                     </div>
                 </form>
-<<<<<<< HEAD
                 <div class='confirmutii'><b>Pour que votre bannière ne soit pas déformé, il est recommandé de publier une image d'une résolution de 600x150</b></div>
-=======
-                <div class='confirmutii'></div>
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
             </div>
         </fieldset>";
         
     }
     // Fin
-<<<<<<< HEAD
     echo "<fieldset class='field_client' id='fieldset_client_emplo'>
-=======
-    echo "<fieldset class='field_client'>
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                 <div class='gauche'>
                     <img src='img/logo.png' alt='' style='width: 100%;'>
                     <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>
@@ -306,7 +343,8 @@ setcookie("bannierenom", "", time()+3600);
                 else
                 {
                   echo "<div class='droite'>
-                    <h2 style='font-size: 35px;'>Les employés de votre entreprise</h2>";
+                    <h2 style='font-size: 35px;'>Les employés de votre entreprise</h2>
+                    <div class='list-employes' style='height: 300px; overflow: hidden; overflow-y: scroll;'>";
                     for ($z=0; $z < $_COOKIE['nb_client']; $z++) { 
                         echo "<form action='".$_SERVER['PHP_SELF']."' method='post' class='formclient_".$z." formclient'>
                                 <div class='".$_COOKIE['nom_'.$z]." formclientt'>
@@ -389,6 +427,7 @@ setcookie("bannierenom", "", time()+3600);
                         <div class='reponse_client reponse_client_".$z."'></div>";
                     }
                 echo "</div>";
+                echo "</div>";
                 }
                 // Si la personne a déclaré son entreprise mais pas ses employés, on fait une redirection
                 if ($_COOKIE['nb_client'] == 0)
@@ -397,13 +436,8 @@ setcookie("bannierenom", "", time()+3600);
                 }
                 echo "<div class='droitedeux'>
                     <div class='coldeux' style='display: flex; flex-direction: column; width: 70%;'>
-<<<<<<< HEAD
                         <div class='apercu' style='padding: 25px;'>
                             <!-- <div class='pub'>
-=======
-                        <div class='apercu' style='height: 450px; padding: 25px;'>
-                            <div class='pub'>
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                                 <a href='";
                                 if (isset($_COOKIE['pub']))
                                 {
@@ -416,11 +450,7 @@ setcookie("bannierenom", "", time()+3600);
                                 echo "' target='_blank' rel='noopener noreferrer'>
                                     <img src='https://tse2.mm.bing.net/th?id=OIP.zLgHnkbN3rZ_ElIH1PXThgHaE7&pid=Api' alt='' style='width: 600px; height: 150px;'>
                                 </a>
-<<<<<<< HEAD
                             </div> -->
-=======
-                            </div>
->>>>>>> f4dbbec0ad4884910deac2ca173971d24997607c
                         </div>
                     </div>
                     <form action='".$_SERVER['PHP_SELF']."' method='post'>
@@ -433,8 +463,10 @@ setcookie("bannierenom", "", time()+3600);
     <?php
     if ($_COOKIE['nb_client'] > 1)
     {
+        // Affichage des boutons pour la navigation
+        include("navigation.php");
         echo "
-        <fieldset>
+        <fieldset id='ajout_client'>
             <div class='gauche'>
                 <img src='img/logo.png' alt='' style='width: 100%;'>
                 <h1 style='margin-top: 10px; margin-bottom: 0px !important;'>Signature Generator</h1>

@@ -21,5 +21,10 @@ for ($i = 0; $i < 20; $i++) {
 $ide = strtolower($_COOKIE['prenom']).".".strtolower($_COOKIE['nom'])."@signature-cactus.fr";
 $update = "UPDATE employes SET ide='".$ide."', mdp='".$randomString."' WHERE id='".$_COOKIE['idd']."' AND nom='".$_COOKIE['nom']."' AND prenom='".$_COOKIE['prenom']."'";
 $conn->query($update);
+// $emplo = $_COOKIE['empl'];
+// $emplo++;
+// echo $emplo;
+// $updateeee = "UPDATE entreprise SET employe='".$emplo."' WHERE id='".$_COOKIE['bddid']."'";
+// $conn->query($updateeee);
 echo "<p style='color: #000000;'>Votre nouvel employé a bien été ajouté !</p>";
 ?>
