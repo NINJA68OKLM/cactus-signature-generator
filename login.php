@@ -125,7 +125,7 @@ session_id();
                                 {
                                     setcookie("rs_".$m, $cl, time()+3600);
                                     setcookie("rs_href_".$m, $va, time()+3600);
-                                    setcookie("rs_icon_".$m, "<img src='https://generator.agence-cactus.fr/img/Logos/".$responsee['rs_style']."/".$cl.".png'>", time()+3600);
+                                    setcookie("rs_icon_".$m, "<img src='https://"+window.location.hostname+"/img/Logos/".$responsee['rs_style']."/".$cl.".png'>", time()+3600);
                                     echo "Hihi : ".$va."<br>";
                                     $m++;
                                 }

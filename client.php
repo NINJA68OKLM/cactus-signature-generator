@@ -177,7 +177,7 @@ setcookie("bannierenom", "", time()+3600);
                 //    $svg = file_get_contents("img/Logos/".$_COOKIE['rs_style']."/".$tab[$ch].".svg");
                     setcookie("rs_".$ch, $tab[$r], time()+4600);
                     setcookie("rs_href_".$ch, $val[$tab[$r]], time()+4600);
-                    setcookie("rs_icon_".$ch, "<img src='https://generator.agence-cactus.fr/img/Logos/".$_COOKIE['rs_style']."/".$tab[$r].".png'>", time()+3600);
+                    setcookie("rs_icon_".$ch, "<img src='https://"+window.location.hostname+"/img/Logos/".$_COOKIE['rs_style']."/".$tab[$r].".png'>", time()+3600);
                     // echo $_COOKIE['rs_icon_0'];
                     $ch++; 
                 }
