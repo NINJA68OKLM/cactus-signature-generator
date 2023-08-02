@@ -446,7 +446,7 @@ jQuery(function ($) {
                             //     $.cookie("rs_icon_"+l, data)
                             //     return data
                             // }, "html");
-                            $(".icon." + valeur).html("<img width='14' height='14' src='https://generator.agence-cactus.fr/img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png'>")
+                            $(".icon." + valeur).html("<img width='14' height='14' src='https://"+window.location.hostname+"/img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png'>")
                             $.cookie("rs_icon_"+l, "img/Logos/" + $("[name='style']:checked").val() + "/" + valeur + ".png")
                             console.log($.cookie("rs_icon_"+l))
                         }
