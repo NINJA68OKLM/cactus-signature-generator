@@ -11,7 +11,7 @@ $id=$_COOKIE['id'];
                             <tr>
                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
                                 <td style="height:55px; vertical-align:top;" valign="top">
-                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" style="border:0;" height="70">
+                                    <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_SESSION['logonom'] ?>" style="border:0;" height="70">
                                 </td>
                             </tr>      
                         </tbody>
@@ -59,7 +59,7 @@ $id=$_COOKIE['id'];
                                         echo "<span style='margin-left: 5px; margin-top: 3px;'>
                                             <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
                                                 <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                                                    <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
+                                                    <img src='https://"+window.location.hostname+"/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                                                 </div>
                                             </a>
                                             </span>";

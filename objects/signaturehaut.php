@@ -7,7 +7,7 @@ $id=$_COOKIE['id'];
       <!-- Identité -->
       <td style=" height:35px; vertical-align:center; text-align: left;" valign="center" align="right">
         <span>
-          <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
+          <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_SESSION['logonom'] ?>" alt="agence-cactus.fr" style="max-height:150px; height:auto; border:0;" height="150">
         </span>
         <br>
         <span id="nom" style="font-weight:bold; font-size: 18px; font-family: Arial, Helvetica, sans-serif;"><?= $_COOKIE['prenom_'.$id]." ".strtoupper($_COOKIE['nom_'.$id]) ?></span>
@@ -46,7 +46,7 @@ $id=$_COOKIE['id'];
             echo "<span style='margin-left: 5px; margin-top: 3px;'>
                   <a style='text-decoration: none;' href='".$_COOKIE['rs_href_'.$r]."' target='_blank' rel='noopener noreferrer' style=''>
                     <div style='display: flex; width: 14px; height: 14px; justify-content: space-between;'' class='icon ".$_COOKIE['rs_'.$r]."'>
-                      <img src='https://generator.agence-cactus.fr/".$_COOKIE['rs_icon_'.$r]."' alt=''>
+                      <img src='https://"+window.location.hostname+/".$_COOKIE['rs_icon_'.$r]."' alt=''>
                     </div>
                   </a>
                 </span>";

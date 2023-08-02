@@ -65,7 +65,7 @@ foreach ($sresult as $cle => $val) {
                             <tr>
                                 <!-- Logo ou photo de profil d'une largeur de 150 px -->
                                 <td style="height:55px; vertical-align:top;" valign="top">
-                                    <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" style="max-height: 90px; border:0; margin-right: 20px;" height="90">
+                                    <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_COOKIE['logo'] ?>" style="max-height: 90px; border:0; margin-right: 20px;" height="90">
                                 </td>
                             </tr>      
                         </tbody>
@@ -153,6 +153,6 @@ foreach ($sresult as $cle => $val) {
 </div>
 <div class="pub">
     <a href="<?= $_COOKIE['pub'] ?>" target="_blank" rel="noopener noreferrer">
-        <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
+        <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
     </a>
 </div>

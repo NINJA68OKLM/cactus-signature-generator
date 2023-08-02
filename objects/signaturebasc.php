@@ -127,7 +127,7 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
           </table>
             <br>
           <span>
-            <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['logo'] ?>" alt="agence-cactus.fr" style="max-height:120px; height:auto; border:0;" height="">
+            <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_COOKIE['logo'] ?>" alt="agence-cactus.fr" style="max-height:120px; height:auto; border:0;" height="">
           </span>
         </td>
       </tr>
@@ -136,6 +136,6 @@ $tab = ["facebook", "twitter", "instagram", "linkedin", "youtube"];
 </div>
 <div class="pub">
     <a href="<?= $_COOKIE['pub'] ?>" target="_blank" rel="noopener noreferrer">
-        <img src="https://generator.agence-cactus.fr/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
+        <img src="https://<?= $_SERVER['SERVER_NAME'] ?>/img/uploads/<?= $_COOKIE['banniere'] ?>" alt="" style="min-width: 310px; max-width: 600px; max-height: 150px; margin-top: 15px;">
     </a>
 </div>
